@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowledge Base — Sea Billing &amp; Collection</title>
+<style>
+/* ── DESIGN TOKENS ── */
+:root {
+  --ke-blue:       #0052CC;
+  --ke-blue-h:     #003D99;
+  --ke-blue-lt:    #EBF3FF;
+  --ke-blue-bd:    #C7DCFF;
+  --ke-g50:  #F9FAFB; --ke-g100: #F3F4F6; --ke-g200: #E5E7EB;
+  --ke-g300: #D1D5DB; --ke-g400: #9CA3AF; --ke-g500: #6B7280;
+  --ke-g600: #4B5563; --ke-g700: #374151; --ke-g800: #1F2937; --ke-g900: #111827;
+  --ke-ok-t:#166534;  --ke-ok-b:#F0FDF4;  --ke-ok-bd:#BBF7D0;
+  --ke-pnd-t:#92400E; --ke-pnd-b:#FFFBEB; --ke-pnd-bd:#FDE68A;
+  --ke-ALL-t:#166534;--ke-ALL-b:#F0FDF4;--ke-ALL-bd:#BBF7D0;
+  --ke-TH-t:#92400E; --ke-TH-b:#FFFBEB; --ke-TH-bd:#FDE68A;
+  --ke-ID-t:#9A3412; --ke-ID-b:#FFF7ED; --ke-ID-bd:#FED7AA;
+  --ke-VN-t:#065F46; --ke-VN-b:#ECFDF5; --ke-VN-bd:#A7F3D0;
+  --ke-SG-t:#3730A3; --ke-SG-b:#EEF2FF; --ke-SG-bd:#C7D2FE;
+  --ke-MY-t:#9D174D; --ke-MY-b:#FFF1F2; --ke-MY-bd:#FECDD3;
+  --ke-TW-t:#075985; --ke-TW-b:#F0F9FF; --ke-TW-bd:#BAE6FD;
+  --ke-PH-t:#581C87; --ke-PH-b:#FAF5FF; --ke-PH-bd:#E9D5FF;
+  --ke-BR-t:#854D0E; --ke-BR-b:#FEFCE8; --ke-BR-bd:#FEF08A;
+  --sb-w: 210px;
+  --tb-h: 44px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: "Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  font-size: 13px; line-height: 1.5;
+  color: var(--ke-g900);
+  background: var(--ke-g100);
+  overflow: hidden;
+}
+button, select, input { font-family: inherit; font-size: 13px; }
+svg { display: block; flex-shrink: 0; }
+
+#app {
+  height: 100vh; display: flex; flex-direction: column;
+  border: 1px solid var(--ke-g200); border-radius: 6px;
+  overflow: hidden;
+}
+
+/* ── TOPBAR ── */
+.ke-topbar {
+  height: var(--tb-h); background: #fff;
+  border-bottom: 1px solid var(--ke-g200);
+  display: flex; align-items: center; flex-shrink: 0; z-index: 10;
+}
+.ke-brand {
+  width: var(--sb-w); display: flex; align-items: center; gap: 8px;
+  padding: 0 14px; border-right: 1px solid var(--ke-g200);
+  height: 100%; flex-shrink: 0;
+}
+.ke-brand-name { font-size: 12.5px; font-weight: 600; color: var(--ke-g900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ke-breadcrumb {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; color: var(--ke-g500); padding: 0 16px; flex: 1;
+}
+.ke-bc-sep { color: var(--ke-g300); }
+.ke-bc-cur { color: var(--ke-g700); font-weight: 500; }
+.ke-topbar-right {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 14px; margin-left: auto;
+}
+.ke-tb-icon {
+  width: 28px; height: 28px; border-radius: 4px;
+  border: none; background: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ke-g400); transition: background .1s;
+}
+.ke-tb-icon:hover { background: var(--ke-g100); color: var(--ke-g700); }
+.ke-avatar {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11.5px; color: var(--ke-g500); cursor: pointer;
+  padding: 3px 6px; border-radius: 4px;
+}
+.ke-avatar:hover { background: var(--ke-g100); }
+.ke-avatar-dot {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--ke-blue); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; flex-shrink: 0;
+}
+.ke-kbd-hint {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10.5px; color: var(--ke-g400);
+  padding: 3px 8px; border: 1px solid var(--ke-g200);
+  border-radius: 4px; background: var(--ke-g50); cursor: pointer;
+}
+.ke-kbd-hint:hover { border-color: var(--ke-blue-bd); color: var(--ke-blue); background: var(--ke-blue-lt); }
+.ke-kbd {
+  display: inline-block; font-family: "Consolas","Courier New",monospace;
+  font-size: 10px; padding: 1px 4px; border: 1px solid var(--ke-g300);
+  border-radius: 3px; background: #fff; color: var(--ke-g700); line-height: 1;
+}
+
+/* ── SYNC STATUS ── */
+.ke-sync-status {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; color: var(--ke-g500);
+  padding: 4px 8px; border-radius: 4px;
+  border: 1px solid var(--ke-g200); background: var(--ke-g50);
+  cursor: default; position: relative; white-space: nowrap;
+}
+.ke-sync-status.stale {
+  color: #b45309; border-color: #fde68a; background: #fffbeb;
+}
+.ke-sync-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #22c55e; flex-shrink: 0;
+}
+.ke-sync-status.stale .ke-sync-dot { background: #f59e0b; }
+.ke-sync-tooltip {
+  position: absolute; top: calc(100% + 6px); right: 0;
+  background: #1f2937; color: #fff; font-size: 11px;
+  padding: 5px 9px; border-radius: 4px; white-space: nowrap;
+  pointer-events: none; opacity: 0; transition: opacity .15s;
+  z-index: 200;
+}
+.ke-sync-status.stale:hover .ke-sync-tooltip { opacity: 1; }
+.ke-sync-tooltip::before {
+  content: ''; position: absolute; bottom: 100%; right: 10px;
+  border: 5px solid transparent; border-bottom-color: #1f2937;
+}
+
+/* ── BODY ROW ── */
+.ke-body-row { display: flex; flex: 1; overflow: hidden; }
+
+/* ── SIDEBAR ── */
+.ke-sidebar {
+  width: var(--sb-w); background: #fff;
+  border-right: 1px solid var(--ke-g200);
+  display: flex; flex-direction: column;
+  overflow-y: auto; overflow-x: hidden; flex-shrink: 0;
+  scrollbar-width: thin; scrollbar-color: var(--ke-g200) transparent;
+}
+.ke-sidebar::-webkit-scrollbar { width: 3px; }
+.ke-sidebar::-webkit-scrollbar-thumb { background: var(--ke-g200); border-radius: 4px; }
+
+.ke-nav-sec { padding: 5px 0; }
+.ke-nav-sec + .ke-nav-sec { border-top: 1px solid var(--ke-g200); padding-top: 5px; }
+.ke-nav-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 12px; font-size: 12px; font-weight: 500;
+  color: var(--ke-g700); cursor: pointer; user-select: none;
+  transition: background .1s; position: relative;
+}
+.ke-nav-item:hover { background: var(--ke-g50); }
+.ke-nav-icon { color: var(--ke-g400); flex-shrink: 0; }
+.ke-nav-chev {
+  margin-left: auto; color: var(--ke-g400);
+  transition: transform .16s; flex-shrink: 0;
+}
+.ke-nav-item.open .ke-nav-chev { transform: rotate(180deg); }
+.ke-nav-sub { display: none; }
+.ke-nav-sub.open { display: block; }
+.ke-nav-sub-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px 6px 30px;
+  font-size: 11.5px; color: var(--ke-g500);
+  cursor: pointer; transition: background .1s, color .1s; position: relative;
+}
+.ke-nav-sub-item:hover { background: var(--ke-g50); color: var(--ke-g700); }
+.ke-nav-sub-item.active {
+  color: var(--ke-blue); font-weight: 600; background: var(--ke-blue-lt);
+}
+.ke-nav-sub-item.active::before {
+  content: ""; position: absolute; left: 0; top: 3px; bottom: 3px;
+  width: 2px; background: var(--ke-blue); border-radius: 0 2px 2px 0;
+}
+/* Knowledge Detail sub-item (no dropdown, acts as label) */
+.ke-nav-sub-item.kd-parent {
+  font-weight: 600; color: var(--ke-g700); cursor: pointer;
+  padding-left: 22px;
+}
+.ke-nav-sub-item.kd-parent.active { background: none; color: var(--ke-g900); }
+.ke-nav-sub-item.kd-parent.active::before { display: none; }
+/* Sub-sub items (Buyer Entity, Supplier Master under Knowledge Detail) */
+.ke-nav-sub2 { display: none; }
+.ke-nav-sub2.open { display: block; }
+.ke-nav-sub2-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px 6px 44px;
+  font-size: 11.5px; color: var(--ke-g500);
+  cursor: pointer; transition: background .1s, color .1s; position: relative;
+}
+.ke-nav-sub2-item:hover { background: var(--ke-g50); color: var(--ke-g700); }
+.ke-nav-sub2-item.active {
+  color: var(--ke-blue); font-weight: 600; background: var(--ke-blue-lt);
+}
+.ke-nav-sub2-item.active::before {
+  content: ""; position: absolute; left: 0; top: 3px; bottom: 3px;
+  width: 2px; background: var(--ke-blue); border-radius: 0 2px 2px 0;
+}
+.ke-nav-sub2-item .ke-nav-count {
+  margin-left: auto; font-size: 10px; font-weight: 600;
+  color: var(--ke-g400); background: var(--ke-g100);
+  padding: 1px 6px; border-radius: 10px; line-height: 1.4;
+}
+.ke-nav-sub2-item.active .ke-nav-count { background: #fff; color: var(--ke-blue); }
+.ke-nav-chev-small {
+  color: var(--ke-g400); flex-shrink: 0;
+  transition: transform .16s;
+}
+.ke-nav-sub-item.kd-parent.open .ke-nav-chev-small { transform: rotate(0deg); }
+.ke-nav-sub-item.kd-parent:not(.open) .ke-nav-chev-small { transform: rotate(-90deg); }
+
+/* ── MAIN ── */
+.ke-main {
+  flex: 1; display: flex; flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── PAGE HEADER ── */
+.ke-page-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; background: #fff;
+  border-bottom: 1px solid var(--ke-g200);
+  flex-shrink: 0;
+}
+.ke-page-hdr-l { display: flex; align-items: center; gap: 14px; min-width: 0; flex: 1; }
+.ke-page-title { font-size: 15px; font-weight: 600; color: var(--ke-g900); white-space: nowrap; }
+.ke-page-meta  { font-size: 11.5px; color: var(--ke-g500); margin-top: 2px; }
+.ke-page-hdr-r { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+.ke-btn-primary {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--ke-blue); color: #fff;
+  border: 1px solid var(--ke-blue); border-radius: 4px;
+  font-size: 12px; font-weight: 500;
+  padding: 5px 12px; cursor: pointer; white-space: nowrap;
+  transition: background .1s;
+}
+.ke-btn-primary:hover { background: var(--ke-blue-h); }
+.ke-btn-ghost {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: #fff; color: var(--ke-g700);
+  border: 1px solid var(--ke-g300); border-radius: 4px;
+  font-size: 12px; font-weight: 500;
+  padding: 5px 12px; cursor: pointer; white-space: nowrap;
+  transition: background .1s;
+}
+.ke-btn-ghost:hover { background: var(--ke-g50); border-color: var(--ke-g400); }
+
+/* ── VIEW SWITCHING ── */
+.ke-view { display: none; flex: 1; flex-direction: column; min-height: 0; overflow: hidden; }
+.ke-view.active { display: flex; }
+
+/* ── DATA-DICTIONARY TABLE SHARED ── */
+.ke-dd-toolbar {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr auto;
+  gap: 16px 20px;
+  align-items: end;
+  padding: 16px 18px;
+  background: #fff;
+  border-bottom: 1px solid var(--ke-g200);
+  flex-shrink: 0;
+}
+.ke-dd-toolbar-5col { grid-template-columns: 1.4fr 1fr 1fr 1fr auto; }
+.ke-dd-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.ke-dd-label { font-size: 12px; color: var(--ke-g700); font-weight: 400; }
+.ke-dd-field input, .ke-dd-field select {
+  height: 30px; border: 1px solid var(--ke-g300); border-radius: 3px;
+  padding: 0 10px; font-size: 12.5px; color: var(--ke-g800);
+  background: #fff; outline: none; transition: border-color .12s; width: 100%;
+}
+.ke-dd-field input:focus, .ke-dd-field select:focus { border-color: var(--ke-blue); }
+.ke-dd-field input::placeholder { color: var(--ke-g400); }
+.ke-dd-search { position: relative; }
+.ke-dd-search input { padding-right: 28px; }
+.ke-dd-search svg {
+  position: absolute; right: 8px; top: 50%;
+  transform: translateY(-50%); color: var(--ke-g400); pointer-events: none;
+}
+.ke-dd-actions { flex-direction: row; align-items: end; gap: 8px; }
+.ke-dd-actions .ke-btn-ghost { height: 30px; padding: 0 16px; }
+
+.ke-dd-totalbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 20px 10px;
+  background: #fff; border-bottom: 1px solid var(--ke-g200);
+  flex-shrink: 0;
+}
+.ke-dd-total { font-size: 13px; font-weight: 600; color: var(--ke-g800); }
+
+.ke-dd-tablewrap {
+  background: #fff; border: none;
+  overflow: auto; flex: 1; min-height: 0;
+}
+.ke-dd-table {
+  width: 100%; border-collapse: collapse; font-size: 12.5px;
+}
+.ke-dd-table thead th {
+  background: var(--ke-g50); border-bottom: 1px solid var(--ke-g200);
+  padding: 10px 12px; text-align: left; font-size: 12px; font-weight: 600;
+  color: var(--ke-g600); position: sticky; top: 0; z-index: 1;
+}
+.ke-dd-table tbody td {
+  padding: 11px 12px; border-bottom: 1px solid var(--ke-g100);
+  color: var(--ke-g800); vertical-align: middle;
+}
+.ke-dd-table tbody tr { cursor: default; transition: background .08s; }
+.ke-dd-table tbody tr:hover { background: var(--ke-g50); }
+.ke-dd-cell-id { font-family: Consolas, monospace; font-size: 11.5px; color: var(--ke-g600); }
+.ke-dd-cell-name { color: var(--ke-g900); font-weight: 500; }
+.ke-dd-cell-tin { font-family: Consolas, monospace; font-size: 11.5px; color: var(--ke-g700); }
+.ke-dd-cell-muted { color: var(--ke-g500); font-size: 12px; }
+.ke-dd-mkt-chip {
+  display: inline-block; padding: 2px 7px; border-radius: 3px;
+  background: var(--ke-g100); color: var(--ke-g700);
+  font-size: 11px; font-weight: 600; letter-spacing: .03em;
+}
+.ke-dd-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--ke-g700);
+}
+.ke-dd-status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--ke-g300); }
+.ke-dd-status.active { color: #166534; }
+.ke-dd-status.active::before { background: #22c55e; }
+
+.ke-dd-empty {
+  padding: 56px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  color: var(--ke-g500); font-size: 12.5px;
+}
+
+/* ── VIEW DETAILS BUTTON ── */
+.ke-view-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11.5px; font-weight: 500; color: var(--ke-blue);
+  background: var(--ke-blue-lt); border: 1px solid var(--ke-blue-bd);
+  border-radius: 4px; padding: 4px 10px; cursor: pointer;
+  transition: background .1s, border-color .1s; white-space: nowrap;
+}
+.ke-view-btn:hover { background: #dbeafe; border-color: var(--ke-blue); }
+
+/* ── PAGINATION ── */
+.ke-dd-pager {
+  display: flex; align-items: center; justify-content: flex-end;
+  gap: 4px; padding: 10px 20px;
+  background: #fff; border-top: 1px solid var(--ke-g200);
+  font-size: 12px; color: var(--ke-g600); flex-shrink: 0;
+}
+.ke-dd-pg-btn {
+  min-width: 28px; height: 28px; padding: 0 8px;
+  border: 1px solid var(--ke-g200); background: #fff;
+  border-radius: 3px; cursor: pointer; font-size: 12px; color: var(--ke-g700);
+}
+.ke-dd-pg-btn:hover { border-color: var(--ke-g300); }
+.ke-dd-pg-btn.active { background: var(--ke-blue); color: #fff; border-color: var(--ke-blue); }
+.ke-dd-pg-btn:disabled { opacity: .4; cursor: not-allowed; }
+.ke-dd-pg-info { margin-right: 10px; color: var(--ke-g500); }
+
+/* ── DRAWER ── */
+.ke-drawer-scrim {
+  position: fixed; inset: 0;
+  background: rgba(15, 23, 42, 0.35);
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s; z-index: 90;
+}
+.ke-drawer-scrim.open { opacity: 1; pointer-events: auto; }
+.ke-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(700px, 92vw);
+  background: #fff; border-left: 1px solid var(--ke-g200);
+  box-shadow: -8px 0 24px -12px rgba(15, 23, 42, 0.18);
+  transform: translateX(100%);
+  transition: transform .22s ease; z-index: 91;
+  display: flex; flex-direction: column;
+}
+.ke-drawer.open { transform: translateX(0); }
+.ke-drawer-hdr {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px; padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--ke-g200);
+}
+.ke-drawer-title { font-size: 16px; font-weight: 600; color: var(--ke-g900); letter-spacing: -.01em; }
+.ke-drawer-sub { font-size: 12px; color: var(--ke-g500); margin-top: 2px; font-family: Consolas, monospace; }
+.ke-drawer-close {
+  background: transparent; border: none; width: 28px; height: 28px; border-radius: 4px;
+  color: var(--ke-g500); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.ke-drawer-close:hover { background: var(--ke-g100); color: var(--ke-g800); }
+.ke-drawer-body { flex: 1; min-height: 0; overflow-y: auto; padding: 18px 22px 40px; }
+
+/* ── BUYER DETAIL ── */
+.ke-buyer-hero {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding-bottom: 20px; border-bottom: 1px solid var(--ke-g200); margin-bottom: 20px;
+}
+.ke-buyer-hero-code {
+  width: 56px; height: 56px; border-radius: 8px;
+  background: var(--ke-blue); color: #fff;
+  font-size: 20px; font-weight: 700; letter-spacing: .04em;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.ke-buyer-hero-body { flex: 1; min-width: 0; }
+.ke-buyer-hero-name { font-size: 20px; font-weight: 600; color: var(--ke-g900); letter-spacing: -.01em; line-height: 1.25; }
+.ke-buyer-hero-id { font-family: Consolas, monospace; font-size: 11px; color: var(--ke-g500); margin-top: 4px; }
+.ke-buyer-tag {
+  font-size: 10.5px; font-weight: 600; letter-spacing: .03em;
+  padding: 3px 8px; border-radius: 3px;
+  background: var(--ke-blue-lt); color: var(--ke-blue-h); text-transform: uppercase;
+}
+.ke-buyer-tag.region { background: var(--ke-g100); color: var(--ke-g700); }
+.ke-buyer-section-hdr {
+  font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ke-g600);
+  padding-bottom: 8px; border-bottom: 1px solid var(--ke-g200);
+  margin-bottom: 14px; margin-top: 8px;
+}
+.ke-buyer-kv {
+  width: 100%; border-collapse: collapse; background: #fff;
+  border: 1px solid var(--ke-g200); border-radius: 6px; margin-bottom: 24px;
+  font-size: 13px; overflow: hidden;
+}
+.ke-buyer-kv th, .ke-buyer-kv td {
+  padding: 11px 16px; text-align: left; vertical-align: top;
+  border-bottom: 1px solid var(--ke-g100); line-height: 1.45;
+}
+.ke-buyer-kv tr:last-child th, .ke-buyer-kv tr:last-child td { border-bottom: none; }
+.ke-buyer-kv th {
+  width: 220px; background: var(--ke-g50); color: var(--ke-g600);
+  font-weight: 500; font-size: 12.5px;
+  border-right: 1px solid var(--ke-g100); white-space: nowrap;
+}
+.ke-buyer-kv td { color: var(--ke-g900); }
+.ke-buyer-kv td.mono { font-family: Consolas,'SF Mono',Menlo,monospace; font-size: 12px; }
+
+/* ── SUPPLIER DETAIL (inside drawer) ── */
+.ke-detail-hdr {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 16px;
+}
+.ke-detail-hdr-avatar {
+  width: 40px; height: 40px; border-radius: 6px;
+  background: var(--ke-blue); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; flex-shrink: 0;
+}
+.ke-detail-hdr-info { flex: 1; min-width: 0; }
+.ke-detail-hdr-name { font-size: 15px; font-weight: 600; color: var(--ke-g900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ke-detail-hdr-sub {
+  display: flex; align-items: center; gap: 8px;
+  flex-wrap: wrap; font-size: 11.5px; color: var(--ke-g500); margin-top: 2px;
+}
+.ke-detail-hdr-sub strong { color: var(--ke-g700); font-weight: 600; font-family: Consolas, monospace; }
+.ke-detail-hdr-actions { display: flex; align-items: center; gap: 6px; }
+
+.ke-sec-hdr {
+  display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+  background: linear-gradient(to right, var(--ke-g50), #fff);
+  border-bottom: 1px solid var(--ke-g200);
+  cursor: pointer; user-select: none; transition: background .15s;
+}
+.ke-sec-hdr:hover { background: linear-gradient(to right, var(--ke-g100), var(--ke-g50)); }
+.ke-sec-hdr.collapsed { border-bottom: none; }
+.ke-sec-chev { color: var(--ke-g400); transition: transform .2s ease; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+.ke-sec-hdr.collapsed .ke-sec-chev { transform: rotate(-90deg); }
+.ke-sec-label { font-size: 12.5px; font-weight: 600; color: var(--ke-g800); flex: 1; }
+.ke-sec-badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: var(--ke-g100); color: var(--ke-g600); border: 1px solid var(--ke-g200); }
+.ke-sec-body { overflow: hidden; transition: max-height .25s ease; max-height: 3000px; }
+.ke-sec-body.collapsed { max-height: 0; }
+.ke-card { background: #fff; border: 1px solid var(--ke-g200); border-radius: 6px; overflow: hidden; margin-bottom: 12px; }
+
+.ke-ps-grid { display: grid; grid-template-columns: minmax(180px, 38%) 1fr; font-size: 12.5px; }
+.ke-ps-row { display: contents; }
+.ke-ps-row > * { padding: 10px 16px; border-bottom: 1px solid var(--ke-g100); }
+.ke-ps-row:last-child > * { border-bottom: none; }
+.ke-ps-row:hover > * { background: var(--ke-g50); }
+.ke-ps-label { display: flex; align-items: center; gap: 6px; color: var(--ke-g600); font-weight: 500; background: #fff; }
+.ke-ps-value-wrap { display: flex; align-items: center; gap: 8px; color: var(--ke-g800); background: #fff; }
+.ke-ps-value { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ke-ps-value.empty { color: var(--ke-g400); font-style: italic; }
+
+.ke-copy-btn {
+  opacity: 0; transition: opacity .15s; background: none; border: none; cursor: pointer;
+  color: var(--ke-g400); padding: 2px; border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+}
+.ke-ps-row:hover .ke-copy-btn { opacity: 1; }
+.ke-copy-btn:hover { color: var(--ke-blue); background: var(--ke-blue-lt); }
+.ke-copy-btn.copied { color: var(--ke-ok-t); opacity: 1 !important; }
+
+.ke-mkt-inline {
+  display: inline-flex; align-items: center;
+  font-size: 9.5px; font-weight: 700;
+  padding: 1px 5px; border-radius: 4px; line-height: 1;
+}
+.ke-mkt-ALL{background:var(--ke-ALL-b);color:var(--ke-ALL-t);border:1px solid var(--ke-ALL-bd);}
+.ke-mkt-TH {background:var(--ke-TH-b); color:var(--ke-TH-t); border:1px solid var(--ke-TH-bd);}
+.ke-mkt-ID {background:var(--ke-ID-b); color:var(--ke-ID-t); border:1px solid var(--ke-ID-bd);}
+.ke-mkt-VN {background:var(--ke-VN-b); color:var(--ke-VN-t); border:1px solid var(--ke-VN-bd);}
+.ke-mkt-SG {background:var(--ke-SG-b); color:var(--ke-SG-t); border:1px solid var(--ke-SG-bd);}
+.ke-mkt-MY {background:var(--ke-MY-b); color:var(--ke-MY-t); border:1px solid var(--ke-MY-bd);}
+.ke-mkt-TW {background:var(--ke-TW-b); color:var(--ke-TW-t); border:1px solid var(--ke-TW-bd);}
+.ke-mkt-PH {background:var(--ke-PH-b); color:var(--ke-PH-t); border:1px solid var(--ke-PH-bd);}
+.ke-mkt-BR {background:var(--ke-BR-b); color:var(--ke-BR-t); border:1px solid var(--ke-BR-bd);}
+
+.ke-empty-state {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 40px 20px; text-align: center;
+  color: var(--ke-g500); font-size: 13px; gap: 6px;
+}
+
+/* ── CMD+K PALETTE ── */
+.ke-cmdk-scrim {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(15,23,42,.35);
+  display: none; align-items: flex-start; justify-content: center;
+  padding-top: 12vh;
+}
+.ke-cmdk-scrim.open { display: flex; }
+.ke-cmdk {
+  width: 560px; max-width: 90vw;
+  background: #fff; border-radius: 10px;
+  box-shadow: 0 25px 50px rgba(0,0,0,.2); overflow: hidden;
+}
+.ke-cmdk-search {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px; border-bottom: 1px solid var(--ke-g200);
+}
+.ke-cmdk-search input { flex: 1; border: none; outline: none; font-size: 15px; color: var(--ke-g900); background: none; }
+.ke-cmdk-list { max-height: 360px; overflow-y: auto; padding: 6px 0; }
+.ke-cmdk-section-label {
+  font-size: 10px; font-weight: 700; color: var(--ke-g400);
+  text-transform: uppercase; letter-spacing: .5px; padding: 8px 16px 4px;
+}
+.ke-cmdk-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 16px; cursor: pointer; font-size: 13px; color: var(--ke-g800);
+}
+.ke-cmdk-row:hover, .ke-cmdk-row.active { background: var(--ke-blue-lt); color: var(--ke-blue-h); }
+.ke-cmdk-row-avatar {
+  width: 24px; height: 24px; border-radius: 4px;
+  background: var(--ke-g100); color: var(--ke-g600);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; flex-shrink: 0;
+}
+.ke-cmdk-row.active .ke-cmdk-row-avatar { background: var(--ke-blue); color: #fff; }
+.ke-cmdk-row-info { flex: 1; min-width: 0; }
+.ke-cmdk-row-name { font-size: 12.5px; font-weight: 500; }
+.ke-cmdk-row-meta { font-size: 10.5px; color: var(--ke-g500); margin-top: 1px; }
+.ke-cmdk-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 16px; border-top: 1px solid var(--ke-g200);
+  font-size: 11px; color: var(--ke-g500); background: var(--ke-g50);
+}
+
+mark.ke-hl { background: #FEF08A; color: inherit; padding: 0 1px; border-radius: 2px; }
+
+/* Detail toolbar for supplier drawer */
+.ke-detail-toolbar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 0 14px;
+}
+.ke-detail-toolbar input, .ke-detail-toolbar select {
+  height: 30px; border: 1px solid var(--ke-g300); border-radius: 4px;
+  color: var(--ke-g900); background: #fff; outline: none;
+  transition: border-color .12s; padding: 0 9px;
+}
+.ke-detail-toolbar input { flex: 1; min-width: 140px; }
+.ke-detail-toolbar select { min-width: 120px; cursor: pointer; }
+.ke-detail-toolbar input:focus, .ke-detail-toolbar select:focus { border-color: var(--ke-blue); }
+.ke-detail-toolbar input::placeholder { color: var(--ke-g400); }
+.ke-tlabel { font-size: 11.5px; color: var(--ke-g500); white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+<!-- ══════════════ TOPBAR ══════════════ -->
+<header class="ke-topbar">
+  <div class="ke-brand">
+    <svg width="26" height="26" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+      <defs><clipPath id="keLogoClip"><circle cx="50" cy="50" r="50"/></clipPath></defs>
+      <g clip-path="url(#keLogoClip)">
+        <rect width="100" height="100" fill="#1A237E"/>
+        <path d="M0,68 Q25,58 50,65 Q75,72 100,62 L100,100 L0,100 Z" fill="#283593"/>
+        <path d="M0,55 Q20,45 45,52 Q70,59 100,48 L100,100 L0,100 Z" fill="#3949AB"/>
+        <path d="M0,45 Q25,35 55,43 Q75,49 100,38 L100,65 Q75,75 50,68 Q25,61 0,70 Z" fill="#5C6BC0"/>
+        <path d="M0,32 Q30,20 55,30 Q78,39 100,28 L100,50 Q75,42 50,35 Q25,28 0,40 Z" fill="#00E5FF"/>
+        <path d="M0,25 Q28,14 52,23 Q76,32 100,20 L100,32 Q75,43 50,34 Q26,25 0,36 Z" fill="#18FFFF"/>
+        <path d="M0,20 Q30,10 55,18 Q78,26 100,15 L100,24 Q76,35 52,27 Q28,19 0,30 Z" fill="#00C853"/>
+        <path d="M0,10 Q25,2 50,10 Q75,18 100,8 L100,20 Q75,30 50,22 Q25,14 0,22 Z" fill="#FF6D00"/>
+        <path d="M0,0 L100,0 L100,14 Q75,24 50,16 Q25,8 0,18 Z" fill="#D32F2F"/>
+      </g>
+    </svg>
+    <span class="ke-brand-name">Sea Billing &amp; Collection</span>
+  </div>
+  <nav class="ke-breadcrumb" id="breadcrumb">
+    <span>Knowledge Base</span>
+    <span class="ke-bc-sep">›</span>
+    <span class="ke-bc-cur" id="bc-current">Knowledge Detail</span>
+    <span class="ke-bc-sep" id="bc-sep2">›</span>
+    <span class="ke-bc-cur" id="bc-entity">Buyer Entity</span>
+    <span class="ke-bc-sep" id="bc-sep3" style="display:none">›</span>
+    <span class="ke-bc-cur" id="bc-selection" style="display:none">—</span>
+  </nav>
+  <div class="ke-topbar-right">
+    <button class="ke-kbd-hint" onclick="openCmdK()" title="Quick find (⌘K)">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span>Quick find</span>
+      <span class="ke-kbd">⌘K</span>
+    </button>
+    <!-- Sync status top-right -->
+    <div class="ke-sync-status" id="sync-status">
+      <span class="ke-sync-dot"></span>
+      <span id="sync-label">Last synced: …</span>
+      <span class="ke-sync-tooltip" id="sync-tooltip">Data may be outdated. Contact system admin.</span>
+    </div>
+    <div class="ke-avatar">
+      <div class="ke-avatar-dot">ML</div>
+      <span>megan.lee@shopee.com</span>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════ BODY ══════════════ -->
+<div class="ke-body-row">
+
+  <!-- SIDEBAR -->
+  <aside class="ke-sidebar">
+
+    <div class="ke-nav-sec">
+      <div class="ke-nav-item open" onclick="toggleNav(this)">
+        <svg class="ke-nav-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Knowledge Base
+        <svg class="ke-nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="ke-nav-sub open" id="nav-kb">
+        <!-- Knowledge Detail (no dropdown, toggles sub-panel) -->
+        <div class="ke-nav-sub-item kd-parent open" id="nav-detail" onclick="toggleKdSub()">
+          <svg class="ke-nav-chev-small" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="6 9 12 15 18 9"/></svg>
+          Knowledge Detail
+        </div>
+        <!-- Sub-panel: Buyer Entity + Supplier Master -->
+        <div class="ke-nav-sub2 open" id="nav-kd-sub">
+          <div class="ke-nav-sub2-item active" id="nav-buyer" onclick="switchView('buyer')">
+            Buyer Entity<span class="ke-nav-count">8</span>
+          </div>
+          <div class="ke-nav-sub2-item" id="nav-supplier" onclick="switchView('supplier')">
+            Supplier Master<span class="ke-nav-count">1k</span>
+          </div>
+        </div>
+        <div class="ke-nav-sub-item" id="nav-endpoint" onclick="switchView('endpoint')">Knowledge Endpoint</div>
+      </div>
+    </div>
+
+    <div class="ke-nav-sec">
+      <div class="ke-nav-item" onclick="toggleNav(this)">
+        <svg class="ke-nav-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        Case Management
+        <svg class="ke-nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="ke-nav-sub" id="nav-case">
+        <div class="ke-nav-sub-item" onclick="keNavClick(this)">Case List</div>
+        <div class="ke-nav-sub-item" onclick="keNavClick(this)">Archive Case</div>
+        <div class="ke-nav-sub-item" onclick="keNavClick(this)">Golden Case</div>
+        <div class="ke-nav-sub-item" onclick="keNavClick(this)">Pattern Library</div>
+      </div>
+    </div>
+
+    <div class="ke-nav-sec">
+      <div class="ke-nav-item" onclick="toggleNav(this)">
+        <svg class="ke-nav-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 11V7"/><circle cx="12" cy="5" r="2"/><line x1="8" y1="15" x2="8.01" y2="15"/><line x1="16" y1="15" x2="16.01" y2="15"/></svg>
+        Agent Management
+        <svg class="ke-nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="ke-nav-sub" id="nav-agent">
+        <div class="ke-nav-sub-item" onclick="keNavClick(this)">Agent List</div>
+        <div class="ke-nav-sub-item" onclick="keNavClick(this)">Regression Test</div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="ke-main">
+
+    <!-- ════════ BUYER ENTITY VIEW ════════ -->
+    <div class="ke-view active" id="view-buyer">
+      <div class="ke-page-hdr">
+        <div class="ke-page-hdr-l">
+          <div>
+            <div class="ke-page-title">Buyer Entity</div>
+            <div class="ke-page-meta">8 legal entities operating Shopee's regional buyer systems</div>
+          </div>
+        </div>
+        <div class="ke-page-hdr-r">
+          <button class="ke-btn-primary" onclick="alert('Export triggered')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export
+          </button>
+        </div>
+      </div>
+
+      <!-- Buyer filters -->
+      <div class="ke-dd-toolbar">
+        <div class="ke-dd-field">
+          <label class="ke-dd-label">Search</label>
+          <div class="ke-dd-search">
+            <input type="text" id="buyer-search" placeholder="Buyer ID, Name, or Billing TIN" oninput="renderBuyerTable()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+        </div>
+        <div class="ke-dd-field">
+          <label class="ke-dd-label">Region</label>
+          <select id="buyer-region-filter" onchange="renderBuyerTable()">
+            <option value="">Select</option>
+            <option value="SEA">SEA</option>
+            <option value="TW">TW</option>
+            <option value="LATAM">LATAM</option>
+          </select>
+        </div>
+        <div class="ke-dd-field">
+          <label class="ke-dd-label">Market</label>
+          <select id="buyer-market-filter" onchange="renderBuyerTable()">
+            <option value="">Select</option>
+            <option value="MY">MY</option>
+            <option value="SG">SG</option>
+            <option value="TH">TH</option>
+            <option value="VN">VN</option>
+            <option value="ID">ID</option>
+            <option value="PH">PH</option>
+            <option value="TW">TW</option>
+            <option value="BR">BR</option>
+          </select>
+        </div>
+        <div class="ke-dd-field ke-dd-actions">
+          <button class="ke-btn-ghost" onclick="resetBuyerFilters()">Reset</button>
+        </div>
+      </div>
+
+      <div class="ke-dd-totalbar">
+        <span class="ke-dd-total" id="buyer-total-count">Total 8 items</span>
+      </div>
+
+      <div class="ke-dd-tablewrap">
+        <table class="ke-dd-table" id="buyer-table">
+          <thead>
+            <tr>
+              <th style="width:120px;">Buyer Entity ID</th>
+              <th>Legal Name</th>
+              <th style="width:80px;">Market</th>
+              <th style="width:90px;">Region</th>
+              <th style="width:200px;">Tax ID No.</th>
+              <th style="width:100px;">Currency</th>
+              <th style="width:110px;text-align:center;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="buyer-table-body"></tbody>
+        </table>
+        <div class="ke-dd-empty" id="buyer-dd-empty" style="display:none;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--ke-g300)" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <div>No buyer entities match the current filters.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════ SUPPLIER MASTER VIEW ════════ -->
+    <div class="ke-view" id="view-supplier">
+      <div class="ke-page-hdr">
+        <div class="ke-page-hdr-l">
+          <div>
+            <div class="ke-page-title">Supplier Master</div>
+          </div>
+        </div>
+        <div class="ke-page-hdr-r">
+          <button class="ke-btn-primary" onclick="alert('Export triggered')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export
+          </button>
+        </div>
+      </div>
+
+      <!-- Supplier filters (no Status filter, type = Business/Individual) -->
+      <div class="ke-dd-toolbar ke-dd-toolbar-5col">
+        <div class="ke-dd-field">
+          <label class="ke-dd-label">Search</label>
+          <div class="ke-dd-search">
+            <input type="text" id="supplier-search" placeholder="Supplier ID, Name, or Tax Reg No." oninput="renderSupplierTable()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+        </div>
+        <div class="ke-dd-field">
+          <label class="ke-dd-label">Market</label>
+          <select id="supplier-market-filter" onchange="renderSupplierTable()">
+            <option value="">Select</option>
+            <option value="TH">TH</option>
+            <option value="VN">VN</option>
+            <option value="MY">MY</option>
+            <option value="SG">SG</option>
+            <option value="TW">TW</option>
+            <option value="ID">ID</option>
+            <option value="PH">PH</option>
+            <option value="BR">BR</option>
+          </select>
+        </div>
+        <div class="ke-dd-field">
+          <label class="ke-dd-label">Supplier Type</label>
+          <select id="supplier-type-filter" onchange="renderSupplierTable()">
+            <option value="">Select</option>
+            <option value="Business">Business</option>
+            <option value="Individual">Individual</option>
+          </select>
+        </div>
+        <div class="ke-dd-field">
+          <label class="ke-dd-label">WHT Status</label>
+          <select id="supplier-wht-filter" onchange="renderSupplierTable()">
+            <option value="">Select</option>
+            <option value="Y">Y – Applicable</option>
+            <option value="N">N – Not Applicable</option>
+          </select>
+        </div>
+        <div class="ke-dd-field ke-dd-actions">
+          <button class="ke-btn-ghost" onclick="resetSupplierFilters()">Reset</button>
+        </div>
+      </div>
+
+      <div class="ke-dd-totalbar">
+        <span class="ke-dd-total" id="dd-total-count">Total 0 items</span>
+      </div>
+
+      <div class="ke-dd-tablewrap">
+        <table class="ke-dd-table" id="supplier-table">
+          <thead>
+            <tr>
+              <th style="width:120px;">Supplier ID</th>
+              <th>Supplier Name</th>
+              <th style="width:80px;">Market</th>
+              <th style="width:120px;">Supplier Type</th>
+              <th style="width:190px;">Tax Registration No.</th>
+              <th style="width:110px;text-align:center;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="supplier-table-body"></tbody>
+        </table>
+        <div class="ke-dd-empty" id="dd-empty" style="display:none;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--ke-g300)" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <div>No suppliers match the current filters.</div>
+        </div>
+      </div>
+
+      <div class="ke-dd-pager" id="dd-pager"></div>
+    </div>
+
+    <!-- ════════ ENDPOINT VIEW ════════ -->
+    <div class="ke-view" id="view-endpoint">
+      <div class="ke-page-hdr">
+        <div class="ke-page-hdr-l">
+          <div>
+            <div class="ke-page-title">Knowledge Endpoint</div>
+            <div class="ke-page-meta">Developer variable reference. Format: <code style="font-family:Consolas,monospace;background:var(--ke-blue-lt);padding:1px 5px;border-radius:3px;color:var(--ke-blue-h);">@{Tab}.{field}</code></div>
+          </div>
+        </div>
+        <div class="ke-page-hdr-r">
+          <button class="ke-btn-primary" onclick="alert('Export CSV triggered')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export CSV
+          </button>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 20px;background:#fff;border-bottom:1px solid var(--ke-g200);flex-shrink:0;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--ke-g400)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="endpoint-search" style="height:30px;border:1px solid var(--ke-g300);border-radius:4px;padding:0 9px;outline:none;flex:1;max-width:280px;min-width:140px;" placeholder="Search variables…" oninput="renderEndpoint()">
+        <span class="ke-tlabel">Market</span>
+        <select id="endpoint-market" style="height:30px;border:1px solid var(--ke-g300);border-radius:4px;padding:0 7px;outline:none;min-width:110px;" onchange="renderEndpoint()">
+          <option value="">All Markets</option>
+          <option value="TH">TH</option>
+          <option value="VN">VN</option>
+          <option value="MY">MY</option>
+          <option value="SG">SG</option>
+          <option value="BR">BR</option>
+          <option value="ID">ID</option>
+          <option value="TW">TW</option>
+          <option value="PH">PH</option>
+          <option value="ALL">Global</option>
+        </select>
+        <span class="ke-tlabel">Level</span>
+        <select id="endpoint-level" style="height:30px;border:1px solid var(--ke-g300);border-radius:4px;padding:0 7px;outline:none;min-width:110px;" onchange="renderEndpoint()">
+          <option value="">Header + Line</option>
+          <option value="Header">Header only</option>
+          <option value="Line">Line only</option>
+        </select>
+      </div>
+
+      <div style="display:flex;border-bottom:1px solid var(--ke-g200);padding:0 20px;overflow-x:auto;scrollbar-width:none;background:#fff;flex-shrink:0;" id="endpoint-tabs"></div>
+
+      <div style="flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--ke-g200) transparent;">
+        <div style="padding:20px;" id="endpoint-table-wrap"></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</div><!-- /#app -->
+
+<!-- ══ DETAIL DRAWER (shared for buyer + supplier) ══ -->
+<div class="ke-drawer-scrim" id="drawer-scrim" onclick="closeDrawer()"></div>
+<aside class="ke-drawer" id="detail-drawer">
+  <div class="ke-drawer-hdr">
+    <div>
+      <div class="ke-drawer-title" id="drawer-title">—</div>
+      <div class="ke-drawer-sub" id="drawer-sub">—</div>
+    </div>
+    <button class="ke-drawer-close" onclick="closeDrawer()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="ke-drawer-body" id="detail-pane"></div>
+</aside>
+
+<!-- ══ CMD+K ══ -->
+<div class="ke-cmdk-scrim" id="cmdk-scrim" onclick="if(event.target===this) closeCmdK()">
+  <div class="ke-cmdk">
+    <div class="ke-cmdk-search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ke-g400)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="cmdk-input" placeholder="Find supplier or buyer by name, ID, TIN…">
+      <span class="ke-kbd">esc</span>
+    </div>
+    <div class="ke-cmdk-list" id="cmdk-list"></div>
+    <div class="ke-cmdk-footer">
+      <span><span class="ke-kbd">↑</span> <span class="ke-kbd">↓</span> navigate · <span class="ke-kbd">↵</span> open</span>
+      <span id="cmdk-count">—</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ENDPOINT TABLE CSS ══ -->
+<style>
+.ke-ep-table { width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--ke-g200);border-radius:6px;overflow:hidden; }
+.ke-ep-table th { text-align:left;font-size:10.5px;font-weight:600;color:var(--ke-g500);text-transform:uppercase;letter-spacing:.5px;padding:10px 14px;background:var(--ke-g50);border-bottom:1px solid var(--ke-g200);position:sticky;top:0;z-index:1; }
+.ke-ep-table td { padding:10px 14px;font-size:12.5px;border-bottom:1px solid var(--ke-g100);color:var(--ke-g800);vertical-align:middle; }
+.ke-ep-table tr:last-child td { border-bottom:none; }
+.ke-ep-table tr:hover td { background:var(--ke-g50); }
+.ke-ep-level { display:inline-block;font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;background:var(--ke-g100);color:var(--ke-g600);border:1px solid var(--ke-g200); }
+.ke-var-code { font-family:"Consolas","Courier New",monospace;font-size:11px;color:var(--ke-g600);background:var(--ke-g50);border:1px solid var(--ke-g200);border-radius:3px;padding:3px 8px;cursor:pointer;transition:all .1s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;display:inline-block; }
+.ke-var-code:hover { border-color:var(--ke-blue);color:var(--ke-blue);background:var(--ke-blue-lt); }
+.ke-ep-tab { display:flex;align-items:center;gap:5px;padding:11px 14px 12px;font-size:12.5px;font-weight:500;color:var(--ke-g500);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;cursor:pointer;user-select:none;transition:color .12s,border-color .12s; }
+.ke-ep-tab:hover { color:var(--ke-g700); }
+.ke-ep-tab.active { color:var(--ke-blue);border-bottom-color:var(--ke-blue); }
+.ke-ep-tab-ct { font-size:10px;font-weight:600;background:var(--ke-g100);color:var(--ke-g500);padding:1px 6px;border-radius:10px; }
+.ke-ep-tab.active .ke-ep-tab-ct { background:var(--ke-blue-lt);color:var(--ke-blue); }
+</style>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  DATA
+// ═══════════════════════════════════════════════════════
+
+const BUYERS = [
+  { id:'BUY-001', code:'MY', name:'Shopee Malaysia Sdn Bhd',           tin:'C1234567890', region:'SEA', market:'MY', address:'Level 29, Menara KL Eco City, Jalan Bangsar, 59200 Kuala Lumpur' },
+  { id:'BUY-002', code:'SG', name:'Shopee Singapore Pte Ltd',          tin:'201631862E',  region:'SEA', market:'SG', address:'5 Science Park Drive, Shopee Building, 118265' },
+  { id:'BUY-003', code:'TH', name:'Shopee (Thailand) Co., Ltd',        tin:'0105558181641', region:'SEA', market:'TH', address:'1031 Soi Sukhumvit 53, Bangkok 10110' },
+  { id:'BUY-004', code:'VN', name:'Shopee Việt Nam Co., Ltd',          tin:'0312867052',  region:'SEA', market:'VN', address:'Tầng 29 Saigon Centre Tower 2, 67 Lê Lợi, Quận 1, TP. HCM' },
+  { id:'BUY-005', code:'ID', name:'PT Shopee International Indonesia',  tin:'75.123.456.7-011.000', region:'SEA', market:'ID', address:'Pacific Century Place, SCBD, Jakarta Selatan 12190' },
+  { id:'BUY-006', code:'PH', name:'Shopee Philippines, Inc.',          tin:'009-432-118-000', region:'SEA', market:'PH', address:'8th Floor Net Park Building, 5th Avenue, BGC, Taguig' },
+  { id:'BUY-007', code:'TW', name:'蝦皮購物股份有限公司 (Shopee TW)',    tin:'54660133',    region:'TW',  market:'TW', address:'110台北市信義區菸廠路88號10樓' },
+  { id:'BUY-008', code:'BR', name:'Shopee Brasil Serviços Ltda.',      tin:'31.629.144/0001-50', region:'LATAM', market:'BR', address:'Av. Brigadeiro Faria Lima, 3477, São Paulo, SP' },
+];
+
+const GROUP_DEFS = {
+  G1:{ id:'G1', name:'Company Identity',           defaultExpanded:true  },
+  G2:{ id:'G2', name:'Address & Contact',           defaultExpanded:true  },
+  G3:{ id:'G3', name:'Tax & Financial Credentials', defaultExpanded:false },
+  G4:{ id:'G4', name:'Banking Details',             defaultExpanded:false },
+  G5:{ id:'G5', name:'Operational Terms',           defaultExpanded:false },
+  G6:{ id:'G6', name:'Operational Status',          defaultExpanded:true  },
+};
+
+const SUPPLIER_SCHEMA = [
+  { name:'supplier_id',         label:'Supplier ID',          group:'G1', market:'ALL', source:'System' },
+  { name:'supplier_name',       label:'Supplier Name',        group:'G1', market:'ALL', source:'Purchase' },
+  { name:'supplier_alias',      label:'Supplier Alias',       group:'G1', market:'ALL', source:'EBS' },
+  { name:'supplier_site_name',  label:'Supplier Site Name',   group:'G1', market:'VN',  source:'EBS' },
+  { name:'entity',              label:'Entity',               group:'G1', market:'ALL', source:'3WM' },
+  { name:'foreign_vs_local',    label:'Foreign vs Local',     group:'G1', market:'VN',  source:'EBS' },
+  { name:'supplier_type',       label:'Supplier Type',        group:'G1', market:'ALL', source:'EBS' },
+  { name:'supplier_address',    label:'Supplier Address',     group:'G2', market:'ALL', source:'3WM' },
+  { name:'company_address',     label:'Company Address',      group:'G2', market:'ALL', source:'3WM' },
+  { name:'site_email',          label:'Site Email',           group:'G2', market:'ALL', source:'EBS' },
+  { name:'contact_phone',       label:'Contact Phone',        group:'G2', market:'ALL', source:'EBS' },
+  { name:'tax_registration_no', label:'Tax Registration No.', group:'G3', market:'ALL', source:'EBS' },
+  { name:'site_tax_reg_no',     label:'Site Tax Reg. No.',    group:'G3', market:'MY',  source:'EBS' },
+  { name:'taxpayer_id',         label:'Taxpayer ID',          group:'G3', market:'ALL', source:'EBS' },
+  { name:'brn_ic',              label:'BRN / IC',             group:'G3', market:'MY',  source:'EBS' },
+  { name:'wht_status',          label:'WHT Status',           group:'G3', market:'ALL', source:'EBS' },
+  { name:'liability_account',   label:'Liability Account',    group:'G3', market:'ALL', source:'EBS' },
+  { name:'prepayment_account',  label:'Prepayment Account',   group:'G3', market:'ALL', source:'EBS' },
+  { name:'supplier_bank_name',  label:'Supplier Bank Name',   group:'G4', market:'ALL', source:'EBS' },
+  { name:'supplier_bank_number',label:'Supplier Bank Number', group:'G4', market:'ALL', source:'EBS', masked:true },
+  { name:'site_bank_name',      label:'Site Bank Name',       group:'G4', market:'ALL', source:'EBS' },
+  { name:'site_bank_number',    label:'Site Bank Number',     group:'G4', market:'ALL', source:'EBS', masked:true },
+  { name:'currency',            label:'Currency',             group:'G4', market:'ALL', source:'Purchase' },
+  { name:'swift_code',          label:'SWIFT Code',           group:'G4', market:'ALL', source:'EBS' },
+  { name:'payment_term',        label:'Payment Term',         group:'G5', market:'ALL', source:'3WM' },
+  { name:'due_date_rule',       label:'Due Date Rule',        group:'G5', market:'ALL', source:'System' },
+  { name:'credit_limit',        label:'Credit Limit',         group:'G5', market:'ALL', source:'EBS' },
+  { name:'payment_method',      label:'Payment Method',       group:'G5', market:'ALL', source:'EBS' },
+  { name:'invoice_currency',    label:'Invoice Currency',     group:'G5', market:'ALL', source:'3WM' },
+  { name:'status',              label:'Status',               group:'G6', market:'ALL', source:'3WM' },
+  { name:'supplier_branch',     label:'Supplier Branch',      group:'G6', market:'TH',  source:'3WM' },
+  { name:'supplier_tid',        label:'Supplier TID',         group:'G6', market:'TW',  source:'3WM' },
+  { name:'seller_validation_status', label:'Seller Validation Status', group:'G6', market:'VN', source:'3WM' },
+  { name:'buyer_validation_status',  label:'Buyer Validation Status',  group:'G6', market:'VN', source:'3WM' },
+  { name:'validation_flag',     label:'Validation Flag',      group:'G6', market:'ALL', source:'System' },
+  { name:'onboarding_date',     label:'Onboarding Date',      group:'G6', market:'ALL', source:'System' },
+];
+
+const EP_TABS = [
+  { name:'Buyer_Entity',         label:'Buyer Entity' },
+  { name:'Po_Info',              label:'PO Info' },
+  { name:'Receipt_Info',         label:'Receipt Info' },
+  { name:'Invoice_Info',         label:'Invoice Info' },
+  { name:'Invoice_AI_Parsed',    label:'AI Parsed' },
+  { name:'Compared_Source_Data', label:'Compared Source' },
+  { name:'EBS_Supplier',         label:'EBS Supplier' },
+];
+
+const EP_FIELDS = [
+  { tab:0, cmd:'@Buyer_Entity.billing_name',    mkt:'ALL', level:'Header' },
+  { tab:0, cmd:'@Buyer_Entity.company_address', mkt:'ALL', level:'Header' },
+  { tab:0, cmd:'@Buyer_Entity.billing_tin',     mkt:'ALL', level:'Header' },
+  { tab:0, cmd:'@Buyer_Entity.company_branch',  mkt:'TH',  level:'Header' },
+  { tab:1, cmd:'@Po_Info.po_number',            mkt:'ALL', level:'Header' },
+  { tab:1, cmd:'@Po_Info.pr_number',            mkt:'ALL', level:'Header' },
+  { tab:1, cmd:'@Po_Info.supplier_name',        mkt:'ALL', level:'Header' },
+  { tab:1, cmd:'@Po_Info.currency',             mkt:'ALL', level:'Header' },
+  { tab:1, cmd:'@Po_Info.total_amount',         mkt:'ALL', level:'Header' },
+  { tab:1, cmd:'@Po_Info.company_name',         mkt:'ALL', level:'Header' },
+  { tab:1, cmd:'@Po_Info.description',          mkt:'ALL', level:'Header' },
+  { tab:1, cmd:'@Po_Info.payment_term',         mkt:'ALL', level:'Header' },
+  { tab:2, cmd:'@Receipt_Info.receipt_number',  mkt:'ALL', level:'Header' },
+  { tab:2, cmd:'@Receipt_Info.receipt_type',    mkt:'ALL', level:'Header' },
+  { tab:2, cmd:'@Receipt_Info.record_status',   mkt:'ALL', level:'Header' },
+  { tab:2, cmd:'@Receipt_Info.reviewer',        mkt:'ALL', level:'Header' },
+  { tab:2, cmd:'@Receipt_Info.review_comment',  mkt:'ALL', level:'Header' },
+  { tab:2, cmd:'@Receipt_Info.do_status',       mkt:'ALL', level:'Header' },
+  { tab:2, cmd:'@Receipt_Info.tax_code',        mkt:'TH',  level:'Line' },
+  { tab:2, cmd:'@Receipt_Info.receipt_date',    mkt:'ID',  level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.invoice_date',                  mkt:'ALL', level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.invoice_number',                mkt:'ALL', level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.supplier_name',                 mkt:'ALL', level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.billing_name',                  mkt:'ALL', level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.company_address',               mkt:'ALL', level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.billing_tin',                   mkt:'ALL', level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.currency',                      mkt:'ALL', level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.total_amount_before_tax',       mkt:'ALL', level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.vat',                           mkt:'ALL', level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.total_amount_after_tax',        mkt:'ALL', level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.document_type',                 mkt:'TH',  level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.buyer_validation_status',       mkt:'VN',  level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.seller_validation_status',      mkt:'VN',  level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.invoice_validation_status',     mkt:'VN',  level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.due_date',                      mkt:'ID',  level:'Header' },
+  { tab:3, cmd:'@Invoice_Info.duplicate_invoice',             mkt:'ALL', level:'Header' },
+  { tab:4, cmd:'@Invoice_AI_Parsed.doc_type_title',           mkt:'ALL', level:'Header' },
+  { tab:4, cmd:'@Invoice_AI_Parsed.invoice_date',             mkt:'ALL', level:'Header' },
+  { tab:4, cmd:'@Invoice_AI_Parsed.invoice_number',           mkt:'ALL', level:'Header' },
+  { tab:4, cmd:'@Invoice_AI_Parsed.supplier_name',            mkt:'ALL', level:'Header' },
+  { tab:4, cmd:'@Invoice_AI_Parsed.billing_name',             mkt:'ALL', level:'Header' },
+  { tab:4, cmd:'@Invoice_AI_Parsed.company_address',          mkt:'ALL', level:'Header' },
+  { tab:4, cmd:'@Invoice_AI_Parsed.billing_tin',              mkt:'ALL', level:'Header' },
+  { tab:4, cmd:'@Invoice_AI_Parsed.line_items_sum',           mkt:'ALL', level:'Line' },
+  { tab:4, cmd:'@Invoice_AI_Parsed.total_amount_before_tax',  mkt:'ALL', level:'Header' },
+  { tab:4, cmd:'@Invoice_AI_Parsed.net_amount',               mkt:'ALL', level:'Header' },
+  { tab:4, cmd:'@Invoice_AI_Parsed.vat',                      mkt:'ALL', level:'Header' },
+  { tab:4, cmd:'@Invoice_AI_Parsed.total_amount_after_tax',   mkt:'ALL', level:'Header' },
+  { tab:4, cmd:'@Invoice_AI_Parsed.is_iras',                  mkt:'SG',  level:'Header' },
+  { tab:5, cmd:'@Compared_Source_Data.invoice_date',               mkt:'ALL', level:'Header' },
+  { tab:5, cmd:'@Compared_Source_Data.invoice_number',             mkt:'ALL', level:'Header' },
+  { tab:5, cmd:'@Compared_Source_Data.supplier_tax_id',            mkt:'BR',  level:'Header' },
+  { tab:5, cmd:'@Compared_Source_Data.total_amount_including_tax', mkt:'BR',  level:'Header' },
+  { tab:5, cmd:'@Compared_Source_Data.company_tax_id',             mkt:'BR',  level:'Header' },
+  { tab:5, cmd:'@Compared_Source_Data.biz_invoice_type',           mkt:'BR',  level:'Header' },
+  { tab:6, cmd:'@EBS_Supplier.supplier_alias',           mkt:'ALL', level:'Header' },
+  { tab:6, cmd:'@EBS_Supplier.taxpayer_id',              mkt:'ALL', level:'Header' },
+  { tab:6, cmd:'@EBS_Supplier.tax_registration_number',  mkt:'ALL', level:'Header' },
+  { tab:6, cmd:'@EBS_Supplier.brn_ic',                   mkt:'MY',  level:'Header' },
+  { tab:6, cmd:'@EBS_Supplier.wht',                      mkt:'ALL', level:'Header' },
+  { tab:6, cmd:'@EBS_Supplier.site_email',               mkt:'ALL', level:'Header' },
+  { tab:6, cmd:'@EBS_Supplier.supplier_bank_name',       mkt:'ALL', level:'Header' },
+  { tab:6, cmd:'@EBS_Supplier.supplier_bank_number',     mkt:'ALL', level:'Header' },
+  { tab:6, cmd:'@EBS_Supplier.supplier_address',         mkt:'ALL', level:'Header' },
+  { tab:6, cmd:'@EBS_Supplier.foreign_vs_local',         mkt:'VN',  level:'Header' },
+  { tab:6, cmd:'@EBS_Supplier.supplier_type',            mkt:'ALL', level:'Header' },
+  { tab:6, cmd:'@EBS_Supplier.payment_term',             mkt:'ALL', level:'Header' },
+];
+
+// ── DETERMINISTIC RNG ──
+function rng(seed){ let s=seed|0; return ()=>{ s=(s*1664525+1013904223)|0; return (s>>>0)/4294967295; }; }
+function pick(r, arr){ return arr[Math.floor(r()*arr.length)]; }
+
+const COMPANY_ROOTS=['Accenture','Nielsen','Maybank','Unilever','P&G','Schneider','Siemens','Deloitte','Salesforce','Oracle','Cisco','IBM','Lenovo','Dell','HP','Microsoft','Google','AWS','SAP','Adobe','ABB','Honeywell','GE','Bosch','Samsung','Panasonic','Sony','LG','Philips','Hitachi','PwC','KPMG','EY','McKinsey','Bain','BCG','Nokia','Ericsson','Qualcomm','Intel','JLL','CBRE','Cushman','Colliers','DHL','FedEx','UPS','Maersk','Kuehne','Ceva'];
+const COMPANY_SUFFIX={MY:['Sdn Bhd','Malaysia Sdn Bhd','(M) Sdn Bhd','Technology Sdn Bhd'],SG:['Pte Ltd','Singapore Pte Ltd','Asia Pte Ltd','Holdings Pte Ltd'],TH:['(Thailand) Co., Ltd','Co., Ltd','Asia Ltd','Thailand Ltd'],VN:['Viet Nam Co., Ltd','Company Limited','JSC','VN Co., Ltd'],ID:['PT','PT Indonesia','Tbk','Indonesia'],PH:['Philippines, Inc.','Phils., Inc.','Corporation','Inc.'],TW:['股份有限公司','Taiwan Ltd','(Taiwan) Co., Ltd','Technologies Inc.'],BR:['Ltda.','Brasil Ltda.','S.A.','Serviços Ltda.']};
+const MKT_LIST=['MY','SG','TH','VN','ID','PH','TW','BR'];
+const CURRENCY_BY_MKT={MY:'MYR',SG:'SGD',TH:'THB',VN:'VND',ID:'IDR',PH:'PHP',TW:'TWD',BR:'BRL'};
+const PAYMENT_TERMS=['Net 30','Net 45','Net 60','Net 15','Immediate','2/10 Net 30'];
+// Supplier types are now strictly Business or Individual
+const SUPPLIER_TYPES_NEW=['Business','Business','Business','Individual'];
+const STATUSES=['Active','Active','Active','Active','Suspended','Under Review'];
+
+// Tax reg number generator by market
+function genTaxReg(r, mkt, seed) {
+  const n = Math.floor(r()*9e7+1e7);
+  const templates = {
+    MY: `C${n}`,
+    SG: `${Math.floor(r()*999999000+1000000)}E`,
+    TH: `01055${Math.floor(r()*9999000+1000000)}`,
+    VN: `0${Math.floor(r()*9e8+1e8)}`,
+    ID: `${Math.floor(r()*99)}.${Math.floor(r()*999)}.${Math.floor(r()*999)}.${Math.floor(r()*9)}-${Math.floor(r()*999)}.${Math.floor(r()*999)}`,
+    PH: `00${Math.floor(r()*9)}-${Math.floor(r()*999)}-${Math.floor(r()*999)}-${Math.floor(r()*9999).toString().padStart(3,'0')}`,
+    TW: `${Math.floor(r()*9e7+1e7)}`,
+    BR: `${Math.floor(r()*99)}.${Math.floor(r()*999)}.${Math.floor(r()*999)}/0001-${Math.floor(r()*99).toString().padStart(2,'0')}`,
+  };
+  return templates[mkt] || `TAX-${n}`;
+}
+
+function generateSuppliers(count){
+  const r=rng(0xBEEF);
+  const list=[];
+  for(let i=0;i<count;i++){
+    const mkt=MKT_LIST[i%MKT_LIST.length];
+    const root=COMPANY_ROOTS[(i*7+3)%COMPANY_ROOTS.length];
+    const suffix=pick(r,COMPANY_SUFFIX[mkt]);
+    const name=`${root} ${suffix}`;
+    const id=`SUP-${10000+i}`;
+    const rTax=rng(0xF00D+i);
+    list.push({
+      id, name, market:mkt,
+      type: pick(r, SUPPLIER_TYPES_NEW),
+      currency:CURRENCY_BY_MKT[mkt],
+      payment_term:pick(r,PAYMENT_TERMS),
+      status:pick(r,STATUSES),
+      tax_registration_no: genTaxReg(rTax, mkt, i),
+      onboarding_date:new Date(2022,(i*3)%12,((i*7)%28)+1).toISOString().slice(0,10),
+      fields:{},
+      _seed:i,
+    });
+  }
+  return list;
+}
+
+function populateFields(sup){
+  if(sup._populated) return sup;
+  const r=rng(0xA11CE+sup._seed);
+  const v={};
+  const mkt=sup.market;
+  const root=sup.name.split(' ')[0];
+  SUPPLIER_SCHEMA.forEach(f=>{
+    const applies=f.market==='ALL'||f.market===mkt;
+    if(!applies){v[f.name]={applies:false,value:null};return;}
+    let val=null;
+    switch(f.name){
+      case 'supplier_id':         val=sup.id; break;
+      case 'supplier_name':       val=sup.name; break;
+      case 'supplier_alias':      val=root.toUpperCase(); break;
+      case 'supplier_site_name':  val=`${root} HQ Site`; break;
+      case 'entity':              val=mkt; break;
+      case 'foreign_vs_local':    val=r()>0.35?'Local':'Foreign'; break;
+      case 'supplier_type':       val=sup.type; break;
+      case 'supplier_address':    val=mkt==='MY'?`Level ${5+Math.floor(r()*20)}, Menara ${root}, Kuala Lumpur`:mkt==='SG'?`${1+Math.floor(r()*30)} ${root} Road, Singapore`:`${100+Math.floor(r()*800)} ${root} St., ${mkt}`; break;
+      case 'company_address':     val=`Level ${3+Math.floor(r()*30)}, ${root} Tower, ${mkt}`; break;
+      case 'site_email':          val=`ap.${root.toLowerCase()}@${root.toLowerCase()}.com`; break;
+      case 'contact_phone':       val=`+${60+(sup._seed%40)} ${Math.floor(r()*9000+1000)} ${Math.floor(r()*9000+1000)}`; break;
+      case 'tax_registration_no': val=sup.tax_registration_no; break;
+      case 'site_tax_reg_no':     val=`SST-${Math.floor(r()*9000+1000)}-X`; break;
+      case 'taxpayer_id':         val=`TX-${Math.floor(r()*9e7+1e7)}`; break;
+      case 'brn_ic':              val=r()<0.3?null:`BRN-${Math.floor(r()*9e5+1e5)}-${mkt}`; break;
+      case 'wht_status':          val=r()>0.5?'Y':'N'; break;
+      case 'liability_account':   val='2100-AP-Control'; break;
+      case 'prepayment_account':  val='1300-Prepaid-GL'; break;
+      case 'supplier_bank_name':  val=pick(r,['Maybank','HSBC','DBS','OCBC','Citi','Standard Chartered','RHB','CIMB']); break;
+      case 'supplier_bank_number':val=`**** **** **** ${Math.floor(r()*9000+1000)}`; break;
+      case 'site_bank_name':      val=r()<0.4?null:pick(r,['Maybank','HSBC','DBS']); break;
+      case 'site_bank_number':    val=r()<0.4?null:`**** **** **** ${Math.floor(r()*9000+1000)}`; break;
+      case 'currency':            val=sup.currency; break;
+      case 'swift_code':          val=`${root.substring(0,4).toUpperCase()}${mkt}XX`; break;
+      case 'payment_term':        val=sup.payment_term; break;
+      case 'due_date_rule':       val=`Invoice Date + ${sup.payment_term.match(/\d+/)?.[0]||30} days`; break;
+      case 'credit_limit':        val=`${sup.currency} ${(Math.floor(r()*900)+100)*1000}`; break;
+      case 'payment_method':      val=pick(r,['Bank Transfer','Wire','Check','ACH']); break;
+      case 'invoice_currency':    val=sup.currency; break;
+      case 'status':              val=sup.status; break;
+      case 'supplier_branch':     val=`${root} — ${mkt} Branch`; break;
+      case 'supplier_tid':        val=`TID-${Math.floor(r()*9e5+1e5)}`; break;
+      case 'seller_validation_status': val=r()>.3?'Verified':'Pending'; break;
+      case 'buyer_validation_status':  val=r()>.2?'Verified':'Pending'; break;
+      case 'validation_flag':     val=r()>.15?'Passed':'Flagged'; break;
+      case 'onboarding_date':     val=sup.onboarding_date; break;
+    }
+    v[f.name]={applies:true,value:val,masked:f.masked};
+  });
+  sup.fields=v; sup._populated=true;
+  return sup;
+}
+
+// ═══════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════
+const state = {
+  currentBuyer: BUYERS[0].id,
+  currentSupplier: null,
+  drawerMode: null,  // 'buyer' | 'supplier'
+  seed: 1000,
+  suppliers: [],
+  page: 1,
+  expandedGroups: {},
+  expandAll: false,
+  endpointTab: 0,
+  syncTime: new Date(),  // set on init
+};
+
+function rebuildSuppliers(){
+  state.suppliers = generateSuppliers(state.seed);
+}
+function buyerById(id){ return BUYERS.find(b=>b.id===id); }
+function supplierById(id){ return state.suppliers.find(s=>s.id===id); }
+
+// ── UTILS ──
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+function escAttr(s){ return esc(s).replace(/`/g,'&#96;'); }
+function highlight(text, q){
+  if(!q) return esc(text);
+  const re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig');
+  return esc(text).replace(re,'<mark class="ke-hl">$1</mark>');
+}
+function initials(name){
+  return name.replace(/[^A-Za-z\u4e00-\u9fff\s]/g,'').trim().split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase()||'??';
+}
+function localCurrency(mkt){ return {MY:'MYR',SG:'SGD',TH:'THB',VN:'VND',ID:'IDR',PH:'PHP',TW:'TWD',BR:'BRL'}[mkt]||'—'; }
+function tzByMarket(mkt){ return {MY:'Asia/Kuala_Lumpur',SG:'Asia/Singapore',TH:'Asia/Bangkok',VN:'Asia/Ho_Chi_Minh',ID:'Asia/Jakarta',PH:'Asia/Manila',TW:'Asia/Taipei',BR:'America/Sao_Paulo'}[mkt]||'—'; }
+function titleCase(s){ return (s||'').toLowerCase().replace(/(^|\s|-)\w/g,c=>c.toUpperCase()); }
+
+function copyToClipboard(text, btn){
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text).catch(()=>fallbackCopy(text)); } else { fallbackCopy(text); }
+  if(btn){
+    btn.classList.add('copied');
+    const orig=btn.innerHTML;
+    btn.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    setTimeout(()=>{ btn.classList.remove('copied'); btn.innerHTML=orig; },1400);
+  }
+}
+function fallbackCopy(t){
+  const ta=document.createElement('textarea');
+  ta.value=t; ta.style.cssText='position:fixed;opacity:0';
+  document.body.appendChild(ta); ta.select();
+  try{document.execCommand('copy')}catch(e){}
+  document.body.removeChild(ta);
+}
+
+// ── SYNC STATUS ──
+function formatSyncTime(dt){
+  const pad=n=>String(n).padStart(2,'0');
+  const y=dt.getFullYear(), mo=dt.getMonth()+1, d=dt.getDate();
+  const h=dt.getHours(), m=dt.getMinutes();
+  return `${y}-${pad(mo)}-${pad(d)} ${pad(h)}:${pad(m)} UTC+8`;
+}
+function initSyncStatus(){
+  // Use current system time as last synced
+  state.syncTime = new Date();
+  updateSyncStatus();
+}
+function updateSyncStatus(){
+  const el=document.getElementById('sync-status');
+  const lbl=document.getElementById('sync-label');
+  if(!el||!lbl) return;
+  const now=new Date();
+  const diffMs=now-state.syncTime;
+  const diffHrs=diffMs/(1000*60*60);
+  const stale=diffHrs>24;
+  lbl.textContent=`Last synced: ${formatSyncTime(state.syncTime)}`;
+  el.classList.toggle('stale', stale);
+}
+
+// ── SIDEBAR ──
+function toggleNav(item){
+  const sub=item.nextElementSibling;
+  if(!sub) return;
+  const open=sub.classList.contains('open');
+  sub.classList.toggle('open',!open);
+  item.classList.toggle('open',!open);
+}
+function toggleKdSub(){
+  const el=document.getElementById('nav-detail');
+  const sub=document.getElementById('nav-kd-sub');
+  if(!sub) return;
+  const open=sub.classList.contains('open');
+  sub.classList.toggle('open',!open);
+  el.classList.toggle('open',!open);
+}
+function keNavClick(el){
+  document.querySelectorAll('.ke-nav-sub-item:not(.kd-parent),.ke-nav-sub2-item').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── VIEW SWITCHING ──
+function switchView(view){
+  document.querySelectorAll('.ke-view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+view)?.classList.add('active');
+
+  // Update sidebar nav
+  document.getElementById('nav-buyer')?.classList.toggle('active', view==='buyer');
+  document.getElementById('nav-supplier')?.classList.toggle('active', view==='supplier');
+  document.getElementById('nav-endpoint')?.classList.toggle('active', view==='endpoint');
+
+  // Breadcrumb
+  const bcCurrent=document.getElementById('bc-current');
+  const bcEntity=document.getElementById('bc-entity');
+  const bcSep2=document.getElementById('bc-sep2');
+  const bcSep3=document.getElementById('bc-sep3');
+  const bcSel=document.getElementById('bc-selection');
+
+  if(view==='endpoint'){
+    bcCurrent.textContent='Knowledge Endpoint';
+    bcSep2.style.display='none';
+    bcEntity.style.display='none';
+    bcSep3.style.display='none';
+    bcSel.style.display='none';
+    renderEndpoint();
+  } else {
+    bcCurrent.textContent='Knowledge Detail';
+    bcSep2.style.display='';
+    bcEntity.style.display='';
+    bcEntity.textContent=view==='buyer'?'Buyer Entity':'Supplier Master';
+    if(view==='buyer'){
+      bcSep3.style.display='none'; bcSel.style.display='none';
+      renderBuyerTable();
+    } else {
+      bcSep3.style.display='none'; bcSel.style.display='none';
+      renderSupplierTable();
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  BUYER TABLE
+// ═══════════════════════════════════════════════════════
+function getFilteredBuyers(){
+  const q=(document.getElementById('buyer-search')?.value||'').toLowerCase().trim();
+  const region=document.getElementById('buyer-region-filter')?.value||'';
+  const mkt=document.getElementById('buyer-market-filter')?.value||'';
+  return BUYERS.filter(b=>{
+    if(region&&b.region!==region) return false;
+    if(mkt&&b.market!==mkt) return false;
+    if(q){
+      // Search: buyer_id, billing_name (name), billing_tin (tin)
+      return b.id.toLowerCase().includes(q)
+        || b.name.toLowerCase().includes(q)
+        || b.tin.toLowerCase().includes(q);
+    }
+    return true;
+  });
+}
+
+function resetBuyerFilters(){
+  const s=document.getElementById('buyer-search'); if(s) s.value='';
+  const r=document.getElementById('buyer-region-filter'); if(r) r.value='';
+  const m=document.getElementById('buyer-market-filter'); if(m) m.value='';
+  renderBuyerTable();
+}
+
+function renderBuyerTable(){
+  const list=getFilteredBuyers();
+  const totalEl=document.getElementById('buyer-total-count');
+  if(totalEl) totalEl.textContent=`Total ${list.length} items`;
+  const body=document.getElementById('buyer-table-body');
+  const empty=document.getElementById('buyer-dd-empty');
+  if(!body) return;
+  if(list.length===0){
+    body.innerHTML='';
+    if(empty) empty.style.display='flex';
+    return;
+  }
+  if(empty) empty.style.display='none';
+  body.innerHTML=list.map(b=>`
+    <tr data-id="${b.id}">
+      <td class="ke-dd-cell-id">${esc(b.id)}</td>
+      <td class="ke-dd-cell-name">${esc(b.name)}</td>
+      <td><span class="ke-dd-mkt-chip">${b.market}</span></td>
+      <td class="ke-dd-cell-muted">${b.region}</td>
+      <td class="ke-dd-cell-tin">${esc(b.tin)}</td>
+      <td class="ke-dd-cell-muted">${localCurrency(b.market)}</td>
+      <td style="text-align:center;">
+        <button class="ke-view-btn" onclick="openBuyerDrawer('${b.id}')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          View Details
+        </button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function openBuyerDrawer(id){
+  state.drawerMode='buyer';
+  state.currentBuyer=id;
+  const b=buyerById(id);
+  if(!b) return;
+  document.getElementById('drawer-title').textContent=b.name;
+  document.getElementById('detail-pane').innerHTML=renderBuyerDetailHTML(b);
+  document.getElementById('drawer-scrim').classList.add('open');
+  document.getElementById('detail-drawer').classList.add('open');
+}
+
+function renderBuyerDetailHTML(b){
+  return `
+
+    <div class="ke-buyer-section-hdr">Legal Identity</div>
+    <table class="ke-buyer-kv">
+      <tbody>
+        <tr><th>Entity Code</th><td>${b.code}</td></tr>
+        <tr><th>Buyer Entity ID</th><td class="mono">${esc(b.id)}</td></tr>
+        <tr><th>Legal Name</th><td>${esc(b.name)}</td></tr>
+        <tr><th>Tax Identification No.</th><td class="mono">${esc(b.tin)}</td></tr>
+        <tr><th>Region</th><td>${b.region}</td></tr>
+        <tr><th>Market</th><td>${b.market}</td></tr>
+        <tr><th>Registered Address</th><td>${esc(b.address)}</td></tr>
+      </tbody>
+    </table>
+
+    <div class="ke-buyer-section-hdr">Operational Profile</div>
+    <table class="ke-buyer-kv">
+      <tbody>
+        <tr><th>Functional Currency</th><td>${localCurrency(b.market)}</td></tr>
+        <tr><th>Reporting Currency</th><td>USD</td></tr>
+        <tr><th>Fiscal Year End</th><td>31 Dec</td></tr>
+        <tr><th>Time Zone</th><td>${tzByMarket(b.market)}</td></tr>
+        <tr><th>ERP Instance</th><td>Oracle EBS · ${b.market}-PROD</td></tr>
+      </tbody>
+    </table>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════
+//  SUPPLIER TABLE
+// ═══════════════════════════════════════════════════════
+const PAGE_SIZE=20;
+
+function getFilteredSuppliers(){
+  const q=(document.getElementById('supplier-search')?.value||'').toLowerCase().trim();
+  const mkt=document.getElementById('supplier-market-filter')?.value||'';
+  const typ=document.getElementById('supplier-type-filter')?.value||'';
+  const wht=document.getElementById('supplier-wht-filter')?.value||'';
+  let list=state.suppliers.slice();
+  if(mkt) list=list.filter(s=>s.market===mkt);
+  if(typ) list=list.filter(s=>s.type===typ);
+  if(q){
+    // Search by supplier_id, supplier_name, tax_reg_no only
+    list=list.filter(s=>
+      s.id.toLowerCase().includes(q) ||
+      s.name.toLowerCase().includes(q) ||
+      (s.tax_registration_no||'').toLowerCase().includes(q)
+    );
+  }
+  return list;
+}
+
+function resetSupplierFilters(){
+  const s=document.getElementById('supplier-search'); if(s) s.value='';
+  const m=document.getElementById('supplier-market-filter'); if(m) m.value='';
+  const t=document.getElementById('supplier-type-filter'); if(t) t.value='';
+  const w=document.getElementById('supplier-wht-filter'); if(w) w.value='';
+  state.page=1;
+  renderSupplierTable();
+}
+
+function renderSupplierTable(){
+  const all=getFilteredSuppliers();
+  const total=all.length;
+  const maxPage=Math.max(1,Math.ceil(total/PAGE_SIZE));
+  if(state.page>maxPage) state.page=1;
+  const start=(state.page-1)*PAGE_SIZE;
+  const rows=all.slice(start,start+PAGE_SIZE);
+  document.getElementById('dd-total-count').textContent=`Total ${total.toLocaleString()} items`;
+  const body=document.getElementById('supplier-table-body');
+  const empty=document.getElementById('dd-empty');
+  if(!body) return;
+  if(rows.length===0){
+    body.innerHTML=''; empty.style.display='flex';
+  } else {
+    empty.style.display='none';
+    body.innerHTML=rows.map(s=>`
+      <tr data-id="${s.id}">
+        <td class="ke-dd-cell-id">${s.id}</td>
+        <td class="ke-dd-cell-name">${esc(s.name)}</td>
+        <td><span class="ke-dd-mkt-chip">${s.market}</span></td>
+        <td class="ke-dd-cell-muted">${esc(s.type)}</td>
+        <td class="ke-dd-cell-tin">${esc(s.tax_registration_no||'—')}</td>
+        <td style="text-align:center;">
+          <button class="ke-view-btn" onclick="openSupplierDrawer('${s.id}')">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            View Details
+          </button>
+        </td>
+      </tr>`).join('');
+  }
+  renderDdPager(total,maxPage);
+}
+
+function renderDdPager(total,maxPage){
+  const el=document.getElementById('dd-pager');
+  if(!el) return;
+  const p=state.page;
+  const pages=[];
+  const ws=5;
+  let from=Math.max(1,p-2), to=Math.min(maxPage,from+ws-1);
+  from=Math.max(1,to-ws+1);
+  for(let i=from;i<=to;i++) pages.push(i);
+  el.innerHTML=`
+    <span class="ke-dd-pg-info">Page ${p} of ${maxPage} · ${total.toLocaleString()} items</span>
+    <button class="ke-dd-pg-btn" ${p===1?'disabled':''} onclick="gotoPage(${p-1})">‹</button>
+    ${from>1?`<button class="ke-dd-pg-btn" onclick="gotoPage(1)">1</button><span style="padding:0 4px;color:var(--ke-g400);">…</span>`:''}
+    ${pages.map(i=>`<button class="ke-dd-pg-btn ${i===p?'active':''}" onclick="gotoPage(${i})">${i}</button>`).join('')}
+    ${to<maxPage?`<span style="padding:0 4px;color:var(--ke-g400);">…</span><button class="ke-dd-pg-btn" onclick="gotoPage(${maxPage})">${maxPage}</button>`:''}
+    <button class="ke-dd-pg-btn" ${p===maxPage?'disabled':''} onclick="gotoPage(${p+1})">›</button>`;
+}
+function gotoPage(n){ state.page=n; renderSupplierTable(); }
+
+// ── SUPPLIER DRAWER ──
+function openSupplierDrawer(id){
+  state.drawerMode='supplier';
+  state.currentSupplier=id;
+  const s=supplierById(id);
+  if(!s) return;
+  document.getElementById('drawer-title').textContent=s.name;
+  document.getElementById('drawer-sub').textContent=`${s.id} · ${s.market} · ${s.type}`;
+  document.getElementById('drawer-scrim').classList.add('open');
+  document.getElementById('detail-drawer').classList.add('open');
+  renderSupplierDetailPane();
+  // Update breadcrumb selection
+  document.getElementById('bc-selection').textContent=`${s.name} (${s.id})`;
+  document.getElementById('bc-sep3').style.display='';
+  document.getElementById('bc-selection').style.display='';
+}
+
+function closeDrawer(){
+  document.getElementById('drawer-scrim').classList.remove('open');
+  document.getElementById('detail-drawer').classList.remove('open');
+  if(state.drawerMode==='supplier'){
+    state.currentSupplier=null;
+    document.getElementById('bc-sep3').style.display='none';
+    document.getElementById('bc-selection').style.display='none';
+  }
+  state.drawerMode=null;
+}
+
+function renderSupplierDetailPane(){
+  const s=supplierById(state.currentSupplier);
+  if(!s) return;
+  populateFields(s);
+
+  const pane=document.getElementById('detail-pane');
+  pane.innerHTML=`
+    <div class="ke-detail-toolbar">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--ke-g400);flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="detail-field-search" placeholder="Search fields or values…" oninput="renderDetailBody()">
+      <button class="ke-btn-ghost" onclick="expandAllGroups(true)" style="padding:3px 8px;">Expand</button>
+      <button class="ke-btn-ghost" onclick="expandAllGroups(false)" style="padding:3px 8px;">Collapse</button>
+    </div>
+
+    <div id="detail-content"></div>
+  `;
+  renderDetailBody();
+}
+
+function renderDetailBody(){
+  const s=supplierById(state.currentSupplier);
+  if(!s) return;
+  populateFields(s);
+  const q=(document.getElementById('detail-field-search')?.value||'').toLowerCase().trim();
+  const gFilter=document.getElementById('detail-group-filter')?.value||'';
+  const applicable=SUPPLIER_SCHEMA.filter(f=>s.fields[f.name]?.applies);
+  const filtered=applicable.filter(f=>{
+    if(gFilter&&f.group!==gFilter) return false;
+    if(q){ const v=s.fields[f.name]?.value||''; return (f.name+' '+f.label+' '+v).toLowerCase().includes(q); }
+    return true;
+  });
+  const groups=Object.values(GROUP_DEFS);
+  const grouped={};
+  groups.forEach(g=>grouped[g.id]=[]);
+  filtered.forEach(f=>grouped[f.group].push(f));
+  let html='';
+  groups.forEach(g=>{
+    const fs=grouped[g.id];
+    if(fs.length===0&&!q) return;
+    const overr=state.expandedGroups[g.id];
+    const expanded=state.expandAll?true:(overr!==undefined?overr:g.defaultExpanded);
+    html+=`<div class="ke-card" id="card-${g.id}">`;
+    html+=`<div class="ke-sec-hdr ${expanded?'':'collapsed'}" onclick="toggleGroup('${g.id}')">`;
+    html+=`<span class="ke-sec-chev"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>`;
+    html+=`<span class="ke-sec-label">${g.name}</span>`;
+    html+=`<span class="ke-sec-badge">${fs.length} field${fs.length===1?'':'s'}</span>`;
+    html+=`</div>`;
+    html+=`<div class="ke-sec-body ${expanded?'':'collapsed'}">`;
+    if(fs.length===0){
+      html+=`<div class="ke-empty-state">No fields match your search in this group.</div>`;
+    } else {
+      html+=`<div class="ke-ps-grid">`;
+      fs.forEach(f=>{
+        const fd=s.fields[f.name];
+        const value=fd.value;
+        const isEmpty=value===null||value===''||value===undefined;
+        html+=`<div class="ke-ps-row">`;
+        html+=`<div class="ke-ps-label">${highlight(f.label,q)}${f.market!=='ALL'?`<span class="ke-mkt-inline ke-mkt-${f.market}">${f.market}</span>`:''}</div>`;
+        html+=`<div class="ke-ps-value-wrap"><span class="ke-ps-value ${isEmpty?'empty':''}">${isEmpty?'—':highlight(String(value),q)}</span>`;
+        if(!isEmpty) html+=`<button class="ke-copy-btn" onclick="copyToClipboard(${JSON.stringify(String(value)).replace(/"/g,'&quot;')}, this)" title="Copy"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>`;
+        html+=`</div></div>`;
+      });
+      html+=`</div>`;
+    }
+    html+=`</div></div>`;
+  });
+  const el=document.getElementById('detail-content');
+  if(el) el.innerHTML=html||`<div class="ke-empty-state" style="padding:80px 20px;">No fields match your search.</div>`;
+}
+
+function toggleGroup(gid){
+  const current=state.expandedGroups[gid];
+  const def=GROUP_DEFS[gid].defaultExpanded;
+  const eff=state.expandAll?true:(current!==undefined?current:def);
+  state.expandedGroups[gid]=!eff;
+  state.expandAll=false;
+  renderDetailBody();
+}
+function expandAllGroups(open){
+  Object.values(GROUP_DEFS).forEach(g=>state.expandedGroups[g.id]=open);
+  state.expandAll=open;
+  renderDetailBody();
+}
+
+// ═══════════════════════════════════════════════════════
+//  ENDPOINT
+// ═══════════════════════════════════════════════════════
+function renderEndpoint(){
+  const counts=EP_TABS.map((_,i)=>EP_FIELDS.filter(f=>f.tab===i).length);
+  document.getElementById('endpoint-tabs').innerHTML=EP_TABS.map((t,i)=>`
+    <div class="ke-ep-tab ${i===state.endpointTab?'active':''}" onclick="switchEpTab(${i})">
+      ${esc(t.label)}<span class="ke-ep-tab-ct">${counts[i]}</span>
+    </div>`).join('');
+  const q=(document.getElementById('endpoint-search')?.value||'').toLowerCase().trim();
+  const mkt=document.getElementById('endpoint-market')?.value||'';
+  const lvl=document.getElementById('endpoint-level')?.value||'';
+  let items=EP_FIELDS.filter(f=>f.tab===state.endpointTab);
+  if(mkt) items=items.filter(f=>f.mkt===mkt||(mkt==='ALL'&&f.mkt==='ALL'));
+  if(lvl) items=items.filter(f=>f.level===lvl);
+  if(q) items=items.filter(f=>f.cmd.toLowerCase().includes(q));
+  const wrap=document.getElementById('endpoint-table-wrap');
+  if(items.length===0){
+    wrap.innerHTML=`<div class="ke-empty-state" style="padding:60px 20px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--ke-g300)" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><div>No variables match.</div></div>`;
+    return;
+  }
+  let html=`<table class="ke-ep-table"><thead><tr><th style="width:34%">Field</th><th style="width:12%">Market</th><th style="width:12%">Level</th><th>Variable</th><th style="width:60px"></th></tr></thead><tbody>`;
+  items.forEach(f=>{
+    const label=f.cmd.split('.').slice(1).join('.').replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+    html+=`<tr>
+      <td>${highlight(label,q)}</td>
+      <td><span class="ke-mkt-inline ke-mkt-${f.mkt}">${f.mkt}</span></td>
+      <td><span class="ke-ep-level">${f.level}</span></td>
+      <td><span class="ke-var-code" onclick="copyToClipboard('${f.cmd}',this)" title="Click to copy">${highlight(f.cmd,q)}</span></td>
+      <td><button class="ke-copy-btn" style="opacity:.6" onclick="copyToClipboard('${f.cmd}',this)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
+    </tr>`;
+  });
+  html+='</tbody></table>';
+  wrap.innerHTML=html;
+}
+function switchEpTab(i){ state.endpointTab=i; renderEndpoint(); }
+
+// ═══════════════════════════════════════════════════════
+//  CMD+K PALETTE
+// ═══════════════════════════════════════════════════════
+let cmdkResults=[], cmdkActive=0;
+function openCmdK(){
+  document.getElementById('cmdk-scrim').classList.add('open');
+  const input=document.getElementById('cmdk-input');
+  input.value=''; input.focus();
+  renderCmdK('');
+  input.oninput=e=>renderCmdK(e.target.value);
+}
+function closeCmdK(){ document.getElementById('cmdk-scrim').classList.remove('open'); }
+function renderCmdK(q){
+  const query=q.toLowerCase().trim();
+  const buyers=BUYERS.filter(b=>!query||b.name.toLowerCase().includes(query)||b.code.toLowerCase().includes(query)||b.tin.toLowerCase().includes(query));
+  const suppliers=state.suppliers.filter(s=>!query||s.name.toLowerCase().includes(query)||s.id.toLowerCase().includes(query)||s.market.toLowerCase().includes(query)).slice(0,40);
+  cmdkResults=[...buyers.map(b=>({kind:'buyer',data:b})),...suppliers.map(s=>({kind:'supplier',data:s}))];
+  cmdkActive=0;
+  const list=document.getElementById('cmdk-list');
+  document.getElementById('cmdk-count').textContent=`${cmdkResults.length} result${cmdkResults.length===1?'':'s'}`;
+  if(cmdkResults.length===0){ list.innerHTML=`<div class="ke-empty-state" style="padding:40px 20px;">No matches.</div>`; return; }
+  let html='';
+  if(buyers.length){
+    html+=`<div class="ke-cmdk-section-label">Buyers (${buyers.length})</div>`;
+    buyers.forEach((b,i)=>{
+      html+=`<div class="ke-cmdk-row ${i===0?'active':''}" data-idx="${i}" onmouseenter="setCmdKActive(${i})" onclick="commitCmdK(${i})">
+        <div class="ke-cmdk-row-avatar">${b.code}</div>
+        <div class="ke-cmdk-row-info">
+          <div class="ke-cmdk-row-name">${highlight(b.name,q)}</div>
+          <div class="ke-cmdk-row-meta">${b.id} · TIN ${b.tin}</div>
+        </div></div>`;
+    });
+  }
+  if(suppliers.length){
+    html+=`<div class="ke-cmdk-section-label">Suppliers (showing ${suppliers.length})</div>`;
+    suppliers.forEach((s,j)=>{
+      const idx=buyers.length+j;
+      html+=`<div class="ke-cmdk-row ${idx===cmdkActive?'active':''}" data-idx="${idx}" onmouseenter="setCmdKActive(${idx})" onclick="commitCmdK(${idx})">
+        <div class="ke-cmdk-row-avatar">${initials(s.name)}</div>
+        <div class="ke-cmdk-row-info">
+          <div class="ke-cmdk-row-name">${highlight(s.name,q)}</div>
+        </div></div>`;
+    });
+  }
+  list.innerHTML=html;
+}
+function setCmdKActive(i){
+  cmdkActive=i;
+  document.querySelectorAll('.ke-cmdk-row').forEach(r=>r.classList.toggle('active',parseInt(r.dataset.idx,10)===i));
+}
+function commitCmdK(i){
+  const r=cmdkResults[i]; if(!r) return;
+  closeCmdK();
+  if(r.kind==='buyer'){ switchView('buyer'); openBuyerDrawer(r.data.id); }
+  else { switchView('supplier'); openSupplierDrawer(r.data.id); }
+}
+function handleCmdKKey(e){
+  if(e.key==='Escape'){ closeCmdK(); e.preventDefault(); return; }
+  if(e.key==='ArrowDown'){ cmdkActive=Math.min(cmdkResults.length-1,cmdkActive+1); setCmdKActive(cmdkActive); scrollCmdKIntoView(); e.preventDefault(); return; }
+  if(e.key==='ArrowUp'){ cmdkActive=Math.max(0,cmdkActive-1); setCmdKActive(cmdkActive); scrollCmdKIntoView(); e.preventDefault(); return; }
+  if(e.key==='Enter'){ commitCmdK(cmdkActive); e.preventDefault(); }
+}
+function scrollCmdKIntoView(){ const el=document.querySelector(`.ke-cmdk-row[data-idx="${cmdkActive}"]`); if(el) el.scrollIntoView({block:'nearest'}); }
+
+document.addEventListener('keydown',(e)=>{
+  if((e.key==='k'||e.key==='K')&&(e.metaKey||e.ctrlKey)){ e.preventDefault(); openCmdK(); return; }
+  if(document.getElementById('cmdk-scrim').classList.contains('open')){ handleCmdKKey(e); return; }
+  if(e.key==='Escape'){
+    if(document.getElementById('detail-drawer')?.classList.contains('open')){ closeDrawer(); }
+    return;
+  }
+  const tag=document.activeElement&&document.activeElement.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT') return;
+  if(e.key==='/'&&document.getElementById('view-supplier').classList.contains('active')){
+    document.getElementById('supplier-search')?.focus(); e.preventDefault();
+  }
+});
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+rebuildSuppliers();
+initSyncStatus();
+switchView('buyer');
+</script>
+</body>
+</html>

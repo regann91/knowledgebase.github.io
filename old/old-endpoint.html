@@ -1,0 +1,788 @@
+<style>
+
+#ke-root {
+  /* Tokens */
+  --ke-blue:       #0052CC;
+  --ke-blue-h:     #003D99;
+  --ke-blue-lt:    #EBF3FF;
+  --ke-blue-bd:    #C7DCFF;
+
+  --ke-g50:  #F9FAFB; --ke-g100: #F3F4F6; --ke-g200: #E5E7EB;
+  --ke-g300: #D1D5DB; --ke-g400: #9CA3AF; --ke-g500: #6B7280;
+  --ke-g700: #374151; --ke-g900: #111827;
+
+  --ke-ok-t:#166534;  --ke-ok-b:#F0FDF4;  --ke-ok-bd:#BBF7D0;
+  --ke-bug-t:#7C3AED; --ke-bug-b:#F5F3FF; --ke-bug-bd:#DDD6FE;
+  --ke-pnd-t:#92400E; --ke-pnd-b:#FFFBEB; --ke-pnd-bd:#FDE68A;
+  --ke-nil-t:#6B7280; --ke-nil-b:#F9FAFB; --ke-nil-bd:#E5E7EB;
+
+  --ke-ALL-t:#166534;--ke-ALL-b:#F0FDF4;--ke-ALL-bd:#BBF7D0;
+  --ke-TH-t:#92400E; --ke-TH-b:#FFFBEB; --ke-TH-bd:#FDE68A;
+  --ke-ID-t:#9A3412; --ke-ID-b:#FFF7ED; --ke-ID-bd:#FED7AA;
+  --ke-VN-t:#065F46; --ke-VN-b:#ECFDF5; --ke-VN-bd:#A7F3D0;
+  --ke-SG-t:#3730A3; --ke-SG-b:#EEF2FF; --ke-SG-bd:#C7D2FE;
+  --ke-BR-t:#9D174D; --ke-BR-b:#FFF1F2; --ke-BR-bd:#FECDD3;
+
+  --ke-sb-w: 200px;
+  --ke-tb-h: 44px;
+
+  /* Container */
+  font-family: "Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  font-size: 13px; line-height: 1.5;
+  color: var(--ke-g900);
+  background: var(--ke-g100);
+  box-sizing: border-box;
+  height: 720px;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--ke-g200);
+  border-radius: 6px;
+}
+
+#ke-root *, #ke-root *::before, #ke-root *::after {
+  box-sizing: border-box; margin: 0; padding: 0;
+}
+#ke-root button, #ke-root select, #ke-root input {
+  font-family: inherit; font-size: 13px;
+}
+#ke-root svg { display: block; flex-shrink: 0; }
+
+/* ── TOPBAR ── */
+#ke-root .ke-topbar {
+  height: var(--ke-tb-h);
+  background: #fff;
+  border-bottom: 1px solid var(--ke-g200);
+  display: flex; align-items: center;
+  flex-shrink: 0; z-index: 10;
+}
+#ke-root .ke-brand {
+  width: var(--ke-sb-w);
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 14px;
+  border-right: 1px solid var(--ke-g200);
+  height: 100%; flex-shrink: 0;
+}
+#ke-root .ke-brand-name {
+  font-size: 12.5px; font-weight: 600; color: var(--ke-g900);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+#ke-root .ke-breadcrumb {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; color: var(--ke-g500);
+  padding: 0 16px; flex: 1;
+}
+#ke-root .ke-bc-sep { color: var(--ke-g300); }
+#ke-root .ke-bc-cur { color: var(--ke-g700); font-weight: 500; }
+#ke-root .ke-topbar-right {
+  display: flex; align-items: center; gap: 6px;
+  padding: 0 14px; margin-left: auto;
+}
+#ke-root .ke-tb-icon {
+  width: 28px; height: 28px; border-radius: 4px;
+  border: none; background: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ke-g400); transition: background .1s;
+}
+#ke-root .ke-tb-icon:hover { background: var(--ke-g100); color: var(--ke-g700); }
+#ke-root .ke-avatar {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11.5px; color: var(--ke-g500); cursor: pointer;
+  padding: 3px 6px; border-radius: 4px;
+}
+#ke-root .ke-avatar:hover { background: var(--ke-g100); }
+#ke-root .ke-avatar-dot {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--ke-blue); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; flex-shrink: 0;
+}
+
+/* ── BODY ROW (sidebar + main) ── */
+#ke-root .ke-body-row {
+  display: flex; flex: 1; overflow: hidden;
+}
+
+/* ── SIDEBAR ── */
+#ke-root .ke-sidebar {
+  width: var(--ke-sb-w);
+  background: #fff;
+  border-right: 1px solid var(--ke-g200);
+  display: flex; flex-direction: column;
+  overflow-y: auto; overflow-x: hidden;
+  flex-shrink: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ke-g200) transparent;
+}
+#ke-root .ke-sidebar::-webkit-scrollbar { width: 3px; }
+#ke-root .ke-sidebar::-webkit-scrollbar-thumb { background: var(--ke-g200); border-radius: 4px; }
+
+#ke-root .ke-nav-sec { padding: 5px 0; }
+#ke-root .ke-nav-sec + .ke-nav-sec {
+  border-top: 1px solid var(--ke-g200); padding-top: 5px;
+}
+#ke-root .ke-nav-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 12px;
+  font-size: 12px; font-weight: 500; color: var(--ke-g700);
+  cursor: pointer; user-select: none;
+  transition: background .1s; position: relative;
+}
+#ke-root .ke-nav-item:hover { background: var(--ke-g50); }
+#ke-root .ke-nav-icon { color: var(--ke-g400); flex-shrink: 0; }
+#ke-root .ke-nav-chev {
+  margin-left: auto; color: var(--ke-g400);
+  transition: transform .16s; flex-shrink: 0;
+}
+#ke-root .ke-nav-item.open .ke-nav-chev { transform: rotate(180deg); }
+
+#ke-root .ke-nav-sub { display: none; }
+#ke-root .ke-nav-sub-item {
+  display: flex; align-items: center;
+  padding: 6px 12px 6px 30px;
+  font-size: 11.5px; color: var(--ke-g500);
+  cursor: pointer; transition: background .1s, color .1s; position: relative;
+}
+#ke-root .ke-nav-sub-item:hover { background: var(--ke-g50); color: var(--ke-g700); }
+#ke-root .ke-nav-sub-item.active {
+  color: var(--ke-blue); font-weight: 600; background: var(--ke-blue-lt);
+}
+#ke-root .ke-nav-sub-item.active::before {
+  content: ""; position: absolute; left: 0; top: 3px; bottom: 3px;
+  width: 2px; background: var(--ke-blue); border-radius: 0 2px 2px 0;
+}
+
+/* ── MAIN ── */
+#ke-root .ke-main {
+  flex: 1; overflow-y: auto; padding: 20px;
+  scrollbar-width: thin; scrollbar-color: var(--ke-g200) transparent;
+}
+#ke-root .ke-main::-webkit-scrollbar { width: 4px; }
+#ke-root .ke-main::-webkit-scrollbar-thumb { background: var(--ke-g200); border-radius: 4px; }
+
+#ke-root .ke-page-hdr {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 16px;
+}
+#ke-root .ke-page-title { font-size: 15px; font-weight: 600; color: var(--ke-g900); }
+#ke-root .ke-page-meta  { font-size: 11.5px; color: var(--ke-g500); margin-top: 2px; }
+
+#ke-root .ke-btn-primary {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--ke-blue); color: #fff;
+  border: 1px solid var(--ke-blue); border-radius: 4px;
+  font-size: 12px; font-weight: 500;
+  padding: 5px 12px; cursor: pointer; white-space: nowrap;
+  transition: background .1s;
+}
+#ke-root .ke-btn-primary:hover { background: var(--ke-blue-h); }
+
+/* ── CONTENT CARD ── */
+#ke-root .ke-card {
+  background: #fff;
+  border: 1px solid var(--ke-g200);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+/* ── TAB BAR ── */
+#ke-root .ke-tabs {
+  display: flex; border-bottom: 1px solid var(--ke-g200);
+  padding: 0 16px; overflow-x: auto; scrollbar-width: none;
+  background: var(--ke-g50);
+}
+#ke-root .ke-tabs::-webkit-scrollbar { display: none; }
+#ke-root .ke-tab {
+  display: flex; align-items: center; gap: 5px;
+  padding: 9px 12px 10px;
+  font-size: 12px; font-weight: 500; color: var(--ke-g500);
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  white-space: nowrap; cursor: pointer; user-select: none;
+  transition: color .12s, border-color .12s; background: transparent;
+}
+#ke-root .ke-tab:hover { color: var(--ke-g700); }
+#ke-root .ke-tab.active { color: var(--ke-blue); border-bottom-color: var(--ke-blue); }
+#ke-root .ke-tab-ct {
+  font-size: 10px; font-weight: 600;
+  background: var(--ke-g200); color: var(--ke-g500);
+  padding: 1px 5px; border-radius: 10px; min-width: 18px; text-align: center;
+}
+#ke-root .ke-tab.active .ke-tab-ct { background: var(--ke-blue-lt); color: var(--ke-blue); }
+
+/* ── TOOLBAR ── */
+#ke-root .ke-toolbar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; border-bottom: 1px solid var(--ke-g200); background: #fff;
+}
+#ke-root .ke-input, #ke-root .ke-select {
+  height: 29px; border: 1px solid var(--ke-g300); border-radius: 4px;
+  color: var(--ke-g900); background: #fff; outline: none;
+  transition: border-color .12s; padding: 0 9px;
+}
+#ke-root .ke-input { flex: 1; min-width: 140px; }
+#ke-root .ke-select { min-width: 108px; cursor: pointer; padding: 0 7px; }
+#ke-root .ke-input:focus, #ke-root .ke-select:focus { border-color: var(--ke-blue); }
+#ke-root .ke-input::placeholder { color: var(--ke-g400); }
+#ke-root .ke-tlabel { font-size: 11.5px; color: var(--ke-g500); white-space: nowrap; }
+
+/* ── COUNT BAR ── */
+#ke-root .ke-countbar {
+  font-size: 11px; color: var(--ke-g400);
+  padding: 5px 16px 3px; border-bottom: 1px solid var(--ke-g100); background: #fff;
+}
+#ke-root .ke-countbar strong { color: var(--ke-g500); font-weight: 600; }
+
+/* ── PANELS ── */
+#ke-root .ke-panel { display: none; }
+#ke-root .ke-panel.active { display: block; }
+
+/* ── SECTION GROUPS ── */
+#ke-root .ke-sec { border-bottom: 1px solid var(--ke-g200); }
+#ke-root .ke-sec-hdr {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 16px; background: var(--ke-g50);
+  border-bottom: 1px solid var(--ke-g200);
+  cursor: pointer; user-select: none;
+}
+#ke-root .ke-sec-hdr:hover { background: var(--ke-g100); }
+#ke-root .ke-sec-label { font-size: 11px; font-weight: 600; color: var(--ke-g500); flex: 1; }
+#ke-root .ke-sec-ct { font-size: 11px; color: var(--ke-g400); }
+#ke-root .ke-sec-chev { color: var(--ke-g400); transition: transform .15s; display: flex; align-items: center; }
+#ke-root .ke-sec-hdr.collapsed .ke-sec-chev { transform: rotate(-90deg); }
+#ke-root .ke-sec-body { overflow: hidden; transition: max-height .2s ease; }
+#ke-root .ke-sec-body.collapsed { max-height: 0 !important; }
+
+/* ── TABLE ── */
+#ke-root .ke-tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+#ke-root .ke-tbl th {
+  text-align: left; padding: 7px 16px;
+  font-size: 10.5px; font-weight: 600; color: var(--ke-g500);
+  text-transform: uppercase; letter-spacing: .4px;
+  background: var(--ke-g50); border-bottom: 1px solid var(--ke-g200); white-space: nowrap;
+}
+#ke-root .ke-tbl td {
+  padding: 9px 16px; border-bottom: 1px solid var(--ke-g100);
+  vertical-align: middle; color: var(--ke-g700);
+}
+#ke-root .ke-tbl tr:last-child td { border-bottom: none; }
+#ke-root .ke-tbl tr:hover td { background: var(--ke-g50); }
+#ke-root .ke-tbl tr.ke-dim td { opacity: .48; }
+#ke-root .ke-tbl tr.ke-dim:hover td { opacity: .75; }
+
+#ke-root .ke-fname { font-size: 12.5px; font-weight: 500; color: var(--ke-g900); }
+#ke-root .ke-fvar {
+  display: inline-block;
+  font-family: "Consolas","Courier New",monospace;
+  font-size: 10.5px; color: var(--ke-g500);
+  background: var(--ke-g100); border: 1px solid var(--ke-g200);
+  border-radius: 3px; padding: 1px 5px; margin-top: 2px;
+  cursor: pointer; transition: border-color .1s, color .1s;
+  max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+#ke-root .ke-fvar:hover { border-color: var(--ke-blue); color: var(--ke-blue); }
+#ke-root .ke-fvar.copied { border-color: #166534; color: #166534; background: #F0FDF4; }
+#ke-root .ke-fvar.copied::after {
+  content: " ✓";
+  color: #166534;
+  font-weight: 700;
+  font-style: normal;
+}
+
+#ke-root .ke-mkt {
+  display: inline-block; font-size: 10px; font-weight: 600;
+  padding: 2px 6px; border-radius: 10px; white-space: nowrap;
+}
+#ke-root .ke-mkt-ALL{background:var(--ke-ALL-b);color:var(--ke-ALL-t);border:1px solid var(--ke-ALL-bd);}
+#ke-root .ke-mkt-TH {background:var(--ke-TH-b); color:var(--ke-TH-t); border:1px solid var(--ke-TH-bd);}
+#ke-root .ke-mkt-ID {background:var(--ke-ID-b); color:var(--ke-ID-t); border:1px solid var(--ke-ID-bd);}
+#ke-root .ke-mkt-VN {background:var(--ke-VN-b); color:var(--ke-VN-t); border:1px solid var(--ke-VN-bd);}
+#ke-root .ke-mkt-SG {background:var(--ke-SG-b); color:var(--ke-SG-t); border:1px solid var(--ke-SG-bd);}
+#ke-root .ke-mkt-BR {background:var(--ke-BR-b); color:var(--ke-BR-t); border:1px solid var(--ke-BR-bd);}
+#ke-root .ke-mkt-PH {background:#FFF7ED; color:#9A3412; border:1px solid #FED7AA;}
+#ke-root .ke-mkt-TW {background:#F0F9FF; color:#075985; border:1px solid #BAE6FD;}
+
+#ke-root .ke-lvl {
+  display: inline-block; font-size: 10px; font-weight: 500; color: var(--ke-g500);
+  background: var(--ke-g100); border: 1px solid var(--ke-g200);
+  padding: 2px 6px; border-radius: 10px; white-space: nowrap;
+}
+#ke-root .ke-stag {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 10.5px; font-weight: 500; padding: 2px 9px; border-radius: 10px;
+  border: 1px solid transparent; min-width: 72px; white-space: nowrap;
+}
+#ke-root .ke-s-ok  {background:var(--ke-ok-b); color:var(--ke-ok-t); border-color:var(--ke-ok-bd);}
+#ke-root .ke-s-bug {background:var(--ke-bug-b);color:var(--ke-bug-t);border-color:var(--ke-bug-bd);}
+#ke-root .ke-s-pnd {background:var(--ke-pnd-b);color:var(--ke-pnd-t);border-color:var(--ke-pnd-bd);}
+#ke-root .ke-s-nil {background:var(--ke-nil-b);color:var(--ke-nil-t);border-color:var(--ke-nil-bd);}
+
+#ke-root .ke-empty {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 40px 20px; text-align: center; color: var(--ke-g400); font-size: 13px; gap: 6px;
+}
+</style>
+
+<!-- ══════════════ ROOT ══════════════ -->
+<div id="ke-root">
+
+  <!-- TOPBAR -->
+  <header class="ke-topbar">
+    <div class="ke-brand">
+      <!-- Sea logo -->
+      <svg width="26" height="26" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+        <defs><clipPath id="keLogoClip"><circle cx="50" cy="50" r="50"/></clipPath></defs>
+        <g clip-path="url(#keLogoClip)">
+          <rect width="100" height="100" fill="#1A237E"/>
+          <path d="M0,68 Q25,58 50,65 Q75,72 100,62 L100,100 L0,100 Z" fill="#283593"/>
+          <path d="M0,55 Q20,45 45,52 Q70,59 100,48 L100,100 L0,100 Z" fill="#3949AB"/>
+          <path d="M0,45 Q25,35 55,43 Q75,49 100,38 L100,65 Q75,75 50,68 Q25,61 0,70 Z" fill="#5C6BC0"/>
+          <path d="M0,32 Q30,20 55,30 Q78,39 100,28 L100,50 Q75,42 50,35 Q25,28 0,40 Z" fill="#00E5FF"/>
+          <path d="M0,25 Q28,14 52,23 Q76,32 100,20 L100,32 Q75,43 50,34 Q26,25 0,36 Z" fill="#18FFFF"/>
+          <path d="M0,20 Q30,10 55,18 Q78,26 100,15 L100,24 Q76,35 52,27 Q28,19 0,30 Z" fill="#00C853"/>
+          <path d="M0,10 Q25,2 50,10 Q75,18 100,8 L100,20 Q75,30 50,22 Q25,14 0,22 Z" fill="#FF6D00"/>
+          <path d="M0,0 L100,0 L100,14 Q75,24 50,16 Q25,8 0,18 Z" fill="#D32F2F"/>
+        </g>
+      </svg>
+      <span class="ke-brand-name">Sea Billing & Collection System</span>
+    </div>
+
+    <nav class="ke-breadcrumb">
+      <span>Knowledge Base</span>
+      <span class="ke-bc-sep">›</span>
+      <span class="ke-bc-cur">Knowledge Endpoint</span>
+    </nav>
+
+    <div class="ke-topbar-right">
+      <button class="ke-tb-icon" title="Settings">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+      <div class="ke-avatar">
+        <div class="ke-avatar-dot">ML</div>
+        <span>megan.lee@shopee.com</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- BODY ROW -->
+  <div class="ke-body-row">
+
+    <!-- SIDEBAR -->
+    <aside class="ke-sidebar">
+
+      <!-- Knowledge Base -->
+      <div class="ke-nav-sec">
+        <div class="ke-nav-item open" onclick="keToggleNav(this)">
+          <svg class="ke-nav-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Knowledge Base
+          <svg class="ke-nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="ke-nav-sub" id="keNavKb">
+          <div class="ke-nav-sub-item" onclick="keNavClick(this)">Knowledge Detail</div>
+          <div class="ke-nav-sub-item active" onclick="keNavClick(this)">Knowledge Endpoint</div>
+        </div>
+      </div>
+
+      <!-- Case Management -->
+      <div class="ke-nav-sec">
+        <div class="ke-nav-item open" onclick="keToggleNav(this)">
+          <svg class="ke-nav-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          Case Management
+          <svg class="ke-nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="ke-nav-sub" id="keNavCase">
+          <div class="ke-nav-sub-item" onclick="keNavClick(this)">Case List</div>
+          <div class="ke-nav-sub-item" onclick="keNavClick(this)">Archive Case</div>
+          <div class="ke-nav-sub-item" onclick="keNavClick(this)">Golden Case</div>
+          <div class="ke-nav-sub-item" onclick="keNavClick(this)">Pattern Library</div>
+        </div>
+      </div>
+
+      <!-- Agent Management -->
+      <div class="ke-nav-sec">
+        <div class="ke-nav-item open" onclick="keToggleNav(this)">
+          <svg class="ke-nav-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 11V7"/><circle cx="12" cy="5" r="2"/><line x1="8" y1="15" x2="8.01" y2="15"/><line x1="16" y1="15" x2="16.01" y2="15"/></svg>
+          Agent Management
+          <svg class="ke-nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="ke-nav-sub" id="keNavAgent">
+          <div class="ke-nav-sub-item" onclick="keNavClick(this)">Agent List</div>
+          <div class="ke-nav-sub-item" onclick="keNavClick(this)">Regression Test</div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="ke-main">
+
+      <div class="ke-page-hdr">
+        <div>
+          <div class="ke-page-title">Knowledge Endpoint</div>
+          <div class="ke-page-meta">Variable reference library. Click a variable string to copy it.</div>
+        </div>
+        <button class="ke-btn-primary" onclick="keExport()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export
+        </button>
+      </div>
+
+      <div class="ke-card">
+
+        <!-- Tabs -->
+        <div class="ke-tabs" id="keTabs">
+          <div class="ke-tab active" onclick="keTab(0)">Buyer Entity<span class="ke-tab-ct">4</span></div>
+          <div class="ke-tab" onclick="keTab(1)">PO Info<span class="ke-tab-ct">8</span></div>
+          <div class="ke-tab" onclick="keTab(2)">Receipt Info<span class="ke-tab-ct">8</span></div>
+          <div class="ke-tab" onclick="keTab(3)">Invoice Info<span class="ke-tab-ct">20</span></div>
+          <div class="ke-tab" onclick="keTab(4)">AI Parsed<span class="ke-tab-ct">36</span></div>
+          <div class="ke-tab" onclick="keTab(5)">Compared Source<span class="ke-tab-ct">6</span></div>
+          <div class="ke-tab" onclick="keTab(6)">EBS Supplier<span class="ke-tab-ct">16</span></div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="ke-toolbar">
+          <input type="text" id="keSearch" class="ke-input" placeholder="Search fields or variables…" oninput="keFilter()">
+          <span class="ke-tlabel">Market</span>
+          <select id="keMkt" class="ke-select" onchange="keFilter()">
+            <option value="">All Markets</option>
+            <option value="TH">TH</option>
+            <option value="ID">ID</option>
+            <option value="VN">VN</option>
+            <option value="SG">SG</option>
+            <option value="BR">BR</option>
+            <option value="ALL">Global (ALL)</option>
+          </select>
+          <span class="ke-tlabel">Status</span>
+          <select id="keStat" class="ke-select" onchange="keFilter()">
+            <option value="">All Status</option>
+            <option value="Available">Available</option>
+            <option value="Bug">Bug</option>
+            <option value="Not added yet">Pending</option>
+            <option value="Empty">Empty</option>
+          </select>
+        </div>
+
+        <div class="ke-countbar" id="keCountBar"></div>
+
+        <!-- Panels -->
+        <div id="kePanels">
+          <div class="ke-panel active" id="kePanel0"></div>
+          <div class="ke-panel" id="kePanel1"></div>
+          <div class="ke-panel" id="kePanel2"></div>
+          <div class="ke-panel" id="kePanel3"></div>
+          <div class="ke-panel" id="kePanel4"></div>
+          <div class="ke-panel" id="kePanel5"></div>
+          <div class="ke-panel" id="kePanel6"></div>
+        </div>
+
+      </div><!-- /.ke-card -->
+    </main>
+  </div><!-- /.ke-body-row -->
+
+</div><!-- /#ke-root -->
+
+<script>
+(function(){
+
+/* ── SIDEBAR ─────────────────────────────────────── */
+window.keToggleNav = function(item) {
+  var sub = item.nextElementSibling;
+  if (!sub) return;
+  var open = sub.style.display === 'block';
+  sub.style.display = open ? 'none' : 'block';
+  item.classList.toggle('open', !open);
+};
+window.keNavClick = function(item) {
+  document.querySelectorAll('#ke-root .ke-nav-sub-item').forEach(function(e){ e.classList.remove('active'); });
+  item.classList.add('active');
+};
+// Pre-open all sections
+['keNavKb','keNavCase','keNavAgent'].forEach(function(id){
+  var el = document.getElementById(id);
+  if (el) el.style.display = 'block';
+});
+
+/* ── DATA ────────────────────────────────────────── */
+var ALIASES = {
+  billing_name:"Billing Name",company_address:"Company Address",billing_tin:"Billing TIN",
+  company_branch:"Company Branch",po_number:"PO Number",pr_number:"PR Number",
+  supplier_name:"Supplier Name",currency:"Currency",total_amount:"Total Amount",
+  company_name:"Company Name",description:"Description",receipt_number:"Receipt Number",
+  receipt_type:"Receipt Type",record_status:"Record Status",reviewer:"Reviewer",
+  review_comment:"Review Comment",do_status:"DO Status",tax_code:"Tax Code",
+  receipt_date:"Receipt Date",invoice_date:"Invoice Date",invoice_number:"Invoice Number",
+  total_amount_before_tax:"Total Amount Before Tax",vat:"VAT",
+  total_amount_after_tax:"Total Amount After Tax",document_type:"Document Type",
+  buyer_validation_status:"Buyer Validation Status",seller_validation_status:"Seller Validation Status",
+  invoice_validation_status:"Invoice Validation Status",
+  due_date:"Due Date",
+  "3wm_total_invoice_threshold":"3WM Invoice Threshold",
+  duplicate_invoice:"Duplicate Invoice",supplier_branch:"Supplier Branch",
+  supplier_tid:"Supplier TID",payment_term:"Payment Term",
+  doc_type_title:"Document Type Title",supplier_address:"Supplier Address",
+  line_items_sum:"Line Items Sum",net_amount:"Net Amount",
+  supplier_sign:"Supplier Sign",invoice_discount_amount:"Invoice Discount Amount",
+  page_number:"Page Number",supplier_id:"Supplier ID",supplier_site_id:"Supplier Site ID",
+  unique_account_id:"Unique Account ID",
+  tax_amount:"Tax Amount",line_item_amount:"Line Item Amount",discount_amount:"Discount Amount",
+  wht_amount:"WHT Amount",unit_price:"Unit Price",quantity:"Quantity",
+  is_iras:"Is IRAS",tax_authority_digital_signature_time:"Tax Auth. Digital Signature Time",
+  supplier_digital_signature_time:"Supplier Digital Sig. Time",
+  item_description:"Item Description",registered_name:"Registered Name",
+  authority_to_print:"Authority to Print",
+  supplier_alias:"Supplier Alias",taxpayer_id:"Taxpayer ID",
+  tax_registration_number:"Tax Registration Number",site_tax_registration_num:"Site Tax Reg. Number",
+  brn_ic:"BRN / IC",wht:"WHT",site_email:"Site Email",supplier_bank_name:"Supplier Bank Name",
+  site_bank_name:"Site Bank Name",supplier_bank_number:"Supplier Bank Number",
+  site_bank_number:"Site Bank Number",supplier_site_name:"Supplier Site Name",
+  foreign_vs_local:"Foreign vs Local",supplier_type:"Supplier Type",
+  supplier_address:"Supplier Address",
+  supplier_tax_id:"Supplier Tax ID",total_amount_including_tax:"Total Amount Incl. Tax",
+  company_tax_id:"Company Tax ID",biz_invoice_type:"Biz Invoice Type"
+};
+function alias(cmd){
+  var f=cmd.split(".").slice(1).join(".");
+  return ALIASES[f]||f.replace(/_/g," ").replace(/\b\w/g,function(c){return c.toUpperCase();});
+}
+
+var RAW=[
+  {t:0,cmd:"@Buyer_Entity.billing_name",mkt:"ALL",level:"Header",s:"Available"},
+  {t:0,cmd:"@Buyer_Entity.company_address",mkt:"ALL",level:"Header",s:"Available"},
+  {t:0,cmd:"@Buyer_Entity.billing_tin",mkt:"ALL",level:"Header",s:"Available"},
+  {t:0,cmd:"@Buyer_Entity.company_branch",mkt:"TH",level:"Header",s:"Empty"},
+  {t:1,cmd:"@Po_Info.po_number",mkt:"ALL",level:"Header",s:"Available"},
+  {t:1,cmd:"@Po_Info.pr_number",mkt:"ALL",level:"Header",s:"Available"},
+  {t:1,cmd:"@Po_Info.supplier_name",mkt:"ALL",level:"Header",s:"Available"},
+  {t:1,cmd:"@Po_Info.currency",mkt:"ALL",level:"Header",s:"Available"},
+  {t:1,cmd:"@Po_Info.total_amount",mkt:"ALL",level:"Header",s:"Available"},
+  {t:1,cmd:"@Po_Info.company_name",mkt:"ALL",level:"Header",s:"Available"},
+  {t:1,cmd:"@Po_Info.description",mkt:"ALL",level:"Header",s:"Available"},
+  {t:1,cmd:"@Po_Info.payment_term",mkt:"ALL",level:"Header",s:"Available"},
+  {t:2,cmd:"@Receipt_Info.receipt_number",mkt:"ALL",level:"Header",s:"Available"},
+  {t:2,cmd:"@Receipt_Info.receipt_type",mkt:"ALL",level:"Header",s:"Available"},
+  {t:2,cmd:"@Receipt_Info.record_status",mkt:"ALL",level:"Header",s:"Available"},
+  {t:2,cmd:"@Receipt_Info.reviewer",mkt:"ALL",level:"Header",s:"Available"},
+  {t:2,cmd:"@Receipt_Info.review_comment",mkt:"ALL",level:"Header",s:"Available"},
+  {t:2,cmd:"@Receipt_Info.do_status",mkt:"ALL",level:"Header",s:"Available"},
+  {t:2,cmd:"@Receipt_Info.tax_code",mkt:"TH",level:"Line",s:"Empty"},
+  {t:2,cmd:"@Receipt_Info.receipt_date",mkt:"ID",level:"Header",s:"Empty"},
+  {t:3,cmd:"@Invoice_Info.invoice_date",mkt:"ALL",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.invoice_number",mkt:"ALL",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.supplier_name",mkt:"ALL",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.billing_name",mkt:"ALL",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.company_address",mkt:"ALL",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.billing_tin",mkt:"ALL",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.currency",mkt:"ALL",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.total_amount_before_tax",mkt:"ALL",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.vat",mkt:"ALL",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.total_amount_after_tax",mkt:"ALL",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.tax_code",mkt:"TH",level:"Header",s:"Empty"},
+  {t:3,cmd:"@Invoice_Info.document_type",mkt:"TH",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.buyer_validation_status",mkt:"VN",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.seller_validation_status",mkt:"VN",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.invoice_validation_status",mkt:"VN",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.due_date",mkt:"ID",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.3wm_total_invoice_threshold",mkt:"BR",level:"Header",s:"Not added yet"},
+  {t:3,cmd:"@Invoice_Info.duplicate_invoice",mkt:"ALL",level:"Header",s:"Available"},
+  {t:3,cmd:"@Invoice_Info.supplier_branch",mkt:"TH",level:"Header",s:"Not added yet"},
+  {t:3,cmd:"@Invoice_Info.supplier_tid",mkt:"TW",level:"Header",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.doc_type_title",mkt:"ALL",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.invoice_date",mkt:"ALL",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.invoice_number",mkt:"ALL",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.supplier_name",mkt:"ALL",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.billing_name",mkt:"ALL",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.company_address",mkt:"ALL",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.billing_tin",mkt:"ALL",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.line_items_sum",mkt:"ALL",level:"Line",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.total_amount_before_tax",mkt:"ALL",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.net_amount",mkt:"ALL",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.vat",mkt:"ALL",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.total_amount_after_tax",mkt:"ALL",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.due_date",mkt:"ID",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.supplier_sign",mkt:"ID",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.invoice_discount_amount",mkt:"TH",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.page_number",mkt:"TH",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.supplier_address",mkt:"TH",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.supplier_id",mkt:"TH",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.currency",mkt:"TH",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.item_description",mkt:"TH",level:"Line",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.supplier_site_id",mkt:"TH",level:"Header",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.unique_account_id",mkt:"TH",level:"Header",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.net_amount",mkt:"ALL",level:"Line",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.tax_amount",mkt:"ALL",level:"Line",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.line_item_amount",mkt:"ALL",level:"Line",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.discount_amount",mkt:"ALL",level:"Line",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.wht_amount",mkt:"ALL",level:"Line",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.unit_price",mkt:"ALL",level:"Line",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.quantity",mkt:"ALL",level:"Line",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.is_iras",mkt:"SG",level:"Header",s:"Available"},
+  {t:4,cmd:"@Invoice_AI_Parsed.doc_type_title",mkt:"VN",level:"Header",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.description",mkt:"ALL",level:"Header",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.tax_authority_digital_signature_time",mkt:"VN",level:"Header",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.supplier_digital_signature_time",mkt:"VN",level:"Header",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.registered_name",mkt:"PH",level:"Header",s:"Not added yet"},
+  {t:4,cmd:"@Invoice_AI_Parsed.authority_to_print",mkt:"PH",level:"Header",s:"Not added yet"},
+  {t:5,cmd:"@Compared_Source_Data.invoice_date",mkt:"ALL",level:"Header",s:"Available"},
+  {t:5,cmd:"@Compared_Source_Data.invoice_number",mkt:"ALL",level:"Header",s:"Available"},
+  {t:5,cmd:"@Compared_Source_Data.supplier_tax_id",mkt:"BR",level:"Header",s:"Available"},
+  {t:5,cmd:"@Compared_Source_Data.total_amount_including_tax",mkt:"BR",level:"Header",s:"Available"},
+  {t:5,cmd:"@Compared_Source_Data.company_tax_id",mkt:"BR",level:"Header",s:"Available"},
+  {t:5,cmd:"@Compared_Source_Data.biz_invoice_type",mkt:"BR",level:"Header",s:"Available"},
+  {t:6,cmd:"@EBS_Supplier.supplier_alias",mkt:"ALL",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.taxpayer_id",mkt:"ALL",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.tax_registration_number",mkt:"ALL",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.site_tax_registration_num",mkt:"ALL",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.brn_ic",mkt:"ALL",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.wht",mkt:"ALL",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.site_email",mkt:"ALL",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.supplier_bank_name",mkt:"ALL",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.site_bank_name",mkt:"ALL",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.supplier_bank_number",mkt:"ALL",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.site_bank_number",mkt:"ALL",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.supplier_address",mkt:"ALL",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.supplier_site_name",mkt:"TH",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.foreign_vs_local",mkt:"VN",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.supplier_type",mkt:"VN",level:"Header",s:"Empty"},
+  {t:6,cmd:"@EBS_Supplier.payment_term",mkt:"ALL",level:"Header",s:"Not added yet"}
+];
+
+var S_CFG=[
+  {key:"Available",    label:"Available",cls:"ke-s-ok", sec:"Available",dim:false},
+  {key:"Bug",          label:"Bug",      cls:"ke-s-bug",sec:"Bug",      dim:false},
+  {key:"Not added yet",label:"Pending",  cls:"ke-s-pnd",sec:"Pending",  dim:true},
+  {key:"Empty",        label:"Empty",    cls:"ke-s-nil",sec:"Empty",    dim:true}
+];
+var S_ORDER=S_CFG.map(function(c){return c.key;});
+var S_MAP={};
+S_CFG.forEach(function(c){S_MAP[c.key]=c;});
+
+/* ── RENDER ──────────────────────────────────────── */
+function esc(s){return s.replace(/'/g,"\\'");}
+
+function buildTable(rows){
+  if(!rows.length) return '<div class="ke-empty">No fields match your filters.</div>';
+  var trs=rows.map(function(r){
+    var cfg=S_MAP[r.s]||S_MAP["Empty"];
+    var lbl=alias(r.cmd);
+    var dim=cfg.dim?' class="ke-dim"':'';
+    return '<tr'+dim+' data-cmd="'+r.cmd+'" data-mkt="'+r.mkt+'" data-s="'+r.s+'">'
+      +'<td><div class="ke-fname">'+lbl+'</div>'
+      +'<div class="ke-fvar" onclick="keCopy(this,\''+esc(r.cmd)+'\')" title="Click to copy">'+r.cmd+'</div></td>'
+      +'<td><span class="ke-mkt ke-mkt-'+r.mkt+'">'+r.mkt+'</span></td>'
+      +'<td><span class="ke-lvl">'+r.level+'</span></td>'
+      +'<td><span class="ke-stag '+cfg.cls+'">'+cfg.label+'</span></td>'
+      +'</tr>';
+  }).join('');
+  return '<table class="ke-tbl"><thead><tr>'
+    +'<th style="width:44%">Field Name</th><th>Market</th><th>Level</th><th>Status</th>'
+    +'</tr></thead><tbody>'+trs+'</tbody></table>';
+}
+
+function buildSection(cfg,rows){
+  var id='kesb_'+Math.random().toString(36).slice(2,7);
+  return '<div class="ke-sec" data-skey="'+cfg.key+'">'
+    +'<div class="ke-sec-hdr" onclick="keToggleSec(this)">'
+    +'<span class="ke-sec-label">'+cfg.sec+'</span>'
+    +'<span class="ke-sec-ct">'+rows.length+' field'+(rows.length!==1?'s':'')+'</span>'
+    +'<span class="ke-sec-chev"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>'
+    +'</div>'
+    +'<div class="ke-sec-body" id="'+id+'" style="max-height:9999px">'+buildTable(rows)+'</div>'
+    +'</div>';
+}
+
+function renderAll(){
+  for(var i=0;i<7;i++){
+    var items=RAW.filter(function(r){return r.t===i;});
+    var g={};S_ORDER.forEach(function(k){g[k]=[];});
+    items.forEach(function(r){if(g[r.s])g[r.s].push(r);});
+    var html='';
+    S_ORDER.forEach(function(k){if(g[k].length)html+=buildSection(S_MAP[k],g[k]);});
+    document.getElementById('kePanel'+i).innerHTML=html||'<div class="ke-empty">No fields.</div>';
+  }
+}
+
+/* ── TAB ─────────────────────────────────────────── */
+var activeTab=0;
+window.keTab=function(idx){
+  activeTab=idx;
+  document.querySelectorAll('#keTabs .ke-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  document.querySelectorAll('#kePanels .ke-panel').forEach(function(p,i){p.classList.toggle('active',i===idx);});
+  keFilter();
+};
+
+/* ── FILTER ──────────────────────────────────────── */
+window.keFilter=function(){
+  var q=document.getElementById('keSearch').value.toLowerCase().trim();
+  var mkt=document.getElementById('keMkt').value;
+  var stat=document.getElementById('keStat').value;
+  var panel=document.querySelector('#kePanels .ke-panel.active');
+  if(!panel)return;
+  var vis=0,tot=0;
+  panel.querySelectorAll('tbody tr').forEach(function(row){
+    tot++;
+    var mktOk=!mkt||row.dataset.mkt===mkt||(mkt!=='ALL'&&row.dataset.mkt==='ALL');
+    var statOk=!stat||row.dataset.s===stat;
+    var rCmd=row.dataset.cmd.toLowerCase();
+    var rLbl=row.querySelector('.ke-fname').textContent.toLowerCase();
+    var qOk=!q||rCmd.includes(q)||rLbl.includes(q);
+    var show=mktOk&&statOk&&qOk;
+    row.style.display=show?'':'none';
+    if(show)vis++;
+  });
+  panel.querySelectorAll('.ke-sec').forEach(function(sec){
+    var any=Array.from(sec.querySelectorAll('tbody tr')).some(function(r){return r.style.display!=='none';});
+    sec.style.display=any?'':'none';
+  });
+  var bar=document.getElementById('keCountBar');
+  bar.innerHTML=(q||mkt||stat)?'Showing <strong>'+vis+'</strong> of <strong>'+tot+'</strong> fields':'<strong>'+tot+'</strong> fields';
+};
+
+/* ── SECTION COLLAPSE ────────────────────────────── */
+window.keToggleSec=function(hdr){
+  var body=hdr.nextElementSibling;
+  var closing=!body.classList.contains('collapsed');
+  hdr.classList.toggle('collapsed',closing);
+  if(closing){
+    body.style.maxHeight=body.scrollHeight+'px';
+    requestAnimationFrame(function(){body.classList.add('collapsed');});
+  }else{
+    body.classList.remove('collapsed');
+    body.style.maxHeight=body.scrollHeight+'px';
+  }
+};
+
+/* ── COPY ────────────────────────────────────────── */
+window.keCopy=function(el,cmd){
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(cmd).catch(function(){fbCopy(cmd);});
+  }else{fbCopy(cmd);}
+  if(el.classList.contains('copied')) return;
+  el.classList.add('copied');
+  setTimeout(function(){el.classList.remove('copied');},1500);
+};
+function fbCopy(text){
+  var ta=document.createElement('textarea');
+  ta.value=text;ta.style.cssText='position:fixed;opacity:0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');}catch(e){}
+  document.body.removeChild(ta);
+}
+
+/* ── EXPORT ──────────────────────────────────────── */
+window.keExport=function(){
+  var rows=[['Field Name','Variable','Namespace','Market','Level','Status']];
+  RAW.forEach(function(r){
+    var ns=r.cmd.split('.')[0].replace('@','');
+    rows.push([alias(r.cmd),r.cmd,ns,r.mkt,r.level,r.s]);
+  });
+  var csv=rows.map(function(r){return r.map(function(c){return '"'+c.replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var blob=new Blob([csv],{type:'text/csv'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='knowledge-endpoint-variables.csv';a.click();
+};
+
+/* ── INIT ────────────────────────────────────────── */
+renderAll();
+keFilter();
+
+})();
+</script>

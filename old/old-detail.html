@@ -1,0 +1,1981 @@
+<style>
+#kd-root {
+  --ke-blue:    #0052CC;
+  --ke-blue-h:  #003D99;
+  --ke-blue-lt: #EBF3FF;
+  --ke-blue-bd: #C7DCFF;
+
+  --ke-g50:  #F9FAFB; --ke-g100: #F3F4F6; --ke-g200: #E5E7EB;
+  --ke-g300: #D1D5DB; --ke-g400: #9CA3AF; --ke-g500: #6B7280;
+  --ke-g700: #374151; --ke-g900: #111827;
+
+  --ke-ok-t:#166534; --ke-ok-b:#F0FDF4; --ke-ok-bd:#BBF7D0;
+  --ke-nil-t:#6B7280; --ke-nil-b:#F9FAFB; --ke-nil-bd:#E5E7EB;
+  --ke-pnd-t:#92400E; --ke-pnd-b:#FFFBEB; --ke-pnd-bd:#FDE68A;
+
+  /* country badge colours */
+  --ke-SG-t:#3730A3; --ke-SG-b:#EEF2FF; --ke-SG-bd:#C7D2FE;
+  --ke-TH-t:#92400E; --ke-TH-b:#FFFBEB; --ke-TH-bd:#FDE68A;
+  --ke-VN-t:#065F46; --ke-VN-b:#ECFDF5; --ke-VN-bd:#A7F3D0;
+  --ke-PH-t:#9A3412; --ke-PH-b:#FFF7ED; --ke-PH-bd:#FED7AA;
+  --ke-MY-t:#1e3a5f; --ke-MY-b:#dbeafe; --ke-MY-bd:#93c5fd;
+  --ke-ID-t:#9A3412; --ke-ID-b:#FFF7ED; --ke-ID-bd:#FED7AA;
+  --ke-TW-t:#075985; --ke-TW-b:#F0F9FF; --ke-TW-bd:#BAE6FD;
+  --ke-BR-t:#9D174D; --ke-BR-b:#FFF1F2; --ke-BR-bd:#FECDD3;
+
+  --ke-sb-w: 200px;
+  --ke-tb-h: 44px;
+
+  font-family: "Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  font-size: 13px; line-height: 1.5;
+  color: var(--ke-g900);
+  background: var(--ke-g100);
+  box-sizing: border-box;
+  height: 720px;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--ke-g200);
+  border-radius: 6px;
+}
+#kd-root *, #kd-root *::before, #kd-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
+#kd-root button, #kd-root select, #kd-root input { font-family: inherit; font-size: 13px; }
+#kd-root svg { display: block; flex-shrink: 0; }
+
+/* topbar */
+#kd-root .ke-topbar { height: var(--ke-tb-h); background: #fff; border-bottom: 1px solid var(--ke-g200); display: flex; align-items: center; flex-shrink: 0; z-index: 10; }
+#kd-root .ke-brand { width: var(--ke-sb-w); display: flex; align-items: center; gap: 8px; padding: 0 14px; border-right: 1px solid var(--ke-g200); height: 100%; flex-shrink: 0; }
+#kd-root .ke-brand-name { font-size: 12.5px; font-weight: 600; color: var(--ke-g900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#kd-root .ke-breadcrumb { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--ke-g500); padding: 0 16px; flex: 1; }
+#kd-root .ke-bc-sep { color: var(--ke-g300); }
+#kd-root .ke-bc-cur { color: var(--ke-g700); font-weight: 500; }
+#kd-root .ke-topbar-right { display: flex; align-items: center; gap: 6px; padding: 0 14px; margin-left: auto; }
+#kd-root .ke-avatar { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--ke-g500); cursor: pointer; padding: 3px 6px; border-radius: 4px; }
+#kd-root .ke-avatar:hover { background: var(--ke-g100); }
+#kd-root .ke-avatar-dot { width: 24px; height: 24px; border-radius: 50%; background: var(--ke-blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; flex-shrink: 0; }
+#kd-root .ke-sync { font-size: 11px; color: var(--ke-g500); display: flex; align-items: center; gap: 5px; background: var(--ke-g50); border: 1px solid var(--ke-g200); border-radius: 4px; padding: 3px 9px; }
+#kd-root .ke-sync-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; flex-shrink: 0; }
+#kd-root .ke-date-chip { font-size: 11px; color: var(--ke-g500); display: flex; align-items: center; gap: 5px; background: var(--ke-g50); border: 1px solid var(--ke-g200); border-radius: 4px; padding: 3px 9px; }
+#kd-root .ke-date-chip svg { color: var(--ke-g400); }
+
+/* layout */
+#kd-root .ke-body-row { display: flex; flex: 1; overflow: hidden; }
+
+/* sidebar */
+#kd-root .ke-sidebar { width: var(--ke-sb-w); background: #fff; border-right: 1px solid var(--ke-g200); display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; flex-shrink: 0; scrollbar-width: thin; scrollbar-color: var(--ke-g200) transparent; }
+#kd-root .ke-sidebar::-webkit-scrollbar { width: 3px; }
+#kd-root .ke-sidebar::-webkit-scrollbar-thumb { background: var(--ke-g200); border-radius: 4px; }
+#kd-root .ke-nav-sec { padding: 5px 0; }
+#kd-root .ke-nav-sec + .ke-nav-sec { border-top: 1px solid var(--ke-g200); padding-top: 5px; }
+#kd-root .ke-nav-item { display: flex; align-items: center; gap: 7px; padding: 7px 12px; font-size: 12px; font-weight: 500; color: var(--ke-g700); cursor: pointer; user-select: none; transition: background .1s; }
+#kd-root .ke-nav-item:hover { background: var(--ke-g50); }
+#kd-root .ke-nav-icon { color: var(--ke-g400); flex-shrink: 0; }
+#kd-root .ke-nav-chev { margin-left: auto; color: var(--ke-g400); transition: transform .16s; flex-shrink: 0; }
+#kd-root .ke-nav-item.open .ke-nav-chev { transform: rotate(180deg); }
+#kd-root .ke-nav-sub { display: none; }
+#kd-root .ke-nav-sub-item { display: flex; align-items: center; padding: 6px 12px 6px 30px; font-size: 11.5px; color: var(--ke-g500); cursor: pointer; transition: background .1s, color .1s; position: relative; }
+#kd-root .ke-nav-sub-item:hover { background: var(--ke-g50); color: var(--ke-g700); }
+#kd-root .ke-nav-sub-item.active { color: var(--ke-blue); font-weight: 600; background: var(--ke-blue-lt); }
+#kd-root .ke-nav-sub-item.active::before { content: ""; position: absolute; left: 0; top: 3px; bottom: 3px; width: 2px; background: var(--ke-blue); border-radius: 0 2px 2px 0; }
+
+/* main */
+#kd-root .ke-main { flex: 1; overflow-y: auto; padding: 20px; scrollbar-width: thin; scrollbar-color: var(--ke-g200) transparent; }
+#kd-root .ke-main::-webkit-scrollbar { width: 4px; }
+#kd-root .ke-main::-webkit-scrollbar-thumb { background: var(--ke-g200); border-radius: 4px; }
+#kd-root .ke-page-hdr { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
+#kd-root .ke-page-title { font-size: 15px; font-weight: 600; color: var(--ke-g900); }
+#kd-root .ke-page-meta { font-size: 11.5px; color: var(--ke-g500); margin-top: 2px; }
+
+/* card, tabs, toolbar — identical to KE */
+#kd-root .ke-card { background: #fff; border: 1px solid var(--ke-g200); border-radius: 5px; overflow: hidden; }
+#kd-root .ke-tabs { display: flex; border-bottom: 1px solid var(--ke-g200); padding: 0 16px; overflow-x: auto; scrollbar-width: none; background: var(--ke-g50); }
+#kd-root .ke-tabs::-webkit-scrollbar { display: none; }
+#kd-root .ke-tab { display: flex; align-items: center; gap: 5px; padding: 9px 12px 10px; font-size: 12px; font-weight: 500; color: var(--ke-g500); border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; cursor: pointer; user-select: none; transition: color .12s, border-color .12s; background: transparent; }
+#kd-root .ke-tab:hover { color: var(--ke-g700); }
+#kd-root .ke-tab.active { color: var(--ke-blue); border-bottom-color: var(--ke-blue); }
+#kd-root .ke-tab-ct { font-size: 10px; font-weight: 600; background: var(--ke-g200); color: var(--ke-g500); padding: 1px 5px; border-radius: 10px; min-width: 18px; text-align: center; }
+#kd-root .ke-tab.active .ke-tab-ct { background: var(--ke-blue-lt); color: var(--ke-blue); }
+#kd-root .ke-toolbar { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--ke-g200); background: #fff; }
+#kd-root .ke-input, #kd-root .ke-select { height: 29px; border: 1px solid var(--ke-g300); border-radius: 4px; color: var(--ke-g900); background: #fff; outline: none; transition: border-color .12s; padding: 0 9px; }
+#kd-root .ke-input { flex: 1; min-width: 140px; }
+#kd-root .ke-select { min-width: 100px; cursor: pointer; padding: 0 7px; }
+#kd-root .ke-input:focus, #kd-root .ke-select:focus { border-color: var(--ke-blue); }
+#kd-root .ke-input::placeholder { color: var(--ke-g400); }
+#kd-root .ke-tlabel { font-size: 11.5px; color: var(--ke-g500); white-space: nowrap; }
+#kd-root .ke-countbar { font-size: 11px; color: var(--ke-g400); padding: 5px 16px 3px; border-bottom: 1px solid var(--ke-g100); background: #fff; }
+#kd-root .ke-countbar strong { color: var(--ke-g500); font-weight: 600; }
+
+/* panels */
+#kd-root .ke-panel { display: none; }
+#kd-root .ke-panel.active { display: block; }
+
+/* table — same as KE */
+#kd-root .ke-tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+#kd-root .ke-tbl th { text-align: left; padding: 7px 16px; font-size: 10.5px; font-weight: 600; color: var(--ke-g500); text-transform: uppercase; letter-spacing: .4px; background: var(--ke-g50); border-bottom: 1px solid var(--ke-g200); white-space: nowrap; }
+#kd-root .ke-tbl td { padding: 10px 16px; border-bottom: 1px solid var(--ke-g100); vertical-align: middle; color: var(--ke-g700); }
+#kd-root .ke-tbl tr:last-child td { border-bottom: none; }
+#kd-root .ke-tbl tr:hover td { background: var(--ke-g50); }
+#kd-root .ke-tbl tr.hidden-row { display: none; }
+
+/* data cell styles */
+#kd-root .cell-name { font-size: 12.5px; font-weight: 500; color: var(--ke-blue); cursor: default; }
+#kd-root .cell-id { font-family: "Consolas","Courier New",monospace; font-size: 11px; color: var(--ke-g400); display: block; margin-top: 1px; }
+#kd-root .cell-mono { font-family: "Consolas","Courier New",monospace; font-size: 11.5px; }
+#kd-root .cell-address { font-size: 11.5px; color: var(--ke-g500); max-width: 220px; }
+#kd-root .cell-secondary { font-size: 11px; color: var(--ke-g400); display: block; margin-top: 2px; font-style: italic; }
+
+/* status badge */
+#kd-root .badge-active { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 500; color: var(--ke-ok-t); background: var(--ke-ok-b); border: 1px solid var(--ke-ok-bd); border-radius: 10px; padding: 2px 8px; }
+#kd-root .badge-active::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: #22c55e; flex-shrink: 0; }
+#kd-root .badge-inactive { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 500; color: var(--ke-nil-t); background: var(--ke-nil-b); border: 1px solid var(--ke-nil-bd); border-radius: 10px; padding: 2px 8px; }
+#kd-root .badge-inactive::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--ke-g300); flex-shrink: 0; }
+
+/* country badge — reuses ke-mkt pattern */
+#kd-root .ke-mkt { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 10px; white-space: nowrap; }
+#kd-root .ke-mkt-SG { background: var(--ke-SG-b); color: var(--ke-SG-t); border: 1px solid var(--ke-SG-bd); }
+#kd-root .ke-mkt-TH { background: var(--ke-TH-b); color: var(--ke-TH-t); border: 1px solid var(--ke-TH-bd); }
+#kd-root .ke-mkt-VN { background: var(--ke-VN-b); color: var(--ke-VN-t); border: 1px solid var(--ke-VN-bd); }
+#kd-root .ke-mkt-PH { background: var(--ke-PH-b); color: var(--ke-PH-t); border: 1px solid var(--ke-PH-bd); }
+#kd-root .ke-mkt-MY { background: var(--ke-MY-b); color: var(--ke-MY-t); border: 1px solid var(--ke-MY-bd); }
+#kd-root .ke-mkt-ID { background: var(--ke-ID-b); color: var(--ke-ID-t); border: 1px solid var(--ke-ID-bd); }
+#kd-root .ke-mkt-TW { background: var(--ke-TW-b); color: var(--ke-TW-t); border: 1px solid var(--ke-TW-bd); }
+#kd-root .ke-mkt-BR { background: var(--ke-BR-b); color: var(--ke-BR-t); border: 1px solid var(--ke-BR-bd); }
+
+/* f/l badge */
+#kd-root .badge-local  { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: var(--ke-ok-b); color: var(--ke-ok-t); border: 1px solid var(--ke-ok-bd); }
+#kd-root .badge-foreign { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: var(--ke-pnd-b); color: var(--ke-pnd-t); border: 1px solid var(--ke-pnd-bd); }
+
+/* wht badge */
+#kd-root .badge-wht-yes { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: var(--ke-ok-b); color: var(--ke-ok-t); border: 1px solid var(--ke-ok-bd); }
+#kd-root .badge-wht-no  { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: var(--ke-nil-b); color: var(--ke-nil-t); border: 1px solid var(--ke-nil-bd); }
+
+/* supplier action buttons container */
+#kd-root .sup-btns { display: flex; gap: 5px; margin-top: 5px; }
+
+/* bank expand button */
+#kd-root .bank-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 500; color: var(--ke-blue);
+  background: var(--ke-blue-lt); border: 1px solid var(--ke-blue-bd);
+  border-radius: 4px; padding: 2px 7px; cursor: pointer;
+  transition: background .1s;
+}
+#kd-root .bank-btn:hover { background: var(--ke-blue-bd); }
+#kd-root .bank-btn svg { transition: transform .15s; }
+#kd-root .bank-btn.open svg { transform: rotate(180deg); }
+
+/* details expand button */
+#kd-root .details-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 500; color: var(--ke-g500);
+  background: var(--ke-g50); border: 1px solid var(--ke-g300);
+  border-radius: 4px; padding: 2px 7px; cursor: pointer;
+  transition: background .1s, color .1s;
+}
+#kd-root .details-btn:hover { background: var(--ke-g200); color: var(--ke-g700); }
+#kd-root .details-btn svg { transition: transform .15s; }
+#kd-root .details-btn.open svg { transform: rotate(180deg); }
+#kd-root .details-btn.open { background: var(--ke-g200); color: var(--ke-g700); }
+
+/* bank accounts expansion row */
+#kd-root .bank-expand-row { display: none; }
+#kd-root .bank-expand-row.open { display: table-row; }
+#kd-root .bank-expand-cell {
+  padding: 12px 16px 14px 36px !important;
+  background: var(--ke-g50) !important;
+  border-bottom: 2px solid var(--ke-g200) !important;
+}
+
+/* details expansion row */
+#kd-root .details-expand-row { display: none; }
+#kd-root .details-expand-row.open { display: table-row; }
+#kd-root .details-expand-cell {
+  padding: 12px 16px 14px 36px !important;
+  background: #FFFBF5 !important;
+  border-bottom: 2px solid var(--ke-g200) !important;
+}
+
+/* supplier detail strip — fields inside details expand row */
+#kd-root .sup-detail-strip {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 2px 0;
+}
+#kd-root .sup-detail-chip {
+  display: flex; align-items: center; gap: 6px;
+  background: #fff; border: 1px solid var(--ke-g200);
+  border-radius: 4px; padding: 4px 10px;
+  font-size: 11px;
+}
+#kd-root .sup-detail-label {
+  color: var(--ke-g400); white-space: nowrap; font-weight: 500; font-size: 10.5px; text-transform: uppercase; letter-spacing: .3px;
+}
+#kd-root .sup-detail-sep { color: var(--ke-g300); font-size: 11px; }
+#kd-root .sup-detail-val { color: var(--ke-g700); font-family: "Consolas","Courier New",monospace; font-size: 11px; }
+#kd-root .sup-detail-val.plain { font-family: inherit; }
+
+/* NEW: Copy button for supplier detail fields */
+#kd-root .copy-btn {
+  background: none;
+  border: none;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin-left: 4px;
+  color: var(--ke-g400);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color .15s;
+}
+#kd-root .copy-btn:hover { color: var(--ke-blue); }
+#kd-root .copy-btn.copied { color: #22c55e; animation: copyPop 0.3s ease; }
+@keyframes copyPop { 0% { transform: scale(0.8); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+#kd-root .bank-cards { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 2px; }
+#kd-root .bank-card {
+  background: #fff; border: 1px solid var(--ke-g200);
+  border-radius: 4px; padding: 10px 12px; min-width: 175px;
+}
+#kd-root .bank-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; padding-bottom: 7px; border-bottom: 1px solid var(--ke-g100); }
+#kd-root .bank-card-name { font-size: 12px; font-weight: 500; color: var(--ke-g900); }
+#kd-root .bank-primary-tag { font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 10px; background: #EFF6FF; color: #1d4ed8; border: 1px solid #BFDBFE; }
+#kd-root .bank-row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 11.5px; }
+#kd-root .bank-row-label { color: var(--ke-g400); }
+#kd-root .bank-row-val { font-family: "Consolas","Courier New",monospace; font-size: 11px; color: var(--ke-g700); }
+#kd-root .bank-row-val.plain { font-family: inherit; font-size: 11.5px; }
+#kd-root .bank-empty { display: flex; align-items: center; justify-content: center; min-width: 175px; min-height: 80px; background: var(--ke-g50); border: 1px dashed var(--ke-g300); border-radius: 4px; font-size: 11.5px; color: var(--ke-g400); padding: 12px; text-align: center; }
+
+/* pagination */
+#kd-root .ke-pagination { display: flex; align-items: center; justify-content: space-between; padding: 9px 16px; border-top: 1px solid var(--ke-g200); background: #fff; font-size: 11.5px; color: var(--ke-g500); }
+#kd-root .ke-page-btns { display: flex; gap: 4px; }
+#kd-root .ke-page-btn { width: 26px; height: 26px; border: 1px solid var(--ke-g200); border-radius: 4px; background: #fff; color: var(--ke-g700); font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+#kd-root .ke-page-btn:hover { background: var(--ke-g50); }
+#kd-root .ke-page-btn.active { background: var(--ke-blue); color: #fff; border-color: var(--ke-blue); }
+#kd-root .ke-page-btn:disabled { opacity: 0.35; cursor: default; }
+</style>
+
+<div id="kd-root">
+
+  <!-- topbar -->
+  <header class="ke-topbar">
+    <div class="ke-brand">
+      <svg width="26" height="26" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+        <defs><clipPath id="kdLogo"><circle cx="50" cy="50" r="50"/></clipPath></defs>
+        <g clip-path="url(#kdLogo)">
+          <rect width="100" height="100" fill="#1A237E"/>
+          <path d="M0,68 Q25,58 50,65 Q75,72 100,62 L100,100 L0,100 Z" fill="#283593"/>
+          <path d="M0,55 Q20,45 45,52 Q70,59 100,48 L100,100 L0,100 Z" fill="#3949AB"/>
+          <path d="M0,45 Q25,35 55,43 Q75,49 100,38 L100,65 Q75,75 50,68 Q25,61 0,70 Z" fill="#5C6BC0"/>
+          <path d="M0,32 Q30,20 55,30 Q78,39 100,28 L100,50 Q75,42 50,35 Q25,28 0,40 Z" fill="#00E5FF"/>
+          <path d="M0,10 Q25,2 50,10 Q75,18 100,8 L100,20 Q75,30 50,22 Q25,14 0,22 Z" fill="#FF6D00"/>
+          <path d="M0,0 L100,0 L100,14 Q75,24 50,16 Q25,8 0,18 Z" fill="#D32F2F"/>
+        </g>
+      </svg>
+      <span class="ke-brand-name">Sea Billing & Collection System</span>
+    </div>
+    <nav class="ke-breadcrumb">
+      <span>Knowledge Base</span>
+      <span class="ke-bc-sep">›</span>
+      <span class="ke-bc-cur">Knowledge Detail</span>
+    </nav>
+    <div class="ke-topbar-right">
+      <div class="ke-sync">
+        <span class="ke-sync-dot"></span>
+        Last synced: 2026-04-21 14:00 UTC+8
+      </div>
+      <div class="ke-avatar">
+        <div class="ke-avatar-dot">ML</div>
+        <span>megan.lee@shopee.com</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="ke-body-row">
+
+    <!-- sidebar -->
+    <aside class="ke-sidebar">
+      <div class="ke-nav-sec">
+        <div class="ke-nav-item open" onclick="kdNav(this,'kdNavKb')">
+          <svg class="ke-nav-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Knowledge Base
+          <svg class="ke-nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="ke-nav-sub" id="kdNavKb" style="display:block">
+          <div class="ke-nav-sub-item active">Knowledge Detail</div>
+          <div class="ke-nav-sub-item">Knowledge Endpoint</div>
+        </div>
+      </div>
+      <div class="ke-nav-sec">
+        <div class="ke-nav-item open" onclick="kdNav(this,'kdNavCase')">
+          <svg class="ke-nav-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          Case Management
+          <svg class="ke-nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="ke-nav-sub" id="kdNavCase" style="display:block">
+          <div class="ke-nav-sub-item">Case List</div>
+          <div class="ke-nav-sub-item">Archive Case</div>
+          <div class="ke-nav-sub-item">Golden Case</div>
+          <div class="ke-nav-sub-item">Pattern Library</div>
+        </div>
+      </div>
+      <div class="ke-nav-sec">
+        <div class="ke-nav-item open" onclick="kdNav(this,'kdNavAgent')">
+          <svg class="ke-nav-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 11V7"/><circle cx="12" cy="5" r="2"/><line x1="8" y1="15" x2="8.01" y2="15"/><line x1="16" y1="15" x2="16.01" y2="15"/></svg>
+          Agent Management
+          <svg class="ke-nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="ke-nav-sub" id="kdNavAgent" style="display:block">
+          <div class="ke-nav-sub-item">Agent List</div>
+          <div class="ke-nav-sub-item">Regression Test</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- main -->
+    <main class="ke-main">
+
+      <div class="ke-page-hdr">
+        <div>
+          <div class="ke-page-title">Knowledge Detail</div>
+          <div class="ke-page-meta">Master reference data for buyer entities and supplier master records. Read-only. All supplier metadata (Alias, Liability Account, Prepayment Account, Site Email) added for every region.</div>
+        </div>
+      </div>
+
+      <div class="ke-card">
+
+        <!-- tabs -->
+        <div class="ke-tabs" id="kdTabs">
+          <div class="ke-tab active" onclick="kdTab(0)">Buyer Entity <span class="ke-tab-ct">8</span></div>
+          <div class="ke-tab" onclick="kdTab(1)">Supplier Master <span class="ke-tab-ct">26</span></div>
+        </div>
+
+        <!-- ════════════════════════════════════
+             PANEL 0 — BUYER ENTITY
+        ════════════════════════════════════ -->
+        <div class="ke-panel active" id="kdPanel0">
+
+          <div class="ke-toolbar">
+            <input type="text" class="ke-input" id="beSearch" placeholder="Search ID, Name, or TIN…" oninput="beFilter()">
+            <span class="ke-tlabel">Region</span>
+            <select class="ke-select" id="beRegion" onchange="beFilter()">
+              <option value="">All</option>
+              <option value="SEA">SEA</option>
+              <option value="EA">EA</option>
+              <option value="LATAM">LATAM</option>
+            </select>
+            <span class="ke-tlabel">Status</span>
+            <select class="ke-select" id="beStatus" onchange="beFilter()">
+              <option value="">All</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+
+          <div class="ke-countbar" id="beCount"><strong>8</strong> records</div>
+
+          <table class="ke-tbl" id="beTbl">
+            <thead>
+              <tr>
+                <th style="width:190px">Buyer</th>
+                <th>Billing TIN</th>
+                <th>Address</th>
+                <th>Branch</th>
+                <th>Country</th>
+                <th>Region</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-region="SEA" data-status="Active" data-q="buy-001 shopee singapore pte ltd 201502418d">
+                <td><span class="cell-name">Shopee Singapore Pte Ltd</span><span class="cell-id">BUY-001</span></td>
+                <td><span class="cell-mono">201502418D</span></td>
+                <td><span class="cell-address">5 Science Park Drive, Shopee Building, Singapore 118265</span></td>
+                <td>—</td>
+                <td><span class="ke-mkt ke-mkt-SG">SG</span></td>
+                <td>SEA</td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr data-region="SEA" data-status="Active" data-q="buy-002 shopee thailand co ltd 0105558022134">
+                <td><span class="cell-name">Shopee Thailand Co Ltd</span><span class="cell-id">BUY-002</span></td>
+                <td><span class="cell-mono">0105558022134</span></td>
+                <td><span class="cell-address">1788 Singha Complex, 26th Fl, New Petchaburi Rd, Bangkok 10310</span></td>
+                <td>Head Office</td>
+                <td><span class="ke-mkt ke-mkt-TH">TH</span></td>
+                <td>SEA</td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr data-region="SEA" data-status="Active" data-q="buy-003 shopee vietnam llc 0312776486">
+                <td><span class="cell-name">Shopee Vietnam LLC</span><span class="cell-id">BUY-003</span></td>
+                <td><span class="cell-mono">0312776486</span></td>
+                <td><span class="cell-address">Fl 17, Saigon Centre Tower 2, 67 Le Loi, District 1, HCMC</span></td>
+                <td>—</td>
+                <td><span class="ke-mkt ke-mkt-VN">VN</span></td>
+                <td>SEA</td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr data-region="SEA" data-status="Active" data-q="buy-004 shopee philippines inc 008-944-843-000">
+                <td><span class="cell-name">Shopee Philippines Inc</span><span class="cell-id">BUY-004</span></td>
+                <td><span class="cell-mono">008–944–843–000</span></td>
+                <td><span class="cell-address">25th Fl, Asian Century Center, 27th St, BGC, Taguig City</span></td>
+                <td>—</td>
+                <td><span class="ke-mkt ke-mkt-PH">PH</span></td>
+                <td>SEA</td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr data-region="SEA" data-status="Inactive" data-q="buy-005 shopee malaysia sdn bhd 201601022501">
+                <td><span class="cell-name">Shopee Malaysia Sdn Bhd</span><span class="cell-id">BUY-005</span></td>
+                <td><span class="cell-mono">201601022501</span></td>
+                <td><span class="cell-address">Level 35, Gardens South Tower, Mid Valley City, Kuala Lumpur</span></td>
+                <td>—</td>
+                <td><span class="ke-mkt ke-mkt-MY">MY</span></td>
+                <td>SEA</td>
+                <td><span class="badge-inactive">Inactive</span></td>
+              </tr>
+              <tr data-region="SEA" data-status="Active" data-q="buy-006 shopee indonesia pt 020000001337">
+                <td><span class="cell-name">Shopee Indonesia PT</span><span class="cell-id">BUY-006</span></td>
+                <td><span class="cell-mono">020.000.001.337.5</span></td>
+                <td><span class="cell-address">Treasury Tower Lt. 56, District 8, SCBD, Jakarta Selatan 12190</span></td>
+                <td>—</td>
+                <td><span class="ke-mkt ke-mkt-ID">ID</span></td>
+                <td>SEA</td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr data-region="EA" data-status="Active" data-q="buy-007 sea taiwan ltd 54341434">
+                <td><span class="cell-name">Sea Taiwan Ltd</span><span class="cell-id">BUY-007</span></td>
+                <td><span class="cell-mono">54341434</span></td>
+                <td><span class="cell-address">14F, No. 68, Sec 5, Zhongxiao E Rd, Xinyi District, Taipei</span></td>
+                <td>—</td>
+                <td><span class="ke-mkt ke-mkt-TW">TW</span></td>
+                <td>EA</td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr data-region="LATAM" data-status="Inactive" data-q="buy-008 sea brazil ltda 28865060000198">
+                <td><span class="cell-name">Sea Brazil LTDA</span><span class="cell-id">BUY-008</span></td>
+                <td><span class="cell-mono">28.865.060/0001-98</span></td>
+                <td><span class="cell-address">Av. Brigadeiro Faria Lima, 3900, Itaim Bibi, São Paulo</span></td>
+                <td>—</td>
+                <td><span class="ke-mkt ke-mkt-BR">BR</span></td>
+                <td>LATAM</td>
+                <td><span class="badge-inactive">Inactive</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="ke-pagination">
+            <span id="bePagText">Showing 1–8 of 8 records</span>
+            <div class="ke-page-btns">
+              <button class="ke-page-btn" disabled>‹</button>
+              <button class="ke-page-btn active">1</button>
+              <button class="ke-page-btn" disabled>›</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ════════════════════════════════════
+             PANEL 1 — SUPPLIER MASTER
+        ════════════════════════════════════ -->
+        <div class="ke-panel" id="kdPanel1">
+
+          <div class="ke-toolbar">
+            <input type="text" class="ke-input" id="smSearch" placeholder="Search by ID, Name, Tax No., Alias or Email…" oninput="smFilter()">
+            <span class="ke-tlabel">Country</span>
+            <select class="ke-select" id="smCountry" onchange="smFilter()">
+              <option value="">All</option>
+              <option value="SG">SG</option>
+              <option value="TH">TH</option>
+              <option value="VN">VN</option>
+              <option value="PH">PH</option>
+              <option value="MY">MY</option>
+              <option value="ID">ID</option>
+              <option value="TW">TW</option>
+            </select>
+            <span class="ke-tlabel">WHT</span>
+            <select class="ke-select" id="smWht" onchange="smFilter()" style="min-width:70px">
+              <option value="">All</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+            <span class="ke-tlabel">Status</span>
+            <select class="ke-select" id="smStatus" onchange="smFilter()">
+              <option value="">All</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+
+          <div class="ke-countbar" id="smCount"><strong>26</strong> records</div>
+
+          <table class="ke-tbl" id="smTbl">
+            <thead>
+              <tr>
+                <th style="width:185px">Supplier</th>
+                <th>Tax Reg No.</th>
+                <th>Country</th>
+                <th>CCY</th>
+                <th>F/L</th>
+                <th>WHT</th>
+                <th>Payment Term</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <!-- SUP-001 -->
+              <tr class="sm-row" data-country="SG" data-wht="No" data-status="Active" data-q="sup-001 accenture pte ltd 199401548w">
+                <td>
+                  <span class="cell-name">Accenture Pte Ltd</span>
+                  <span class="cell-id">SUP-001</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details001')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank001')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">199401548W</span></td>
+                <td><span class="ke-mkt ke-mkt-SG">SG</span></td>
+                <td>SGD</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-no">No</span></td>
+                <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details001">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">0deb848f-f45b-11ed-ae59-80693348a001</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.001.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.001.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">claire.tan@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank001">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">DBS Bank Ltd</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****7821</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">SGD</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">ACCENTURE-SG-01</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-002 -->
+              <tr class="sm-row" data-country="SG" data-wht="No" data-status="Active" data-q="sup-002 aws singapore pte ltd 201201552r">
+                <td>
+                  <span class="cell-name">AWS Singapore Pte Ltd</span>
+                  <span class="cell-id">SUP-002</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details002')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank002')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      2 bank accounts
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">201201552R</span></td>
+                <td><span class="ke-mkt ke-mkt-SG">SG</span></td>
+                <td>SGD</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-no">No</span></td>
+                <td>Net 15<span class="cell-secondary">Invoice Date + 15 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details002">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">1fec959f-f45b-11ed-ae59-80693348a002</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.001.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.001.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">benjamin.wong@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank002">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">OCBC Bank Singapore</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****3345</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">SGD</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">AWS-SG-MAIN</span></div>
+                    </div>
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">Citibank N.A. Singapore</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****9902</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">USD</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">AWS-SG-USD</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-003 -->
+              <tr class="sm-row" data-country="SG" data-wht="Yes" data-status="Active" data-q="sup-003 google asia pacific pte ltd 200817949w">
+                <td>
+                  <span class="cell-name">Google Asia Pacific Pte Ltd</span>
+                  <span class="cell-id">SUP-003</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details003')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank003')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">200817949W</span></td>
+                <td><span class="ke-mkt ke-mkt-SG">SG</span></td>
+                <td>SGD</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-yes">Yes</span></td>
+                <td>Net 45<span class="cell-secondary">Invoice Date + 45 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details003">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">2a1ca6af-f45c-11ed-ae59-80693348a003</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.001.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.001.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">priya.sharma@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank003">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">JP Morgan Chase</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****1122</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">SGD</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">GOOGLE-SG-01</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-004 -->
+              <tr class="sm-row" data-country="TH" data-wht="Yes" data-status="Active" data-q="sup-004 microsoft thailand co ltd 0105536049211">
+                <td>
+                  <span class="cell-name">Microsoft (Thailand) Co Ltd</span>
+                  <span class="cell-id">SUP-004</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details004')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank004')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      2 bank accounts
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">0105536049211</span></td>
+                <td><span class="ke-mkt ke-mkt-TH">TH</span></td>
+                <td>THB</td>
+                <td><span class="badge-foreign">FOREIGN</span></td>
+                <td><span class="badge-wht-yes">Yes</span></td>
+                <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details004">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">3b2db7bf-f45c-11ed-ae59-80693348a004</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.002.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.002.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">kannika.thongchai@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank004">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">UOB Thailand</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****5566</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">THB</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">MSFT-TH-MAIN</span></div>
+                    </div>
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">Bangkok Bank PCL</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****4401</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">USD</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">MSFT-TH-USD</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-005 -->
+              <tr class="sm-row" data-country="VN" data-wht="Yes" data-status="Active" data-q="sup-005 deloitte advisory vietnam 0100688100">
+                <td>
+                  <span class="cell-name">Deloitte Advisory Vietnam</span>
+                  <span class="cell-id">SUP-005</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details005')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank005')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">0100688100</span></td>
+                <td><span class="ke-mkt ke-mkt-VN">VN</span></td>
+                <td>VND</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-yes">Yes</span></td>
+                <td>Net 60<span class="cell-secondary">Invoice Date + 60 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details005">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">4c3ec8cf-f45c-11ed-ae59-80693348a005</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.003.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.003.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">nguyen.thi.lan@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank005">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">Vietcombank</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****6678</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">VND</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">DELOITTE-VN-01</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-006 -->
+              <tr class="sm-row" data-country="PH" data-wht="No" data-status="Inactive" data-q="sup-006 siemens inc philippines 004537414000">
+                <td>
+                  <span class="cell-name">Siemens Inc Philippines</span>
+                  <span class="cell-id">SUP-006</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details006')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank006')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      No accounts
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">004-537-414-000</span></td>
+                <td><span class="ke-mkt ke-mkt-PH">PH</span></td>
+                <td>PHP</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-no">No</span></td>
+                <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+                <td><span class="badge-inactive">Inactive</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details006">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">5d4fd9df-f45c-11ed-ae59-80693348a006</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.004.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.004.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">inactive_franchesca.hitchon@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank006">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-empty">No bank accounts synced from EBS for this supplier.</div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-007 -->
+              <tr class="sm-row" data-country="SG" data-wht="No" data-status="Active" data-q="sup-007 salesforce singapore pte ltd 201226983g">
+                <td>
+                  <span class="cell-name">Salesforce Singapore Pte Ltd</span>
+                  <span class="cell-id">SUP-007</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details007')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank007')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">201226983G</span></td>
+                <td><span class="ke-mkt ke-mkt-SG">SG</span></td>
+                <td>SGD</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-no">No</span></td>
+                <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details007">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">6e50eaef-f45c-11ed-ae59-80693348a007</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.001.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.001.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">rachel.lim@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank007">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">Standard Chartered Singapore</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****2290</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">SGD</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">SFDC-SG-01</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-008 -->
+              <tr class="sm-row" data-country="SG" data-wht="No" data-status="Active" data-q="sup-008 oracle systems singapore pte ltd 199503403n">
+                <td>
+                  <span class="cell-name">Oracle Systems Singapore Pte Ltd</span>
+                  <span class="cell-id">SUP-008</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details008')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank008')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      2 bank accounts
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">199503403N</span></td>
+                <td><span class="ke-mkt ke-mkt-SG">SG</span></td>
+                <td>SGD</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-no">No</span></td>
+                <td>Net 45<span class="cell-secondary">Invoice Date + 45 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details008">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">7f61fbff-f45c-11ed-ae59-80693348a008</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.001.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.001.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">david.koh@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank008">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">DBS Bank Ltd</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****4478</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">SGD</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">ORACLE-SG-MAIN</span></div>
+                    </div>
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">HSBC Singapore</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****8812</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">USD</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">ORACLE-SG-USD</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-009 -->
+              <tr class="sm-row" data-country="TH" data-wht="Yes" data-status="Active" data-q="sup-009 sap thailand co ltd 0105552096100">
+                <td>
+                  <span class="cell-name">SAP (Thailand) Co Ltd</span>
+                  <span class="cell-id">SUP-009</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details009')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank009')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">0105552096100</span></td>
+                <td><span class="ke-mkt ke-mkt-TH">TH</span></td>
+                <td>THB</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-yes">Yes</span></td>
+                <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details009">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">8a720c0f-f45d-11ed-ae59-80693348a009</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.002.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.002.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">supaporn.ratchatasiri@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank009">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">Kasikorn Bank PCL</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****3310</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">THB</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">SAP-TH-MAIN</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-010 -->
+              <tr class="sm-row" data-country="TH" data-wht="No" data-status="Active" data-q="sup-010 dhl express international thailand 0105519003773">
+                <td>
+                  <span class="cell-name">DHL Express Intl (Thailand) Ltd</span>
+                  <span class="cell-id">SUP-010</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details010')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank010')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">0105519003773</span></td>
+                <td><span class="ke-mkt ke-mkt-TH">TH</span></td>
+                <td>THB</td>
+                <td><span class="badge-foreign">FOREIGN</span></td>
+                <td><span class="badge-wht-no">No</span></td>
+                <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details010">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">9b831d1f-f45d-11ed-ae59-80693348a010</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.002.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.002.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">thapanee.wongkasem@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank010">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">SCB — Siam Commercial Bank</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****7745</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">THB</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">DHL-TH-MAIN</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-011 -->
+              <tr class="sm-row" data-country="VN" data-wht="Yes" data-status="Active" data-q="sup-011 kpmg vietnam audit company ltd 0100777890">
+                <td>
+                  <span class="cell-name">KPMG Vietnam Audit Co Ltd</span>
+                  <span class="cell-id">SUP-011</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details011')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank011')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">0100777890</span></td>
+                <td><span class="ke-mkt ke-mkt-VN">VN</span></td>
+                <td>VND</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-yes">Yes</span></td>
+                <td>Net 45<span class="cell-secondary">Invoice Date + 45 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details011">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">ac942e2f-f45d-11ed-ae59-80693348a011</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.003.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.003.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">pham.duc.minh@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank011">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">BIDV — Bank for Investment & Development</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****5521</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">VND</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">KPMG-VN-01</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-012 -->
+              <tr class="sm-row" data-country="VN" data-wht="No" data-status="Active" data-q="sup-012 vnpt technology corporation 0100684991">
+                <td>
+                  <span class="cell-name">VNPT Technology Corporation</span>
+                  <span class="cell-id">SUP-012</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details012')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank012')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">0100684991</span></td>
+                <td><span class="ke-mkt ke-mkt-VN">VN</span></td>
+                <td>VND</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-no">No</span></td>
+                <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details012">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">bda53f3f-f45d-11ed-ae59-80693348a012</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.003.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.003.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">tran.thi.huong@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank012">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">VietinBank</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****8840</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">VND</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">VNPT-VN-01</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-013 -->
+              <tr class="sm-row" data-country="PH" data-wht="Yes" data-status="Active" data-q="sup-013 pwc consulting philippines 000-441-524-000">
+                <td>
+                  <span class="cell-name">PwC Consulting Philippines</span>
+                  <span class="cell-id">SUP-013</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details013')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank013')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">000-441-524-000</span></td>
+                <td><span class="ke-mkt ke-mkt-PH">PH</span></td>
+                <td>PHP</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-yes">Yes</span></td>
+                <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details013">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">ceb6404f-f45d-11ed-ae59-80693348a013</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.004.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.004.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">maria.santos@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank013">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">BDO Unibank Inc</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****6630</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">PHP</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">PWC-PH-01</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-014 -->
+              <tr class="sm-row" data-country="PH" data-wht="No" data-status="Active" data-q="sup-014 ey philippines isla lipana 005-644-217-000">
+                <td>
+                  <span class="cell-name">Isla Lipana & Co (EY Philippines)</span>
+                  <span class="cell-id">SUP-014</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details014')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank014')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">005-644-217-000</span></td>
+                <td><span class="ke-mkt ke-mkt-PH">PH</span></td>
+                <td>PHP</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-no">No</span></td>
+                <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details014">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">dfc7515f-f45d-11ed-ae59-80693348a014</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.004.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.004.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">jose.dela.cruz@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank014">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">Metrobank Philippines</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****1155</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">PHP</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">EY-PH-01</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-015 -->
+              <tr class="sm-row" data-country="MY" data-wht="Yes" data-status="Active" data-q="sup-015 ibm malaysia sdn bhd 198201005535">
+                <td>
+                  <span class="cell-name">IBM Malaysia Sdn Bhd</span>
+                  <span class="cell-id">SUP-015</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details015')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank015')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      2 bank accounts
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">198201005535</span></td>
+                <td><span class="ke-mkt ke-mkt-MY">MY</span></td>
+                <td>MYR</td>
+                <td><span class="badge-foreign">FOREIGN</span></td>
+                <td><span class="badge-wht-yes">Yes</span></td>
+                <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details015">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">e0d8626f-f45d-11ed-ae59-80693348a015</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.005.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.005.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">faridah.binti.aziz@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank015">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">Maybank Malaysia</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****9923</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">MYR</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">IBM-MY-MAIN</span></div>
+                    </div>
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">CIMB Bank Malaysia</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****3367</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">USD</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">IBM-MY-USD</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-016 -->
+              <tr class="sm-row" data-country="MY" data-wht="No" data-status="Active" data-q="sup-016 grab technology malaysia sdn bhd 201601012450">
+                <td>
+                  <span class="cell-name">Grab Technology Malaysia Sdn Bhd</span>
+                  <span class="cell-id">SUP-016</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details016')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank016')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">201601012450</span></td>
+                <td><span class="ke-mkt ke-mkt-MY">MY</span></td>
+                <td>MYR</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-no">No</span></td>
+                <td>Net 15<span class="cell-secondary">Invoice Date + 15 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details016">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">f1e9737f-f45d-11ed-ae59-80693348a016</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.005.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.005.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">ahmad.bin.yusof@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank016">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">Public Bank Malaysia</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****7712</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">MYR</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">GRAB-MY-01</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-017 -->
+              <tr class="sm-row" data-country="ID" data-wht="Yes" data-status="Active" data-q="sup-017 pt telekomunikasi selular 0200000013382">
+                <td>
+                  <span class="cell-name">PT Telekomunikasi Selular</span>
+                  <span class="cell-id">SUP-017</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details017')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank017')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">020.000.001.338.2</span></td>
+                <td><span class="ke-mkt ke-mkt-ID">ID</span></td>
+                <td>IDR</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-yes">Yes</span></td>
+                <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details017">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">02fa848f-f45e-11ed-ae59-80693348a017</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.006.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.006.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">sari.dewi.putri@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank017">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">Bank Mandiri</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****4490</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">IDR</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">TELKOMSEL-ID-01</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-018 -->
+              <tr class="sm-row" data-country="ID" data-wht="Yes" data-status="Active" data-q="sup-018 pt ernst young indonesia 0200000014100">
+                <td>
+                  <span class="cell-name">PT Ernst & Young Indonesia</span>
+                  <span class="cell-id">SUP-018</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details018')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank018')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">020.000.001.410.0</span></td>
+                <td><span class="ke-mkt ke-mkt-ID">ID</span></td>
+                <td>IDR</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-yes">Yes</span></td>
+                <td>Net 45<span class="cell-secondary">Invoice Date + 45 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details018">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">130b959f-f45e-11ed-ae59-80693348a018</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.006.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.006.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">budi.santoso@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank018">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">Bank Central Asia (BCA)</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****3381</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">IDR</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">EY-ID-01</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-019 -->
+              <tr class="sm-row" data-country="TW" data-wht="Yes" data-status="Active" data-q="sup-019 chunghwa telecom co ltd 96979271">
+                <td>
+                  <span class="cell-name">Chunghwa Telecom Co Ltd</span>
+                  <span class="cell-id">SUP-019</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details019')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank019')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">96979271</span></td>
+                <td><span class="ke-mkt ke-mkt-TW">TW</span></td>
+                <td>TWD</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-yes">Yes</span></td>
+                <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details019">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">241ca6af-f45e-11ed-ae59-80693348a019</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.007.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.007.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">chen.wei.lin@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank019">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">CTBC Bank Taiwan</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****2207</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">TWD</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">CHT-TW-01</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-020 -->
+              <tr class="sm-row" data-country="TW" data-wht="No" data-status="Inactive" data-q="sup-020 delta electronics taiwan 11566110">
+                <td>
+                  <span class="cell-name">Delta Electronics Taiwan</span>
+                  <span class="cell-id">SUP-020</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details020')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank020')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      No accounts
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">11566110</span></td>
+                <td><span class="ke-mkt ke-mkt-TW">TW</span></td>
+                <td>TWD</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-no">No</span></td>
+                <td>Net 60<span class="cell-secondary">Invoice Date + 60 days</span></td>
+                <td><span class="badge-inactive">Inactive</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details020">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">352db7bf-f45e-11ed-ae59-80693348a020</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.007.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.007.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">inactive_yu.chien.huang@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank020">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-empty">No bank accounts synced from EBS for this supplier.</div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-021 -->
+              <tr class="sm-row" data-country="SG" data-wht="Yes" data-status="Active" data-q="sup-021 meta platforms singapore pte ltd 202015492w">
+                <td>
+                  <span class="cell-name">Meta Platforms Singapore Pte Ltd</span>
+                  <span class="cell-id">SUP-021</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details021')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank021')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">202015492W</span></td>
+                <td><span class="ke-mkt ke-mkt-SG">SG</span></td>
+                <td>SGD</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-yes">Yes</span></td>
+                <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details021">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">463ec8cf-f45e-11ed-ae59-80693348a021</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.001.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.001.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">jasmine.ng@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank021">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">UOB Singapore</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****8803</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">SGD</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">META-SG-01</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-022 -->
+              <tr class="sm-row" data-country="SG" data-wht="No" data-status="Active" data-q="sup-022 grab holdings singapore 201804940h">
+                <td>
+                  <span class="cell-name">Grab Holdings Singapore Pte Ltd</span>
+                  <span class="cell-id">SUP-022</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details022')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank022')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      2 bank accounts
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">201804940H</span></td>
+                <td><span class="ke-mkt ke-mkt-SG">SG</span></td>
+                <td>SGD</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-no">No</span></td>
+                <td>Net 15<span class="cell-secondary">Invoice Date + 15 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details022">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">574fd9df-f45e-11ed-ae59-80693348a022</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.001.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.001.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">kelvin.seah@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank022">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">DBS Bank Ltd</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****6614</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">SGD</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">GRAB-SG-MAIN</span></div>
+                    </div>
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">Standard Chartered Singapore</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****0071</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">USD</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">GRAB-SG-USD</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-023 -->
+              <tr class="sm-row" data-country="MY" data-wht="Yes" data-status="Active" data-q="sup-023 ernst young malaysia plt llp lp0009638t">
+                <td>
+                  <span class="cell-name">Ernst & Young Malaysia PLT</span>
+                  <span class="cell-id">SUP-023</span>
+                  <div class="sup-btns">
+                    <button class="details-btn" onclick="kdToggleDetails(this,'details023')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      Details
+                    </button>
+                    <button class="bank-btn" onclick="kdToggleBank(this,'bank023')">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                      1 bank account
+                    </button>
+                  </div>
+                </td>
+                <td><span class="cell-mono">LP0009638-T</span></td>
+                <td><span class="ke-mkt ke-mkt-MY">MY</span></td>
+                <td>MYR</td>
+                <td><span class="badge-local">LOCAL</span></td>
+                <td><span class="badge-wht-yes">Yes</span></td>
+                <td>Net 45<span class="cell-secondary">Invoice Date + 45 days</span></td>
+                <td><span class="badge-active">Active</span></td>
+              </tr>
+              <tr class="details-expand-row" id="details023">
+                <td class="details-expand-cell" colspan="8">
+                  <div class="sup-detail-strip">
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">6850eaef-f45e-11ed-ae59-80693348a023</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.005.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.005.000.000.000.0</span></div>
+                    <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">zulaikha.binti.hamid@shopee.com</span></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="bank-expand-row" id="bank023">
+                <td class="bank-expand-cell" colspan="8">
+                  <div class="bank-cards">
+                    <div class="bank-card">
+                      <div class="bank-card-top"><span class="bank-card-name">CIMB Bank Malaysia</span><span class="bank-primary-tag">Primary</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****5503</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">MYR</span></div>
+                      <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">EY-MY-01</span></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- SUP-024 -->
+<tr class="sm-row" data-country="ID" data-wht="No" data-status="Inactive" data-q="sup-024 pt goto gojek tokopedia 0200000012820">
+  <td>
+    <span class="cell-name">PT GoTo Gojek Tokopedia Tbk</span>
+    <span class="cell-id">SUP-024</span>
+    <div class="sup-btns">
+      <button class="details-btn" onclick="kdToggleDetails(this,'details024')">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        Details
+      </button>
+      <button class="bank-btn" onclick="kdToggleBank(this,'bank024')">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        No accounts
+      </button>
+    </div>
+  </td>
+  <td><span class="cell-mono">020.000.001.282.0</span></td>
+  <td><span class="ke-mkt ke-mkt-ID">ID</span></td>
+  <td>IDR</td>
+  <td><span class="badge-local">LOCAL</span></td>
+  <td><span class="badge-wht-no">No</span></td>
+  <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+  <td><span class="badge-inactive">Inactive</span></td>
+</tr>
+<tr class="details-expand-row" id="details024">
+  <td class="details-expand-cell" colspan="8">
+    <div class="sup-detail-strip">
+      <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">7961fbff-f45e-11ed-ae59-80693348a024</span></div>
+      <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.006.000.000.000.0</span></div>
+      <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.006.000.000.000.0</span></div>
+      <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">inactive_ricky.prasetyo@shopee.com</span></div>
+    </div>
+  </td>
+</tr>
+<tr class="bank-expand-row" id="bank024">
+  <td class="bank-expand-cell" colspan="8">
+    <div class="bank-cards">
+      <div class="bank-empty">No bank accounts synced from EBS for this supplier.</div>
+    </div>
+  </td>
+</tr>
+
+<!-- SUP-025 -->
+<tr class="sm-row" data-country="TH" data-wht="No" data-status="Active" data-q="sup-025 advanced info service plc 0107545000292">
+  <td>
+    <span class="cell-name">Advanced Info Service PCL</span>
+    <span class="cell-id">SUP-025</span>
+    <div class="sup-btns">
+      <button class="details-btn" onclick="kdToggleDetails(this,'details025')">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        Details
+      </button>
+      <button class="bank-btn" onclick="kdToggleBank(this,'bank025')">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        1 bank account
+      </button>
+    </div>
+  </td>
+  <td><span class="cell-mono">0107545000292</span></td>
+  <td><span class="ke-mkt ke-mkt-TH">TH</span></td>
+  <td>THB</td>
+  <td><span class="badge-local">LOCAL</span></td>
+  <td><span class="badge-wht-no">No</span></td>
+  <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+  <td><span class="badge-active">Active</span></td>
+</tr>
+<tr class="details-expand-row" id="details025">
+  <td class="details-expand-cell" colspan="8">
+    <div class="sup-detail-strip">
+      <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">8a720c0f-f45f-11ed-ae59-80693348a025</span></div>
+      <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.002.000.000.000.0</span></div>
+      <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.002.000.000.000.0</span></div>
+      <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">nattaya.chaiyaporn@shopee.com</span></div>
+    </div>
+  </td>
+</tr>
+<tr class="bank-expand-row" id="bank025">
+  <td class="bank-expand-cell" colspan="8">
+    <div class="bank-cards">
+      <div class="bank-card">
+        <div class="bank-card-top"><span class="bank-card-name">Krungsri Bank (Bank of Ayudhya)</span><span class="bank-primary-tag">Primary</span></div>
+        <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****1198</span></div>
+        <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">THB</span></div>
+        <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">AIS-TH-01</span></div>
+      </div>
+    </div>
+  </td>
+</tr>
+
+<!-- SUP-026 -->
+<tr class="sm-row" data-country="VN" data-wht="Yes" data-status="Active" data-q="sup-026 fpt corporation 0100150977">
+  <td>
+    <span class="cell-name">FPT Corporation</span>
+    <span class="cell-id">SUP-026</span>
+    <div class="sup-btns">
+      <button class="details-btn" onclick="kdToggleDetails(this,'details026')">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        Details
+      </button>
+      <button class="bank-btn" onclick="kdToggleBank(this,'bank026')">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        1 bank account
+      </button>
+    </div>
+  </td>
+  <td><span class="cell-mono">0100150977</span></td>
+  <td><span class="ke-mkt ke-mkt-VN">VN</span></td>
+  <td>VND</td>
+  <td><span class="badge-local">LOCAL</span></td>
+  <td><span class="badge-wht-yes">Yes</span></td>
+  <td>Net 30<span class="cell-secondary">Invoice Date + 30 days</span></td>
+  <td><span class="badge-active">Active</span></td>
+</tr>
+<tr class="details-expand-row" id="details026">
+  <td class="details-expand-cell" colspan="8">
+    <div class="sup-detail-strip">
+      <div class="sup-detail-chip"><span class="sup-detail-label">Alias</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">9b831d1f-f45f-11ed-ae59-80693348a026</span></div>
+      <div class="sup-detail-chip"><span class="sup-detail-label">Liability Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.200202.003.000.000.000.0</span></div>
+      <div class="sup-detail-chip"><span class="sup-detail-label">Prepayment Acct</span><span class="sup-detail-sep">·</span><span class="sup-detail-val">SPH.111104.003.000.000.000.0</span></div>
+      <div class="sup-detail-chip"><span class="sup-detail-label">Site Email</span><span class="sup-detail-sep">·</span><span class="sup-detail-val plain">le.van.dung@shopee.com</span></div>
+    </div>
+  </td>
+</tr>
+<tr class="bank-expand-row" id="bank026">
+  <td class="bank-expand-cell" colspan="8">
+    <div class="bank-cards">
+      <div class="bank-card">
+        <div class="bank-card-top"><span class="bank-card-name">Techcombank Vietnam</span><span class="bank-primary-tag">Primary</span></div>
+        <div class="bank-row"><span class="bank-row-label">Account</span><span class="bank-row-val">****4427</span></div>
+        <div class="bank-row"><span class="bank-row-label">Currency</span><span class="bank-row-val plain">VND</span></div>
+        <div class="bank-row"><span class="bank-row-label">Site</span><span class="bank-row-val plain">FPT-VN-01</span></div>
+      </div>
+    </div>
+  </td>
+</tr>
+
+            </tbody>
+          </table>
+
+          <div class="ke-pagination">
+            <span id="smPagText">Showing 1–10 of 26 records</span>
+            <div class="ke-page-btns" id="smPageBtns">
+              <button class="ke-page-btn" disabled>‹</button>
+              <button class="ke-page-btn active">1</button>
+              <button class="ke-page-btn" disabled>›</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+function kdToggleDetails(btn, id) {
+    const row = document.getElementById(id);
+    if (!row) return;
+    
+    // Toggles the 'open' class on the target row (shows/hides it)
+    const isOpen = row.classList.toggle('open');
+    
+    // Toggles the 'open' class on the button (rotates the icon)
+    btn.classList.toggle('open', isOpen);
+  };
+(function(){
+  // Configuration
+  window.bePage = 1;
+  window.smPage = 1;
+  const pageSize = 10;
+
+  /* Set current date in topbar */
+  (function() {
+    var d = new Date();
+    var opts = { year: 'numeric', month: 'short', day: '2-digit' };
+    var label = d.toLocaleDateString('en-SG', opts);
+    var el = document.getElementById('kdCurDate');
+    if (el) el.textContent = label;
+  })();
+
+  /* Tab switching */
+  window.kdTab = function(idx) {
+    document.querySelectorAll('#kd-root .ke-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+    document.querySelectorAll('#kd-root .ke-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+  };
+
+  /* Sidebar toggle */
+  window.kdNav = function(item, subId) {
+    var sub = document.getElementById(subId);
+    if (!sub) return;
+    var isOpen = sub.style.display === 'block';
+    sub.style.display = isOpen ? 'none' : 'block';
+    item.classList.toggle('open', !isOpen);
+  };
+
+  /* Bank account toggle */
+  window.kdToggleBank = function(btn, rowId) {
+    var row = document.getElementById(rowId);
+    if (!row) return;
+    var isOpen = row.classList.contains('open');
+    row.classList.toggle('open', !isOpen);
+    btn.classList.toggle('open', !isOpen);
+  };
+
+  /* Copy to clipboard with visual feedback */
+  window.copyToClipboard = function(btn, text) {
+    if (!navigator.clipboard) {
+      // Fallback for older browsers
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    } else {
+      navigator.clipboard.writeText(text);
+    }
+    
+    // Visual feedback
+    const originalHTML = btn.innerHTML;
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+    
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = originalHTML;
+    }, 1800);
+  };
+
+  /* Dynamically add copy buttons to all supplier detail chips (clean & maintainable) */
+  function addCopyButtons() {
+    const chips = document.querySelectorAll('.sup-detail-chip');
+    chips.forEach(chip => {
+      // Prevent duplicate buttons
+      if (chip.querySelector('.copy-btn')) return;
+      
+      const valEl = chip.querySelector('.sup-detail-val');
+      if (!valEl) return;
+      
+      const textToCopy = valEl.textContent.trim();
+      
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.title = 'Copy to clipboard';
+      btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1"/></svg>`;
+      btn.onclick = (e) => {
+        e.stopImmediatePropagation();
+        copyToClipboard(btn, textToCopy);
+      };
+      
+      chip.appendChild(btn);
+    });
+  }
+
+  /* Buyer Entity Filter (Single Page since 8 < 10) */
+  window.beFilter = function() {
+    var q = document.getElementById('beSearch').value.toLowerCase();
+    var region = document.getElementById('beRegion').value;
+    var status = document.getElementById('beStatus').value;
+    var rows = document.querySelectorAll('#beTbl tbody tr');
+    var vis = 0;
+
+    rows.forEach(function(row) {
+      var show = (!q || row.dataset.q.indexOf(q) > -1)
+              && (!region || row.dataset.region === region)
+              && (!status || row.dataset.status === status);
+      row.classList.toggle('hidden-row', !show);
+      if (show) vis++;
+    });
+
+    document.getElementById('beCount').innerHTML = '<strong>' + vis + '</strong> records';
+    document.getElementById('bePagText').innerHTML = 'Showing 1–' + vis + ' of ' + vis + ' records';
+  };
+
+  /* Supplier Master Filter with Pagination (10, 10, 6) */
+  window.smFilter = function(targetPage) {
+    var q = document.getElementById('smSearch').value.toLowerCase();
+    var country = document.getElementById('smCountry').value;
+    var wht = document.getElementById('smWht').value;
+    var status = document.getElementById('smStatus').value;
+    var rows = Array.from(document.querySelectorAll('#smTbl .sm-row'));
+    
+    // 1. Filter matches
+    var matches = rows.filter(function(row) {
+      return (!q || row.dataset.q.indexOf(q) > -1)
+          && (!country || row.dataset.country === country)
+          && (!wht || row.dataset.wht === wht)
+          && (!status || row.dataset.status === status);
+    });
+
+    // 2. Pagination Logic
+    var totalMatches = matches.length;
+    var maxPages = Math.ceil(totalMatches / pageSize) || 1;
+    
+    if (typeof targetPage === 'number') {
+        window.smPage = targetPage;
+    }
+    if (window.smPage > maxPages) window.smPage = maxPages;
+    if (window.smPage < 1) window.smPage = 1;
+
+    var startIdx = (window.smPage - 1) * pageSize;
+    var endIdx = startIdx + pageSize;
+
+    // 3. Update visibility
+    rows.forEach(function(row) {
+      var matchIdx = matches.indexOf(row);
+      var isVisible = (matchIdx >= startIdx && matchIdx < endIdx);
+      row.classList.toggle('hidden-row', !isVisible);
+      
+      // Close bank row if main row is hidden
+      var bankRow = row.nextElementSibling;
+      if (bankRow && bankRow.classList.contains('bank-expand-row') && !isVisible) {
+        bankRow.classList.remove('open');
+        var btn = row.querySelector('.bank-btn');
+        if (btn) btn.classList.remove('open');
+      }
+    });
+
+    // 4. Update UI Elements
+    document.getElementById('smCount').innerHTML = 'Showing <strong>' + totalMatches + '</strong> records';
+    var actualEnd = Math.min(endIdx, totalMatches);
+    document.getElementById('smPagText').innerHTML = 'Showing ' + (totalMatches === 0 ? 0 : startIdx + 1) + '–' + actualEnd + ' of ' + totalMatches + ' records';
+    
+    renderSmPagination(maxPages);
+  };
+
+  function renderSmPagination(maxPages) {
+    var container = document.getElementById('smPageBtns');
+    if (!container) return;
+    var html = '';
+    
+    // Prev
+    html += `<button class="ke-page-btn" ${window.smPage === 1 ? 'disabled' : ''} onclick="smFilter(${window.smPage - 1})">‹</button>`;
+    
+    // Numeric Buttons
+    for (let i = 1; i <= maxPages; i++) {
+      html += `<button class="ke-page-btn ${i === window.smPage ? 'active' : ''}" onclick="smFilter(${i})">${i}</button>`;
+    }
+    
+    // Next
+    html += `<button class="ke-page-btn" ${window.smPage === maxPages ? 'disabled' : ''} onclick="smFilter(${window.smPage + 1})">›</button>`;
+    
+    container.innerHTML = html;
+  }
+
+  // Initialize
+  window.onload = function() {
+    smFilter(1);
+    beFilter();
+    addCopyButtons();           // ← NEW: adds copy icons to every supplier detail field
+  };
+
+
+})();
+</script>
