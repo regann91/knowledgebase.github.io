@@ -49,7 +49,7 @@ svg{display:block;flex-shrink:0;}
 .ke-sea-logo svg{position:absolute;inset:0;}
 .ke-hdr-brand-name{font-size:13px;font-weight:700;color:var(--ke-g900);white-space:nowrap;letter-spacing:-.01em;}
 .ke-hdr-right{display:flex;align-items:center;gap:8px;padding:0 14px;margin-left:auto;}
-/* Global market pill — pin icon + code + chevron */
+/* Global Country pill — pin icon + code + chevron */
 .ke-global-mkt{
   display:inline-flex;align-items:center;gap:5px;
   padding:4px 10px 4px 8px;border:1px solid var(--ke-g200);border-radius:4px;
@@ -205,7 +205,7 @@ svg{display:block;flex-shrink:0;}
   padding:8px 20px;background:#fff;border-bottom:1px solid var(--ke-g200);flex-shrink:0;
 }
 .ke-total{font-size:12.5px;font-weight:600;color:var(--ke-g800);}
-/* Market context badge shown in totalbar when global filter is active */
+/* Country context badge shown in totalbar when global filter is active */
 .ke-mkt-context{
   display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--ke-g600);
 }
@@ -355,7 +355,7 @@ svg{display:block;flex-shrink:0;}
 .ke-drawer-body{flex:1;min-height:0;overflow-y:auto;padding:14px 18px 32px;}
 
 /* Buyer detail KV */
-.ke-buyer-sec-hdr{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ke-g500);padding-bottom:7px;border-bottom:1px solid var(--ke-g200);margin-bottom:12px;margin-top:6px;}
+.ke-buyer-sec-hdr{font-size:10.5px;font-weight:700;letter-spacing:.06em;color:var(--ke-g500);padding-bottom:7px;border-bottom:1px solid var(--ke-g200);margin-bottom:12px;margin-top:6px;}
 .ke-kv{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--ke-g200);border-radius:6px;margin-bottom:18px;font-size:12.5px;overflow:hidden;}
 .ke-kv th,.ke-kv td{padding:8px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--ke-g100);line-height:1.4;}
 .ke-kv tr:last-child th,.ke-kv tr:last-child td{border-bottom:none;}
@@ -364,9 +364,24 @@ svg{display:block;flex-shrink:0;}
 .ke-kv td.mono{font-family:Consolas,'SF Mono',Menlo,monospace;font-size:11.5px;}
 .ke-kv-val{display:flex;align-items:center;gap:8px;}
 .ke-kv-val span{flex:1;}
+.ke-detail-toolbar{display:flex;align-items:center;gap:6px;padding:10px 16px;background:#fff;border-bottom:1px solid var(--ke-g200);flex-shrink:0;}
+.ke-detail-toolbar-search{display:flex;align-items:center;gap:0;flex:1;min-width:0;height:30px;border:1px solid var(--ke-g300);border-radius:4px;overflow:hidden;transition:border-color .12s;background:#fff;}
+.ke-detail-toolbar-search:focus-within{border-color:var(--ke-blue);}
+.ke-detail-toolbar-search-icon{display:flex;align-items:center;justify-content:center;padding:0 8px;color:var(--ke-g400);background:#fff;flex-shrink:0;}
+.ke-detail-toolbar-search input{height:100%;border:none;outline:none;font-size:12.5px;color:var(--ke-g900);background:#fff;flex:1;min-width:80px;padding:0 8px 0 0;}
+.ke-detail-toolbar-search input::placeholder{color:var(--ke-g400);}
 .ke-detail-toolbar input{height:30px;border:1px solid var(--ke-g300);border-radius:4px;color:var(--ke-g900);background:#fff;outline:none;transition:border-color .12s;padding:0 9px;flex:1;min-width:140px;}
 .ke-detail-toolbar input:focus{border-color:var(--ke-blue);}
 .ke-detail-toolbar input::placeholder{color:var(--ke-g400);}
+/* bank account cards in drawer */
+.ke-bank-cards{display:flex;flex-wrap:wrap;gap:10px;padding:12px 16px 14px;}
+.ke-bank-card{flex:1;min-width:200px;max-width:calc(50% - 5px);border:1px solid var(--ke-g200);border-radius:6px;padding:12px 14px;background:#fff;position:relative;}
+.ke-bank-card-primary{position:absolute;top:10px;right:10px;font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:10px;background:var(--ke-blue-lt);color:var(--ke-blue-h);border:1px solid var(--ke-blue-bd);}
+.ke-bank-card-name{font-size:12.5px;font-weight:600;color:var(--ke-g900);margin-bottom:8px;padding-right:60px;}
+.ke-bank-card-row{display:flex;justify-content:space-between;font-size:11.5px;margin-top:4px;}
+.ke-bank-card-label{color:var(--ke-g500);}
+.ke-bank-card-value{color:var(--ke-g800);font-family:Consolas,monospace;font-size:11px;}
+.ke-bank-empty{padding:14px 16px;font-size:12px;color:var(--ke-g500);font-style:italic;}
 .ke-sec-hdr{display:flex;align-items:center;gap:10px;padding:10px 16px;background:linear-gradient(to right,var(--ke-g50),#fff);border-bottom:1px solid var(--ke-g200);cursor:pointer;user-select:none;transition:background .15s;}
 .ke-sec-hdr:hover{background:linear-gradient(to right,var(--ke-g100),var(--ke-g50));}
 .ke-sec-hdr.collapsed{border-bottom:none;}
@@ -394,7 +409,7 @@ svg{display:block;flex-shrink:0;}
 .ke-copy-btn:hover{color:var(--ke-blue);background:var(--ke-blue-lt);}
 .ke-copy-btn.copied{color:var(--ke-ok-t);opacity:1!important;}
 
-/* Market chips */
+/* Country chips */
 .ke-mkt-inline{display:inline-flex;align-items:center;font-size:9.5px;font-weight:700;padding:1px 5px;border-radius:4px;line-height:1;}
 .ke-mkt-ALL{background:var(--ke-ALL-b);color:var(--ke-ALL-t);border:1px solid var(--ke-ALL-bd);}
 .ke-mkt-TH{background:var(--ke-TH-b);color:var(--ke-TH-t);border:1px solid var(--ke-TH-bd);}
@@ -428,7 +443,7 @@ mark.ke-hl{background:#FEF08A;color:inherit;padding:0 1px;border-radius:2px;}
 
 /* ═══ ENDPOINT TABLE ═══ */
 .ke-ep-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--ke-g200);border-radius:6px;overflow:hidden;}
-.ke-ep-table th{text-align:left;font-size:10.5px;font-weight:600;color:var(--ke-g500);text-transform:uppercase;letter-spacing:.5px;padding:10px 14px;background:var(--ke-g50);border-bottom:1px solid var(--ke-g200);position:sticky;top:0;z-index:1;}
+.ke-ep-table th{text-align:left;font-size:10.5px;font-weight:600;color:var(--ke-g500);letter-spacing:.5px;padding:10px 14px;background:var(--ke-g50);border-bottom:1px solid var(--ke-g200);position:sticky;top:0;z-index:1;}
 .ke-ep-table td{padding:10px 14px;font-size:12.5px;border-bottom:1px solid var(--ke-g100);color:var(--ke-g800);vertical-align:middle;}
 .ke-ep-table tr:last-child td{border-bottom:none;}
 .ke-ep-table tr:hover td{background:var(--ke-g50);}
@@ -472,12 +487,12 @@ mark.ke-hl{background:#FEF08A;color:inherit;padding:0 1px;border-radius:2px;}
     <span class="ke-hdr-brand-name">Sea Billing &amp; Collection System</span>
   </div>
   <div class="ke-hdr-right">
-    <!-- Global market — pin icon + code + chevron, overlay select -->
+    <!-- Global Country — pin icon + code + chevron, overlay select -->
     <div class="ke-global-mkt" id="global-mkt-wrap">
       <svg class="ke-global-mkt-pin" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
       <span class="ke-global-mkt-text" id="global-mkt-label">All</span>
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--ke-g400)"><polyline points="6 9 12 15 18 9"/></svg>
-      <select id="global-market" onchange="onGlobalMarketChange()">
+      <select id="global-Country" onchange="onGlobalCountryChange()">
         <option value="">All</option>
         <option value="BR">BR</option>
         <option value="ID">ID</option>
@@ -646,7 +661,7 @@ mark.ke-hl{background:#FEF08A;color:inherit;padding:0 1px;border-radius:2px;}
           <div class="ke-mkt-context" id="buyer-mkt-ctx" style="display:none;">
             <span>Filtered by</span>
             <span class="ke-mkt-context-badge" id="buyer-mkt-badge"></span>
-            <span>— Market column hidden</span>
+            <span>— Country column hidden</span>
           </div>
         </div>
         <div class="ke-tablewrap">
@@ -755,7 +770,7 @@ mark.ke-hl{background:#FEF08A;color:inherit;padding:0 1px;border-radius:2px;}
               <div class="ke-colmgr-hdr">Show / Hide Columns</div>
               <label class="ke-colmgr-item"><input type="checkbox" checked data-table="supplier" data-col="1" onchange="toggleCol('supplier',1,this)"> Supplier ID</label>
               <label class="ke-colmgr-item"><input type="checkbox" checked data-table="supplier" data-col="2" onchange="toggleCol('supplier',2,this)"> Supplier Name</label>
-              <label class="ke-colmgr-item"><input type="checkbox" checked data-table="supplier" data-col="3" onchange="toggleCol('supplier',3,this)"> Market</label>
+              <label class="ke-colmgr-item"><input type="checkbox" checked data-table="supplier" data-col="3" onchange="toggleCol('supplier',3,this)"> Country</label>
               <label class="ke-colmgr-item"><input type="checkbox" checked data-table="supplier" data-col="4" onchange="toggleCol('supplier',4,this)"> Supplier Type</label>
               <label class="ke-colmgr-item"><input type="checkbox" checked data-table="supplier" data-col="5" onchange="toggleCol('supplier',5,this)"> Tax Registration No.</label>
             </div>
@@ -766,7 +781,7 @@ mark.ke-hl{background:#FEF08A;color:inherit;padding:0 1px;border-radius:2px;}
           <div class="ke-mkt-context" id="supplier-mkt-ctx" style="display:none;">
             <span>Filtered by</span>
             <span class="ke-mkt-context-badge" id="supplier-mkt-badge"></span>
-            <span>— Market column hidden</span>
+            <span>— Country column hidden</span>
           </div>
         </div>
         <div class="ke-tablewrap">
@@ -776,7 +791,7 @@ mark.ke-hl{background:#FEF08A;color:inherit;padding:0 1px;border-radius:2px;}
                 <th style="width:32px;padding:6px 6px;"><input type="checkbox" id="supplier-chk-all" onchange="toggleSupplierCheckAll(this)" style="cursor:pointer;"></th>
                 <th data-supplier-col="1" style="width:110px;">Supplier ID</th>
                 <th data-supplier-col="2">Supplier Name</th>
-                <th data-supplier-col="3" class="mkt-col" style="width:70px;">Market</th>
+                <th data-supplier-col="3" class="mkt-col" style="width:70px;">Country</th>
                 <th data-supplier-col="4" style="width:105px;">Supplier Type</th>
                 <th data-supplier-col="5" style="width:170px;">Tax Registration No.</th>
                 <th style="width:70px;text-align:center;">Action</th>
@@ -887,14 +902,14 @@ mark.ke-hl{background:#FEF08A;color:inherit;padding:0 1px;border-radius:2px;}
 //  STATIC DATA
 // ════════════════════════════════════════════
 const BUYERS = [
-  { id:'BUY-001', code:'MY', name:'Shopee Malaysia Sdn Bhd',           tin:'201801022237',         region:'SEA',   market:'MY', address:'Level 29, Menara KL Eco City, Jalan Bangsar, 59200 Kuala Lumpur',                         wht_code:'—',                                             status:true,  invoice_cc_to:'',                               collection_info:'Malaysia Scommerce Trading', updated_by:'Wang Jiashen (王家申)', updated_time:'2023-03-16 15:14:52' },
-  { id:'BUY-002', code:'SG', name:'Shopee Singapore Pte Ltd',          tin:'201715826R',           region:'SEA',   market:'SG', address:'5 Science Park Drive, Shopee Building, Singapore 118265',                                 wht_code:'—',                                             status:true,  invoice_cc_to:'',                               collection_info:'',                          updated_by:'Wu Fang (吴芳)',        updated_time:'2025-01-16 10:26:11' },
-  { id:'BUY-003', code:'TH', name:'Shopee (Thailand) Co., Ltd',        tin:'0105558019581',        region:'SEA',   market:'TH', address:'1031 Soi Sukhumvit 53, Bangkok 10110',                                                   wht_code:'Advertising - 2; Commission - 3; Dividend - 10', status:true,  invoice_cc_to:'ar@sea.com',                     collection_info:'Thailand Garena',           updated_by:'Wang Jiashen (王家申)', updated_time:'2023-03-15 11:21:32' },
-  { id:'BUY-004', code:'VN', name:'Shopee Việt Nam Co., Ltd',          tin:'0316613933',           region:'SEA',   market:'VN', address:'Tầng 29 Saigon Centre Tower 2, 67 Lê Lợi, Quận 1, TP. HCM',                             wht_code:'—',                                             status:true,  invoice_cc_to:'',                               collection_info:'',                          updated_by:'Nguyen Huy',           updated_time:'2025-09-16 19:27:28' },
-  { id:'BUY-005', code:'ID', name:'PT Shopee International Indonesia',  tin:'736666900031000',      region:'SEA',   market:'ID', address:'GEDUNG PACIFIC CENTURY PLACE LT 22,23,25,26 SCBD LOT 10 JL.JEND SUDIRMA…',               wht_code:'—',                                             status:true,  invoice_cc_to:'shopee.finance.collection@sea.com', collection_info:'',                      updated_by:'Wang Jiashen (王家申)', updated_time:'2023-03-14 18:25:06' },
-  { id:'BUY-006', code:'PH', name:'Shopee Philippines, Inc.',          tin:'010-091-151-000',      region:'SEA',   market:'PH', address:'8th Floor Net Park Building, 5th Avenue, BGC, Taguig City',                              wht_code:'—',                                             status:true,  invoice_cc_to:'',                               collection_info:'Philippines Scommerce Inc', updated_by:'Terrance Yang (杨振)', updated_time:'2022-02-20 19:58:51' },
-  { id:'BUY-007', code:'TW', name:'蝦皮購物股份有限公司 (Shopee TW)',    tin:'24941832',             region:'TW',    market:'TW', address:'110台北市信義區菸廠路88號10樓',                                                         wht_code:'—',                                             status:true,  invoice_cc_to:'',                               collection_info:'Taiwan Shopee',             updated_by:'Terrance Yang (杨振)', updated_time:'2022-02-20 20:00:51' },
-  { id:'BUY-008', code:'BR', name:'Shopee Brasil Serviços Ltda.',      tin:'29.801.431/0001-48',   region:'LATAM', market:'BR', address:'Av. Brigadeiro Faria Lima, 3477, São Paulo, SP',                                          wht_code:'—',                                             status:false, invoice_cc_to:'',                               collection_info:'',                          updated_by:'Wang Jiashen (王家申)', updated_time:'2022-05-12 18:07:37' },
+  { id:'BUY-001', code:'MY', name:'Shopee Malaysia Sdn Bhd',           tin:'201801022237',         region:'SEA',   Country:'MY', address:'Level 29, Menara KL Eco City, Jalan Bangsar, 59200 Kuala Lumpur',                         wht_code:'—',                                             status:true,  invoice_cc_to:'',                               collection_info:'Malaysia Scommerce Trading', updated_by:'Wang Jiashen (王家申)', updated_time:'2023-03-16 15:14:52' },
+  { id:'BUY-002', code:'SG', name:'Shopee Singapore Pte Ltd',          tin:'201715826R',           region:'SEA',   Country:'SG', address:'5 Science Park Drive, Shopee Building, Singapore 118265',                                 wht_code:'—',                                             status:true,  invoice_cc_to:'',                               collection_info:'',                          updated_by:'Wu Fang (吴芳)',        updated_time:'2025-01-16 10:26:11' },
+  { id:'BUY-003', code:'TH', name:'Shopee (Thailand) Co., Ltd',        tin:'0105558019581',        region:'SEA',   Country:'TH', address:'1031 Soi Sukhumvit 53, Bangkok 10110',                                                   wht_code:'Advertising - 2; Commission - 3; Dividend - 10', status:true,  invoice_cc_to:'ar@sea.com',                     collection_info:'Thailand Garena',           updated_by:'Wang Jiashen (王家申)', updated_time:'2023-03-15 11:21:32' },
+  { id:'BUY-004', code:'VN', name:'Shopee Việt Nam Co., Ltd',          tin:'0316613933',           region:'SEA',   Country:'VN', address:'Tầng 29 Saigon Centre Tower 2, 67 Lê Lợi, Quận 1, TP. HCM',                             wht_code:'—',                                             status:true,  invoice_cc_to:'',                               collection_info:'',                          updated_by:'Nguyen Huy',           updated_time:'2025-09-16 19:27:28' },
+  { id:'BUY-005', code:'ID', name:'PT Shopee International Indonesia',  tin:'736666900031000',      region:'SEA',   Country:'ID', address:'GEDUNG PACIFIC CENTURY PLACE LT 22,23,25,26 SCBD LOT 10 JL.JEND SUDIRMA…',               wht_code:'—',                                             status:true,  invoice_cc_to:'shopee.finance.collection@sea.com', collection_info:'',                      updated_by:'Wang Jiashen (王家申)', updated_time:'2023-03-14 18:25:06' },
+  { id:'BUY-006', code:'PH', name:'Shopee Philippines, Inc.',          tin:'010-091-151-000',      region:'SEA',   Country:'PH', address:'8th Floor Net Park Building, 5th Avenue, BGC, Taguig City',                              wht_code:'—',                                             status:true,  invoice_cc_to:'',                               collection_info:'Philippines Scommerce Inc', updated_by:'Terrance Yang (杨振)', updated_time:'2022-02-20 19:58:51' },
+  { id:'BUY-007', code:'TW', name:'蝦皮購物股份有限公司 (Shopee TW)',    tin:'24941832',             region:'TW',    Country:'TW', address:'110台北市信義區菸廠路88號10樓',                                                         wht_code:'—',                                             status:true,  invoice_cc_to:'',                               collection_info:'Taiwan Shopee',             updated_by:'Terrance Yang (杨振)', updated_time:'2022-02-20 20:00:51' },
+  { id:'BUY-008', code:'BR', name:'Shopee Brasil Serviços Ltda.',      tin:'29.801.431/0001-48',   region:'LATAM', Country:'BR', address:'Av. Brigadeiro Faria Lima, 3477, São Paulo, SP',                                          wht_code:'—',                                             status:false, invoice_cc_to:'',                               collection_info:'',                          updated_by:'Wang Jiashen (王家申)', updated_time:'2022-05-12 18:07:37' },
 ];
 
 const GROUP_DEFS = {
@@ -907,42 +922,42 @@ const GROUP_DEFS = {
 };
 
 const SUPPLIER_SCHEMA = [
-  {name:'supplier_id',label:'Supplier ID',group:'G1',market:'ALL',source:'System'},
-  {name:'supplier_name',label:'Supplier Name',group:'G1',market:'ALL',source:'Purchase'},
-  {name:'supplier_alias',label:'Supplier Alias',group:'G1',market:'ALL',source:'EBS'},
-  {name:'supplier_site_name',label:'Supplier Site Name',group:'G1',market:'VN',source:'EBS'},
-  {name:'entity',label:'Entity',group:'G1',market:'ALL',source:'3WM'},
-  {name:'foreign_vs_local',label:'Foreign vs Local',group:'G1',market:'VN',source:'EBS'},
-  {name:'supplier_type',label:'Supplier Type',group:'G1',market:'ALL',source:'EBS'},
-  {name:'supplier_address',label:'Supplier Address',group:'G2',market:'ALL',source:'3WM'},
-  {name:'company_address',label:'Company Address',group:'G2',market:'ALL',source:'3WM'},
-  {name:'site_email',label:'Site Email',group:'G2',market:'ALL',source:'EBS'},
-  {name:'contact_phone',label:'Contact Phone',group:'G2',market:'ALL',source:'EBS'},
-  {name:'tax_registration_no',label:'Tax Registration No.',group:'G3',market:'ALL',source:'EBS'},
-  {name:'site_tax_reg_no',label:'Site Tax Reg. No.',group:'G3',market:'MY',source:'EBS'},
-  {name:'taxpayer_id',label:'Taxpayer ID',group:'G3',market:'ALL',source:'EBS'},
-  {name:'brn_ic',label:'BRN / IC',group:'G3',market:'MY',source:'EBS'},
-  {name:'wht_status',label:'WHT Status',group:'G3',market:'ALL',source:'EBS'},
-  {name:'liability_account',label:'Liability Account',group:'G3',market:'ALL',source:'EBS'},
-  {name:'prepayment_account',label:'Prepayment Account',group:'G3',market:'ALL',source:'EBS'},
-  {name:'supplier_bank_name',label:'Supplier Bank Name',group:'G4',market:'ALL',source:'EBS'},
-  {name:'supplier_bank_number',label:'Supplier Bank Number',group:'G4',market:'ALL',source:'EBS',masked:true},
-  {name:'site_bank_name',label:'Site Bank Name',group:'G4',market:'ALL',source:'EBS'},
-  {name:'site_bank_number',label:'Site Bank Number',group:'G4',market:'ALL',source:'EBS',masked:true},
-  {name:'currency',label:'Currency',group:'G4',market:'ALL',source:'Purchase'},
-  {name:'swift_code',label:'SWIFT Code',group:'G4',market:'ALL',source:'EBS'},
-  {name:'payment_term',label:'Payment Term',group:'G5',market:'ALL',source:'3WM'},
-  {name:'due_date_rule',label:'Due Date Rule',group:'G5',market:'ALL',source:'System'},
-  {name:'credit_limit',label:'Credit Limit',group:'G5',market:'ALL',source:'EBS'},
-  {name:'payment_method',label:'Payment Method',group:'G5',market:'ALL',source:'EBS'},
-  {name:'invoice_currency',label:'Invoice Currency',group:'G5',market:'ALL',source:'3WM'},
-  {name:'status',label:'Status',group:'G6',market:'ALL',source:'3WM'},
-  {name:'supplier_branch',label:'Supplier Branch',group:'G6',market:'TH',source:'3WM'},
-  {name:'supplier_tid',label:'Supplier TID',group:'G6',market:'TW',source:'3WM'},
-  {name:'seller_validation_status',label:'Seller Validation Status',group:'G6',market:'VN',source:'3WM'},
-  {name:'buyer_validation_status',label:'Buyer Validation Status',group:'G6',market:'VN',source:'3WM'},
-  {name:'validation_flag',label:'Validation Flag',group:'G6',market:'ALL',source:'System'},
-  {name:'onboarding_date',label:'Onboarding Date',group:'G6',market:'ALL',source:'System'},
+  {name:'supplier_id',label:'Supplier ID',group:'G1',Country:'ALL',source:'System'},
+  {name:'supplier_name',label:'Supplier Name',group:'G1',Country:'ALL',source:'Purchase'},
+  {name:'supplier_alias',label:'Supplier Alias',group:'G1',Country:'ALL',source:'EBS'},
+  {name:'supplier_site_name',label:'Supplier Site Name',group:'G1',Country:'VN',source:'EBS'},
+  {name:'entity',label:'Entity',group:'G1',Country:'ALL',source:'3WM'},
+  {name:'foreign_vs_local',label:'Foreign vs Local',group:'G1',Country:'VN',source:'EBS'},
+  {name:'supplier_type',label:'Supplier Type',group:'G1',Country:'ALL',source:'EBS'},
+  {name:'supplier_address',label:'Supplier Address',group:'G2',Country:'ALL',source:'3WM'},
+  {name:'company_address',label:'Company Address',group:'G2',Country:'ALL',source:'3WM'},
+  {name:'site_email',label:'Site Email',group:'G2',Country:'ALL',source:'EBS'},
+  //{name:'contact_phone',label:'Contact Phone',group:'G2',Country:'ALL',source:'EBS'},
+  {name:'tax_registration_no',label:'Tax Registration No.',group:'G3',Country:'ALL',source:'EBS'},
+  {name:'site_tax_reg_no',label:'Site Tax Reg. No.',group:'G3',Country:'MY',source:'EBS'},
+  {name:'taxpayer_id',label:'Taxpayer ID',group:'G3',Country:'ALL',source:'EBS'},
+  {name:'brn_ic',label:'BRN / IC',group:'G3',Country:'MY',source:'EBS'},
+  {name:'wht_status',label:'WHT Status',group:'G3',Country:'ALL',source:'EBS'},
+  {name:'liability_account',label:'Liability Account',group:'G3',Country:'ALL',source:'EBS'},
+  {name:'prepayment_account',label:'Prepayment Account',group:'G3',Country:'ALL',source:'EBS'},
+  {name:'supplier_bank_name',label:'Supplier Bank Name',group:'G4',Country:'ALL',source:'EBS'},
+  {name:'supplier_bank_number',label:'Supplier Bank Number',group:'G4',Country:'ALL',source:'EBS',masked:true},
+  {name:'site_bank_name',label:'Site Bank Name',group:'G4',Country:'ALL',source:'EBS'},
+  {name:'site_bank_number',label:'Site Bank Number',group:'G4',Country:'ALL',source:'EBS',masked:true},
+  {name:'currency',label:'Currency',group:'G4',Country:'ALL',source:'Purchase'},
+  //{name:'swift_code',label:'SWIFT Code',group:'G4',Country:'ALL',source:'EBS'},
+  {name:'payment_term',label:'Payment Term',group:'G5',Country:'ALL',source:'3WM'},
+  {name:'due_date_rule',label:'Due Date Rule',group:'G5',Country:'ALL',source:'System'},
+  //{name:'credit_limit',label:'Credit Limit',group:'G5',Country:'ALL',source:'EBS'},
+  //{name:'payment_method',label:'Payment Method',group:'G5',Country:'ALL',source:'EBS'},
+  {name:'invoice_currency',label:'Invoice Currency',group:'G5',Country:'ALL',source:'3WM'},
+  {name:'status',label:'Status',group:'G6',Country:'ALL',source:'3WM'},
+  {name:'supplier_branch',label:'Supplier Branch',group:'G6',Country:'TH',source:'3WM'},
+  {name:'supplier_tid',label:'Supplier TID',group:'G6',Country:'TW',source:'3WM'},
+  {name:'seller_validation_status',label:'Seller Validation Status',group:'G6',Country:'VN',source:'3WM'},
+  {name:'buyer_validation_status',label:'Buyer Validation Status',group:'G6',Country:'VN',source:'3WM'},
+  {name:'validation_flag',label:'Validation Flag',group:'G6',Country:'ALL',source:'System'},
+  {name:'onboarding_date',label:'Onboarding Date',group:'G6',Country:'ALL',source:'System'},
 ];
 
 const EP_TABS=[
@@ -1036,19 +1051,38 @@ function genTaxReg(r,mkt){
 }
 function generateSuppliers(count){
   const r=rng(0xBEEF),list=[];
+  const BANKS=['Maybank','HSBC','DBS','OCBC','Citi','Standard Chartered','RHB','CIMB','UOB','BNI','BCA','Mandiri','Bangkok Bank','Kasikorn Bank','VietcomBank','Techcombank','BPI','BDO','CTBC','Mega Bank','Bradesco','Itaú'];
+  const CURRENCIES_ALL=['MYR','SGD','USD','THB','VND','IDR','PHP','TWD','BRL'];
   for(let i=0;i<count;i++){
     const mkt=MKT_LIST[i%MKT_LIST.length];
     const root=COMPANY_ROOTS[(i*7+3)%COMPANY_ROOTS.length];
     const rTax=rng(0xF00D+i);
-    list.push({id:`SUP-${10000+i}`,name:`${root} ${pick(r,COMPANY_SUFFIX[mkt])}`,market:mkt,type:pick(r,SUPPLIER_TYPES),currency:CURRENCY_BY_MKT[mkt],payment_term:pick(r,PAYMENT_TERMS),tax_registration_no:genTaxReg(rTax,mkt),onboarding_date:new Date(2022,(i*3)%12,((i*7)%28)+1).toISOString().slice(0,10),fields:{},_seed:i});
+    const rBank=rng(0xBACC+i);
+    // Generate 1-3 bank accounts per supplier
+    const numBanks=1+(i%3===0?2:i%2===0?1:0);
+    const bankAccounts=[];
+    for(let b=0;b<numBanks;b++){
+      const bankName=BANKS[(i*3+b*7)%BANKS.length];
+      const lastFour=Math.floor(rBank()*9000+1000);
+      bankAccounts.push({
+        id:`BA-${10000+i}-${b+1}`,
+        bank_name:bankName,
+        account_number:`**** **** **** ${lastFour}`,
+        currency:b===0?CURRENCY_BY_MKT[mkt]:CURRENCIES_ALL[(i+b)%CURRENCIES_ALL.length],
+        site_name:b===0?`${root} HQ`:b===1?`${root} Branch ${mkt}`:null,
+        is_primary:b===0,
+        //swift:`${bankName.substring(0,4).toUpperCase().replace(/\s/g,'')}${mkt}XX`,
+      });
+    }
+    list.push({id:`SUP-${10000+i}`,name:`${root} ${pick(r,COMPANY_SUFFIX[mkt])}`,Country:mkt,type:pick(r,SUPPLIER_TYPES),currency:CURRENCY_BY_MKT[mkt],payment_term:pick(r,PAYMENT_TERMS),tax_registration_no:genTaxReg(rTax,mkt),onboarding_date:new Date(2022,(i*3)%12,((i*7)%28)+1).toISOString().slice(0,10),bankAccounts,fields:{},_seed:i});
   }
   return list;
 }
 function populateFields(sup){
   if(sup._populated) return sup;
-  const r=rng(0xA11CE+sup._seed),v={},mkt=sup.market,root=sup.name.split(' ')[0];
+  const r=rng(0xA11CE+sup._seed),v={},mkt=sup.Country,root=sup.name.split(' ')[0];
   SUPPLIER_SCHEMA.forEach(f=>{
-    const applies=f.market==='ALL'||f.market===mkt;
+    const applies=f.Country==='ALL'||f.Country===mkt;
     if(!applies){v[f.name]={applies:false,value:null};return;}
     let val=null;
     switch(f.name){
@@ -1059,23 +1093,23 @@ function populateFields(sup){
       case 'supplier_address':val=mkt==='MY'?`Level ${5+Math.floor(r()*20)}, Menara ${root}, KL`:mkt==='SG'?`${1+Math.floor(r()*30)} ${root} Road, Singapore`:`${100+Math.floor(r()*800)} ${root} St., ${mkt}`;break;
       case 'company_address':val=`Level ${3+Math.floor(r()*30)}, ${root} Tower, ${mkt}`;break;
       case 'site_email':val=`ap.${root.toLowerCase()}@${root.toLowerCase()}.com`;break;
-      case 'contact_phone':val=`+${60+(sup._seed%40)} ${Math.floor(r()*9000+1000)} ${Math.floor(r()*9000+1000)}`;break;
+      //case 'contact_phone':val=`+${60+(sup._seed%40)} ${Math.floor(r()*9000+1000)} ${Math.floor(r()*9000+1000)}`;break;
       case 'tax_registration_no':val=sup.tax_registration_no;break;
       case 'site_tax_reg_no':val=`SST-${Math.floor(r()*9000+1000)}-X`;break;
       case 'taxpayer_id':val=`TX-${Math.floor(r()*9e7+1e7)}`;break;
       case 'brn_ic':val=r()<0.3?null:`BRN-${Math.floor(r()*9e5+1e5)}-${mkt}`;break;
       case 'wht_status':val=r()>0.5?'Y':'N';break;
-      case 'liability_account':val='2100-AP-Control';break;case 'prepayment_account':val='1300-Prepaid-GL';break;
+      case 'liability_account':val='SPH.200202.000.000.000.000.0';break;case 'prepayment_account':val='SPH.111104.000.000.000.000.0';break;
       case 'supplier_bank_name':val=pick(r,['Maybank','HSBC','DBS','OCBC','Citi','Standard Chartered','RHB','CIMB']);break;
       case 'supplier_bank_number':val=`**** **** **** ${Math.floor(r()*9000+1000)}`;break;
       case 'site_bank_name':val=r()<0.4?null:pick(r,['Maybank','HSBC','DBS']);break;
       case 'site_bank_number':val=r()<0.4?null:`**** **** **** ${Math.floor(r()*9000+1000)}`;break;
       case 'currency':val=sup.currency;break;
-      case 'swift_code':val=`${root.substring(0,4).toUpperCase()}${mkt}XX`;break;
+      //case 'swift_code':val=`${root.substring(0,4).toUpperCase()}${mkt}XX`;break;
       case 'payment_term':val=sup.payment_term;break;
       case 'due_date_rule':val=`Invoice Date + ${sup.payment_term.match(/\d+/)?.[0]||30} days`;break;
-      case 'credit_limit':val=`${sup.currency} ${(Math.floor(r()*900)+100)*1000}`;break;
-      case 'payment_method':val=pick(r,['Bank Transfer','Wire','Check','ACH']);break;
+      //case 'credit_limit':val=`${sup.currency} ${(Math.floor(r()*900)+100)*1000}`;break;
+      //case 'payment_method':val=pick(r,['Bank Transfer','Wire','Check','ACH']);break;
       case 'invoice_currency':val=sup.currency;break;
       case 'status':val=r()>0.2?'Active':'Inactive';break;
       case 'supplier_branch':val=`${root} — ${mkt} Branch`;break;
@@ -1096,7 +1130,7 @@ function populateFields(sup){
 const state={
   view:'detail',
   tab:'buyer',
-  globalMarket:'',
+  globalCountry:'',
   suppliers:[],
   page:1,
   buyerPage:1,
@@ -1120,7 +1154,7 @@ function highlight(text,q){
 }
 function initials(name){return name.replace(/[^A-Za-z\u4e00-\u9fff\s]/g,'').trim().split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase()||'??';}
 function localCurrency(mkt){return {MY:'MYR',SG:'SGD',TH:'THB',VN:'VND',ID:'IDR',PH:'PHP',TW:'TWD',BR:'BRL'}[mkt]||'—';}
-function tzByMarket(mkt){return {MY:'Asia/Kuala_Lumpur',SG:'Asia/Singapore',TH:'Asia/Bangkok',VN:'Asia/Ho_Chi_Minh',ID:'Asia/Jakarta',PH:'Asia/Manila',TW:'Asia/Taipei',BR:'America/Sao_Paulo'}[mkt]||'—';}
+function tzByCountry(mkt){return {MY:'Asia/Kuala_Lumpur',SG:'Asia/Singapore',TH:'Asia/Bangkok',VN:'Asia/Ho_Chi_Minh',ID:'Asia/Jakarta',PH:'Asia/Manila',TW:'Asia/Taipei',BR:'America/Sao_Paulo'}[mkt]||'—';}
 function buyerById(id){return BUYERS.find(b=>b.id===id);}
 function supplierById(id){return state.suppliers.find(s=>s.id===id);}
 const COPY_ICON=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
@@ -1146,37 +1180,37 @@ function updateSyncStatus(){
 }
 
 // ════════════════════════════════════════════
-//  GLOBAL MARKET FILTER
+//  GLOBAL Country FILTER
 // ════════════════════════════════════════════
-function onGlobalMarketChange(){
-  state.globalMarket=document.getElementById('global-market').value;
+function onGlobalCountryChange(){
+  state.globalCountry=document.getElementById('global-Country').value;
   state.page=1;
   state.buyerPage=1;
   // Update pill label
   const lbl=document.getElementById('global-mkt-label');
-  if(lbl) lbl.textContent=state.globalMarket||'All';
-  document.getElementById('global-mkt-wrap').classList.toggle('has-mkt',!!state.globalMarket);
+  if(lbl) lbl.textContent=state.globalCountry||'All';
+  document.getElementById('global-mkt-wrap').classList.toggle('has-mkt',!!state.globalCountry);
   // Full refresh of all views immediately
   renderBuyerTable();
   renderSupplierTable();
   if(state.view==='endpoint') renderEndpoint();
-  applyMarketColVisibility();
+  applyCountryColVisibility();
   updateBreadcrumb();
 }
 
-function applyMarketColVisibility(){
-  const mkt=state.globalMarket;
+function applyCountryColVisibility(){
+  const mkt=state.globalCountry;
   // For every table with .mkt-col cells
   document.querySelectorAll('.mkt-col').forEach(cell=>{
     if(mkt){
-      // Hide the market column when a specific market is selected
+      // Hide the Country column when a specific Country is selected
       cell.classList.add('mkt-hidden');
       cell.classList.remove('mkt-active');
     } else {
       cell.classList.remove('mkt-hidden','mkt-active');
     }
   });
-  // Show/hide market context badges
+  // Show/hide Country context badges
   const buyerCtx=document.getElementById('buyer-mkt-ctx');
   const supCtx=document.getElementById('supplier-mkt-ctx');
   if(mkt){
@@ -1223,7 +1257,7 @@ function switchTab(tab){
   updateBreadcrumb();
   if(tab==='buyer') renderBuyerTable();
   else renderSupplierTable();
-  applyMarketColVisibility();
+  applyCountryColVisibility();
 }
 
 function updateBreadcrumb(){
@@ -1253,9 +1287,9 @@ function getFilteredBuyers(){
   const q=(document.getElementById('buyer-search')?.value||'').toLowerCase().trim();
   const field=document.getElementById('buyer-search-field')?.value||'all';
   const region=document.getElementById('buyer-region')?.value||'';
-  const gm=state.globalMarket;
+  const gm=state.globalCountry;
   return BUYERS.filter(b=>{
-    if(gm && b.market!==gm) return false;
+    if(gm && b.Country!==gm) return false;
     if(region && b.region!==region) return false;
     if(q){
       if(field==='id')   return b.id.toLowerCase().includes(q);
@@ -1398,7 +1432,7 @@ function renderBuyerTable(){
       <td class="ke-cell-name">${highlight(b.name,q)}</td>
       <td class="ke-cell-tin">${highlight(b.tin,q)}</td>
       <td class="ke-cell-muted" style="font-size:12px;max-width:180px;" title="${esc(b.address)}">${esc(addr)}</td>
-      <td class="ke-cell-muted">${localCurrency(b.market)}</td>
+      <td class="ke-cell-muted">${localCurrency(b.Country)}</td>
       <td style="text-align:center;white-space:nowrap;">
         <button class="ke-details-link" onclick="openBuyerDrawer('${b.id}')">Details</button>
       </td>
@@ -1421,7 +1455,7 @@ function exportBuyerCSV(){
   const ids=new Set([...checked].map(c=>c.dataset.id));
   const list=ids.size>0?getFilteredBuyers().filter(b=>ids.has(b.id)):getFilteredBuyers();
   const headers=['Region','Entity Code','Entity Name','Tax Registration Number','Entity Address','Currency','WHT Code'];
-  const rows=[headers,...list.map(b=>[b.region,b.code,b.name,b.tin,b.address,localCurrency(b.market),b.wht_code])];
+  const rows=[headers,...list.map(b=>[b.region,b.code,b.name,b.tin,b.address,localCurrency(b.Country),b.wht_code])];
   const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
   const a=document.createElement('a');
   a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
@@ -1467,7 +1501,7 @@ function openBuyerDrawer(id){
   state.drawerMode='buyer'; state.currentBuyer=id;
   const b=buyerById(id); if(!b) return;
   document.getElementById('drawer-title').textContent=b.name;
-  document.getElementById('drawer-sub').textContent=b.id;
+  document.getElementById('drawer-sub').textContent='';
   document.getElementById('detail-pane').innerHTML=renderBuyerDetailHTML(b);
   document.getElementById('drawer-scrim').classList.add('open');
   document.getElementById('detail-drawer').classList.add('open');
@@ -1484,15 +1518,15 @@ function renderBuyerDetailHTML(b){
     ['Legal Name',b.name,false],
     ['Tax Identification No.',b.tin,true],
     ['Region',b.region,false],
-    ['Market',b.market,false],
+    ['Country',b.Country,false],
     ['Registered Address',b.address,false],
   ];
   const opRows=[
-    ['Functional Currency',localCurrency(b.market),false],
+    ['Functional Currency',localCurrency(b.Country),false],
     ['Reporting Currency','USD',false],
     ['Fiscal Year End','31 Dec',false],
-    ['Time Zone',tzByMarket(b.market),false],
-    ['ERP Instance',`Oracle EBS · ${b.market}-PROD`,false],
+    ['Time Zone',tzByCountry(b.Country),false],
+    ['ERP Instance',`Oracle EBS · ${b.Country}-PROD`,false],
   ];
   const mkRows=arr=>arr.map(([label,val,mono])=>`
     <tr>
@@ -1516,9 +1550,9 @@ function getFilteredSuppliers(){
   const field=document.getElementById('supplier-search-field')?.value||'all';
   const typ=document.getElementById('supplier-type')?.value||'';
   const wht=document.getElementById('supplier-wht')?.value||'';
-  const gm=state.globalMarket;
+  const gm=state.globalCountry;
   let list=state.suppliers.slice();
-  if(gm) list=list.filter(s=>s.market===gm);
+  if(gm) list=list.filter(s=>s.Country===gm);
   if(typ) list=list.filter(s=>s.type===typ);
   if(wht){list=list.filter(s=>{populateFields(s);return(s.fields['wht_status']?.value||'')===wht;});}
   if(q){
@@ -1556,7 +1590,7 @@ function renderSupplierTable(){
   const start=(state.page-1)*rpp;
   const rows=all.slice(start,start+rpp);
   const q=(document.getElementById('supplier-search')?.value||'').toLowerCase().trim();
-  const gm=state.globalMarket;
+  const gm=state.globalCountry;
 
   document.getElementById('supplier-total').textContent=`Total ${total.toLocaleString()} records`;
   document.getElementById('supplier-tab-ct').textContent=total.toLocaleString();
@@ -1576,7 +1610,7 @@ function renderSupplierTable(){
         <td style="padding:10px 8px;"><input type="checkbox" class="supplier-row-chk" data-id="${s.id}" style="cursor:pointer;"></td>
         <td class="ke-cell-id">${highlight(s.id,q)}</td>
         <td class="ke-cell-name">${highlight(s.name,q)}</td>
-        <td class="mkt-col${gm?' mkt-hidden':''}"><span class="ke-mkt-chip">${s.market}</span></td>
+        <td class="mkt-col${gm?' mkt-hidden':''}"><span class="ke-mkt-chip">${s.Country}</span></td>
         <td class="ke-cell-muted">${esc(s.type)}</td>
         <td class="ke-cell-tin">${highlight(s.tax_registration_no||'—',q)}</td>
         <td style="text-align:center;"><button class="ke-details-link" onclick="openSupplierDrawer('${s.id}')">Details</button></td>
@@ -1603,8 +1637,8 @@ function exportSupplierCSV(){
   const checked=document.querySelectorAll('.supplier-row-chk:checked');
   const ids=new Set([...checked].map(c=>c.dataset.id));
   const list=ids.size>0?getFilteredSuppliers().filter(s=>ids.has(s.id)):getFilteredSuppliers();
-  const headers=['Supplier ID','Supplier Name','Market','Supplier Type','Tax Registration No.'];
-  const csvRows=[headers,...list.map(s=>[s.id,s.name,s.market,s.type,s.tax_registration_no||''])];
+  const headers=['Supplier ID','Supplier Name','Country','Supplier Type','Tax Registration No.'];
+  const csvRows=[headers,...list.map(s=>[s.id,s.name,s.Country,s.type,s.tax_registration_no||''])];
   const csv=csvRows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
   const a=document.createElement('a');
   a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
@@ -1649,7 +1683,7 @@ function openSupplierDrawer(id){
   const s=supplierById(id); if(!s) return;
   document.getElementById('drawer-title').textContent=s.name;
   document.getElementById('drawer-sub').textContent=''; // sub-line removed per spec
-  document.getElementById('drawer-scrim').classList.add('open');
+  //document.getElementById('drawer-scrim').classList.add('open');
   document.getElementById('detail-drawer').classList.add('open');
   renderSupplierDetailPane();
   const bcSep3=document.getElementById('bc-sep3'),bcSel=document.getElementById('bc-sel');
@@ -1673,10 +1707,12 @@ function renderSupplierDetailPane(){
   populateFields(s);
   document.getElementById('detail-pane').innerHTML=`
     <div class="ke-detail-toolbar">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--ke-g400);flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="detail-search" placeholder="Search fields or values…" oninput="renderDetailBody()">
-      <button class="ke-btn-ghost" onclick="expandAllGroups(true)" style="padding:3px 8px;height:30px;">Expand</button>
-      <button class="ke-btn-ghost" onclick="expandAllGroups(false)" style="padding:3px 8px;height:30px;">Collapse</button>
+      <div class="ke-detail-toolbar-search">
+        <span class="ke-detail-toolbar-search-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input type="text" id="detail-search" placeholder="Search fields or values…" oninput="renderDetailBody()">
+      </div>
+      <button class="ke-btn-ghost" onclick="expandAllGroups(true)" style="padding:3px 8px;height:30px;flex-shrink:0;">Expand</button>
+      <button class="ke-btn-ghost" onclick="expandAllGroups(false)" style="padding:3px 8px;height:30px;flex-shrink:0;">Collapse</button>
     </div>
     <div id="detail-content"></div>`;
   renderDetailBody();
@@ -1696,9 +1732,40 @@ function renderDetailBody(){
   filtered.forEach(f=>grouped[f.group].push(f));
   let html='';
   groups.forEach(g=>{
-    const fs=grouped[g.id]; if(fs.length===0&&!q) return;
+    const fs=grouped[g.id]; if(fs.length===0&&!q&&g.id!=='G4') return;
     const overr=state.expandedGroups[g.id];
     const expanded=state.expandAll?true:(overr!==undefined?overr:g.defaultExpanded);
+
+    // Special rendering for Banking Details — show cards per bank account
+    if(g.id==='G4'){
+      const accounts=s.bankAccounts||[];
+      const bankFieldCount=accounts.length;
+      html+=`<div class="ke-card" id="card-G4">
+        <div class="ke-sec-hdr ${expanded?'':'collapsed'}" onclick="toggleGroup('G4')">
+          <span class="ke-sec-chev"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+          <span class="ke-sec-label">Banking Details</span>
+          <span class="ke-sec-badge">${bankFieldCount} account${bankFieldCount===1?'':'s'}</span>
+        </div>
+        <div class="ke-sec-body ${expanded?'':'collapsed'}">`;
+      if(accounts.length===0){
+        html+=`<div class="ke-bank-empty">No bank accounts synced from EBS for this supplier.</div>`;
+      } else {
+        html+=`<div class="ke-bank-cards">`;
+        accounts.forEach(acct=>{
+          html+=`<div class="ke-bank-card">
+            ${acct.is_primary?'<span class="ke-bank-card-primary">Primary</span>':''}
+            <div class="ke-bank-card-name">${esc(acct.bank_name)}</div>
+            <div class="ke-bank-card-row"><span class="ke-bank-card-label">Account No.</span><span class="ke-bank-card-value">${esc(acct.account_number)}</span></div>
+            <div class="ke-bank-card-row"><span class="ke-bank-card-label">Currency</span><span class="ke-bank-card-value">${esc(acct.currency)}</span></div>
+            ${acct.site_name?`<div class="ke-bank-card-row"><span class="ke-bank-card-label">Site</span><span class="ke-bank-card-value" style="font-family:inherit;font-size:11.5px;">${esc(acct.site_name)}</span></div>`:''}
+          </div>`;
+        });
+        html+=`</div>`;
+      }
+      html+=`</div></div>`;
+      return;
+    }
+
     html+=`<div class="ke-card" id="card-${g.id}">
       <div class="ke-sec-hdr ${expanded?'':'collapsed'}" onclick="toggleGroup('${g.id}')">
         <span class="ke-sec-chev"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
@@ -1712,7 +1779,7 @@ function renderDetailBody(){
       fs.forEach(f=>{
         const fd=s.fields[f.name],value=fd.value,isEmpty=value===null||value===''||value===undefined;
         html+=`<div class="ke-ps-row">
-          <div class="ke-ps-label">${highlight(f.label,q)}${f.market!=='ALL'?`<span class="ke-mkt-inline ke-mkt-${f.market}">${f.market}</span>`:''}</div>
+          <div class="ke-ps-label">${highlight(f.label,q)}${f.Country!=='ALL'?`<span class="ke-mkt-inline ke-mkt-${f.Country}">${f.Country}</span>`:''}</div>
           <div class="ke-ps-value-wrap"><span class="ke-ps-value ${isEmpty?'empty':''}">${isEmpty?'—':highlight(String(value),q)}</span>${!isEmpty?`<button class="ke-copy-btn" onclick="copyToClipboard(${JSON.stringify(String(value)).replace(/"/g,'&quot;')},this)" title="Copy">${COPY_ICON}</button>`:''}</div>
         </div>`;
       });
@@ -1745,7 +1812,7 @@ function renderEndpoint(){
     </div>`).join('');
   const q=(document.getElementById('endpoint-search')?.value||'').toLowerCase().trim();
   const lvl=document.getElementById('endpoint-level')?.value||'';
-  const gm=state.globalMarket;
+  const gm=state.globalCountry;
   let items=EP_FIELDS.filter(f=>f.tab===state.endpointTab);
   if(gm) items=items.filter(f=>f.mkt==='ALL'||f.mkt===gm);
   if(lvl) items=items.filter(f=>f.level===lvl);
@@ -1755,10 +1822,10 @@ function renderEndpoint(){
     wrap.innerHTML=`<div class="ke-empty-state" style="padding:50px 20px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ke-g300)" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><div>No variables match.</div></div>`;
     return;
   }
-  // Compact endpoint table — market as plain text, copy with 3s tick
+  // Compact endpoint table — Country as plain text, copy with 3s tick
   let html=`<table class="ke-ep-table"><thead><tr>
     <th style="width:32%">Field</th>
-    <th style="width:9%">Market</th>
+    <th style="width:9%">Country</th>
     <th style="width:9%">Level</th>
     <th>Variable</th>
   </tr></thead><tbody>`;
@@ -1818,7 +1885,7 @@ function renderCmdK(q){
   }
   if(suppliers.length){
     html+=`<div class="ke-cmdk-sec-label">Suppliers (${suppliers.length})</div>`;
-    suppliers.forEach((s,j)=>{const idx=buyers.length+j;html+=`<div class="ke-cmdk-row ${idx===cmdkActive?'active':''}" data-idx="${idx}" onmouseenter="setCmdKActive(${idx})" onclick="commitCmdK(${idx})"><div class="ke-cmdk-row-avatar">${initials(s.name)}</div><div><div class="ke-cmdk-row-name">${highlight(s.name,q)}</div><div class="ke-cmdk-row-meta">${s.id} · ${s.market}</div></div></div>`;});
+    suppliers.forEach((s,j)=>{const idx=buyers.length+j;html+=`<div class="ke-cmdk-row ${idx===cmdkActive?'active':''}" data-idx="${idx}" onmouseenter="setCmdKActive(${idx})" onclick="commitCmdK(${idx})"><div class="ke-cmdk-row-avatar">${initials(s.name)}</div><div><div class="ke-cmdk-row-name">${highlight(s.name,q)}</div><div class="ke-cmdk-row-meta">${s.id} · ${s.Country}</div></div></div>`;});
   }
   list.innerHTML=html;
 }
@@ -1866,13 +1933,13 @@ function updateRibbonSync(){
 function exportEndpointCSV(){
   const q=(document.getElementById('endpoint-search')?.value||'').toLowerCase().trim();
   const lvl=document.getElementById('endpoint-level')?.value||'';
-  const gm=state.globalMarket;
+  const gm=state.globalCountry;
   let items=EP_FIELDS.filter(f=>f.tab===state.endpointTab);
   if(gm) items=items.filter(f=>f.mkt==='ALL'||f.mkt===gm);
   if(lvl) items=items.filter(f=>f.level===lvl);
   if(q) items=items.filter(f=>f.cmd.toLowerCase().includes(q));
   const tabLabel=EP_TABS[state.endpointTab]?.label||'tab';
-  const headers=['Field','Market','Level','Variable'];
+  const headers=['Field','Country','Level','Variable'];
   const rows=[headers,...items.map(f=>{
     const label=f.cmd.split('.').slice(1).join('.').replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
     return[label,f.mkt,f.level,f.cmd];
